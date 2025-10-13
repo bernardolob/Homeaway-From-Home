@@ -1,4 +1,4 @@
 package System.Service;
 
-public class EatingService {
+public interface EatingService extends AbstractLimitedService {
 }

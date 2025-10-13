@@ -1,4 +1,4 @@
 package System.Service;
 
-public class AbstractService {
+public interface AbstractService {
 }

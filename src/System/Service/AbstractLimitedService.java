@@ -1,4 +1,4 @@
 package System.Service;
 
-public class AbstractLimitedService {
+public interface AbstractLimitedService extends AbstractService{
 }

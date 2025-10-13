@@ -1,4 +1,4 @@
 package System.Student;
 
-public class AbstractStudent {
+public interface AbstractStudent {
 }

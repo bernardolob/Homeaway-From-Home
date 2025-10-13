@@ -1,4 +1,4 @@
 package System.Service;
 
-public class LodgingService {
+public interface LodgingService extends AbstractLimitedService{
 }

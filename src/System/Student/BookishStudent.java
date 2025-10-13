@@ -1,4 +1,4 @@
 package System.Student;
 
-public class BookishStudent {
+public interface BookishStudent extends AbstractVisitingStudent {
 }

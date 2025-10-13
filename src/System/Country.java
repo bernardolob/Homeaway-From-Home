@@ -1,4 +1,4 @@
 package System;
 
-public class Country {
+public interface Country  {
 }

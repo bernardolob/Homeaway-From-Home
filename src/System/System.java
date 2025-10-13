@@ -1,4 +1,4 @@
 package System;
 
-public class System {
+public interface System {
 }

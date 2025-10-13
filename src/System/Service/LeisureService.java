@@ -1,4 +1,4 @@
 package System.Service;
 
-public class LeisureService {
+public interface LeisureService extends AbstractService{
 }

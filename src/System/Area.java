@@ -1,4 +1,4 @@
 package System;
 
-public class Area {
+public interface Area {
 }

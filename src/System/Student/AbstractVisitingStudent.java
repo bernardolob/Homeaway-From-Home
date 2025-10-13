@@ -1,4 +1,4 @@
 package System.Student;
 
-public class AbstractVisitingStudent {
+public interface AbstractVisitingStudent extends AbstractStudent{
 }
