@@ -1,7 +1,7 @@
 package dataStructures;
 
-import dataStructures.exceptions.*;
-import java.io.Serializable;
+import dataStructures.exceptions.InvalidPositionException;
+import dataStructures.exceptions.NoSuchElementException;
 
 /**
  * List (sequence) Abstract Data Type 
@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 
  */
 
-public interface List<E> extends Serializable {
+public interface List<E> {
     int NOT_FOUND=-1;
     /**
      * Returns true iff the list contains no elements.

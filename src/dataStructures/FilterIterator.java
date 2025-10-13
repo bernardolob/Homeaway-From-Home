@@ -13,28 +13,36 @@ import dataStructures.exceptions.NoSuchElementException;
 public class FilterIterator<E> implements Iterator<E> {
 
     /**
-     *  Iterator of elements to filter.
+     * Iterator of elements to filter.
      */
-    Iterator<E> iterator;
+    private final Iterator<E> iterator;
 
     /**
      *  Filter.
      */
-    Predicate<E> criterion;
+    private final Predicate<E> filter;
 
     /**
      * Node with the next element in the iteration.
      */
-    E nextToReturn;
-
+    private E nextToReturn;
 
     /**
-     *
-     * @param list to be iterated
-     * @param criterion filter
+     * Boolean that says if the nextToReturn prepared.
      */
-    public FilterIterator(Iterator<E> list, Predicate<E> criterion) {
-        //TODO: Left as an exercise.
+    private boolean hasNextPrepared;
+
+    /**
+     * Constructor.
+     *
+     * @param list   the iterator to filter
+     * @param filter the predicate to apply
+     */
+    public FilterIterator(Iterator<E> list, Predicate<E> filter) {
+        iterator = list;
+        this.filter = filter;
+        this.nextToReturn = null;
+        this.hasNextPrepared = false;
     }
 
     /**
@@ -43,8 +51,9 @@ public class FilterIterator<E> implements Iterator<E> {
      * @return true iff the iteration has more elements
      */
     public boolean hasNext() {
-        //TODO: Left as an exercise.
-        return true;
+        if (!hasNextPrepared)
+            advanceNext();
+        return hasNextPrepared;
     }
 
     /**
@@ -54,8 +63,10 @@ public class FilterIterator<E> implements Iterator<E> {
      * @throws NoSuchElementException - if call is made without verifying pre-condition
      */
     public E next() {
-        //TODO: Left as an exercise.
-        return null;
+        if (!hasNext())
+            throw new NoSuchElementException();
+        hasNextPrepared = false; // consume this element
+        return nextToReturn;
     }
 
     /**
@@ -63,7 +74,25 @@ public class FilterIterator<E> implements Iterator<E> {
      * After rewind, if the iteration is not empty, next will return the first element.
      */
     public void rewind() {
-        //TODO: Left as an exercise.
+        iterator.rewind();
+        hasNextPrepared = false;
+        nextToReturn = null;
     }
 
+    /**
+     * Advances the nextToReturn Node in the iterator to a node that checks the filter.
+     */
+    private void advanceNext() {
+        hasNextPrepared = false;
+        nextToReturn = null;
+
+        while (iterator.hasNext()) {
+            E elem = iterator.next();
+            if (filter.check(elem)) {
+                nextToReturn = elem;
+                hasNextPrepared = true;
+                break;
+            }
+        }
+    }
 }
