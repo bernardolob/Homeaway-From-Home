@@ -28,21 +28,30 @@ public class Main {
 
     /************ Types ************/
     // Services
-    private static final String EATING_TYPE     = "EATING";
-    private static final String LODGING_TYPE    = "LODGING";
-    private static final String LEISURE_TYPE    = "LEISURE";
+    private static final String EATING_TYPE     = "eating";
+    private static final String LODGING_TYPE    = "lodging";
+    private static final String LEISURE_TYPE    = "leisure";
     // Students
-    private static final String BOOKISH_TYPE    = "BOOKISH";
-    private static final String OUTGOING_TYPE   = "OUTGOING";
-    private static final String THRIFTY_TYPE    = "THRIFTY";
+    private static final String BOOKISH_TYPE    = "bookish";
+    private static final String OUTGOING_TYPE   = "outgoing";
+    private static final String THRIFTY_TYPE    = "thrifty";
 
     /************ Errors ************/
-    private static final String UNDEFINED_BOUNDS_ERR    = "System bounds not defined.\n";
-    private static final String INVALID_BOUNDS_ERR      = "Invalid bounds.\n";
-    private static final String EXISTING_BOUNDS_ERR     = "Bounds already exists. Please load it!\n";
-    private static final String NON_EXISTING_BOUNDS_ERR = "Bounds %s does not exists.\n";
-
-
+    private static final String UNDEFINED_BOUNDS_ERR     = "System bounds not defined.\n";
+    private static final String INVALID_BOUNDS_ERR       = "Invalid bounds.\n";
+    private static final String EXISTING_BOUNDS_ERR      = "Bounds already exists. Please load it!\n";
+    private static final String NON_EXISTING_BOUNDS_ERR  = "Bounds %s does not exists.\n";
+    private static final String INVALID_SERVICE_ERR      = "Invalid service type!\n";
+    private static final String INVALID_LOCATION_ERR     = "Invalid location!\n";
+    private static final String INVALID_MENU_ERR         = "Invalid menu price!\n";
+    private static final String INVALID_TICKET_ERR       = "Invalid ticket price!\n";
+    private static final String INVALID_DISCOUNT_ERR     = "Invalid discount price!\n";
+    private static final String INVALID_CAPACITY_ERR     = "Invalid capacity!\n";
+    private static final String ALREADY_EXISTS_ERR       = "%s already exists!\n";
+    private static final String INVALID_STUDENT_ERR      = "Invalid student type!\n";
+    private static final String NON_EXISTING_LODGING_ERR = "lodging %s does not exist!\n";
+    private static final String LODGING_FULL_ERR         = "lodging %s is full!\n";
+    private static final String UNKNOWN_LOCATION_ERR     = "Unknown %s!\n";
 
     /************ Messages ************/
     // General
@@ -55,6 +64,23 @@ public class Main {
     private static final String SAVE_MSG        = "%s saved.\n";
     // Load
     private static final String LOAD_MSG        = "%s loaded.\n";
+    // Service and Student
+    private static final String ADDED_MSG       = "%s %s added.\n";
+    // Services
+    private static final String SERVICES_MSG    = "%s: %s %d %d.\n";
+    private static final String NO_SERVICES_MSG = "No services yet!\n";
+    // Leave
+    private static final String LEAVE_MSG       = "%s has left.\n";
+    // Students
+    private static final String STUDENTS_MSG    = "%s: %s at %s.\n";
+    private static final String NO_STUDENTS_MSG = "No students yet!\n";
+    private static final String NO_COUNTRY_MSG  = "No students from %s!\n";
+    // Go
+    private static final String GO_MSG = "‰s in now at %s.\n";
+    private static final String DISTRACTED = "%s is distracted!\n";
+
+
+
 
 
     public static void main(String[] args) {
