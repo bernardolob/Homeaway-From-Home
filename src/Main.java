@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
 
 // CONSTANTS
@@ -41,7 +43,7 @@ public class Main {
     private static final String INVALID_BOUNDS_ERR       = "Invalid bounds.\n";
     private static final String EXISTING_BOUNDS_ERR      = "Bounds already exists. Please load it!\n";
     private static final String NON_EXISTING_BOUNDS_ERR  = "Bounds %s does not exists.\n";
-    private static final String INVALID_SERVICE_ERR      = "Invalid service type!\n";
+    private static final String INVALID_SERVICE_TYPE_ERR = "Invalid service type!\n";
     private static final String INVALID_LOCATION_ERR     = "Invalid location!\n";
     private static final String INVALID_MENU_ERR         = "Invalid menu price!\n";
     private static final String INVALID_TICKET_ERR       = "Invalid ticket price!\n";
@@ -52,6 +54,18 @@ public class Main {
     private static final String NON_EXISTING_LODGING_ERR = "lodging %s does not exist!\n";
     private static final String LODGING_FULL_ERR         = "lodging %s is full!\n";
     private static final String UNKNOWN_LOCATION_ERR     = "Unknown %s!\n";
+    private static final String NON_EXISTING_ERR         = "%s does not exist!\n";
+    private static final String INVALID_SERVICE_ERR      = "%s is not a valid service!\n";
+    private static final String ALREADY_THERE_ERR        = "Already there!\n";
+    private static final String EATING_FULL_ERR          = "eating %s is full!\n";
+    private static final String ALREADY_HOME_ERR         = "That is %s's home!\n";
+    private static final String UNACCEPTABLE_MOVE_ERR    = "Move is not acceptable for %s!\n";
+    private static final String NON_EXISTING_ORDER_ERR   = "This order does not exists!\n";
+    private static final String NO_USERS_SERVICE_ERR     = "%s does not control student entry and exit!\n";
+    private static final String IS_THRIFTY_ERR           = "%s is thrifty!\n";
+    private static final String INVALID_EVALUATION_ERR   = "Invalid evaluation!\n";
+    private static final String INVALID_STARS_ERR        = "Invalid stars!\n";
+    private static final String NO_SERVICE_TYPE_ERR      = "No %s services!\n";
 
     /************ Messages ************/
     // General
@@ -76,14 +90,151 @@ public class Main {
     private static final String NO_STUDENTS_MSG = "No students yet!\n";
     private static final String NO_COUNTRY_MSG  = "No students from %s!\n";
     // Go
-    private static final String GO_MSG = "‰s in now at %s.\n";
-    private static final String DISTRACTED = "%s is distracted!\n";
+    private static final String GO_MSG          = "‰s in now at %s.\n";
+    private static final String DISTRACTED      = "%s is distracted!\n";
+    // Move
+    private static final String MOVE_MSG        = "lodging %s is now %s's home. %s is at home.\n";
+    // Users
+    private static final String USERS_MSG       = "%s: %s\n";
+    private static final String NO_USERS_MSG    = "No students on %s!";
+    // Where
+    private static final String WHERE_MSG       = "%s is at %s %s (%d, %d).\n";
+    // Visited
+    private static final String VISITED_MSG     = "%s\n";
+    private static final String NO_VISITED_MSG  = "%s has not visited any locations!\n";
+    // Star
+    private static final String STAR_MSG        = "Your evaluation has been registered!\n";
+    // Ranking
+    private static final String DESCENDING_MSG  = "Services sorted in descending order\n";
+    private static final String RANKING_MSG     = "%s: %d\n"; // Enunciado inconsistente com o ponto final
+    private static final String NO_RANKING_MSG  = "No services in the system.\n";
+    // Ranked
+    private static final String RANKED_HEAD_MSG = "%s services closer with %d average\n";
+    private static final String RANKED_MSG      = "%s\n";
+    private static final String NO_RANKED_MSG   = "No %s services with average!\n";
+    // Tag
+    private static final String TAG_MSG         = "%s %s\n";
+    private static final String NO_TAG_MSG      = "There are no services with this tag!\n";
+    // Find
+    private static final String FIND_MSG = "%s\n";
 
 
 
 
+/******************************** MAIN ********************************/
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String command;
+//        bound = null;
+        do {
+            command = in.next().toUpperCase();
+            executeCommand(in, command);
+        } while (!command.equals(EXIT_CMD));
+        in.close();
+    }
+
+    /**
+     * Executes a specific command based on user input.
+     *
+     * @param in - Scanner object for reading user input
+     * @param command - the command string to execute
+     * @pre - 'in' must not be null, and 'command' must be a valid string
+     */
+    private static void executeCommand(Scanner in, String command) {
+        switch (command) {
+            case EXIT_CMD -> exit();
+            case HELP_CMD -> help();
+            case BOUNDS_CMD -> bounds(in);
+            case SAVE_CMD -> save();
+            case LOAD_CMD -> load(in);
+            case SERVICE_CMD -> service(in);
+            case SERVICES_CMD -> services();
+            case STUDENT_CMD -> student(in);
+            case LEAVE_CMD -> leave(in);
+            case STUDENTS_CMD -> students();
+            case GO_CMD -> go(in);
+            case MOVE_CMD -> move(in);
+            case USERS_CMD -> users(in);
+            case STAR_CMD -> star(in);
+            case WHERE_CMD -> where(in);
+            case VISITED_CMD -> visited(in);
+            case RANKING_CMD -> ranking(in);
+            case RANKED_CMD -> ranked(in);
+            case TAG_CMD -> tag(in);
+            case FIND_CMD -> find(in);
+            default -> unknown();
+        }
+    }
+
+    private static void exit() {
+    }
+
+    private static void help() {
+        for (Commands c : Commands.values())
+            System.out.printf(HELP_MSG, c.name().toLowerCase(), c.getDescription());
+    }
+
+    private static void bounds(Scanner in) {
+    }
+
+    private static void save() {
+    }
+
+    private static void load(Scanner in) {
+    }
+
+    private static void service(Scanner in) {
 
     }
+
+    private static void services() {
+    }
+
+    private static void student(Scanner in) {
+    }
+
+    private static void leave(Scanner in) {
+    }
+
+    private static void students() {
+    }
+
+    private static void go(Scanner in) {
+    }
+
+    private static void move(Scanner in) {
+    }
+
+    private static void users(Scanner in) {
+
+    }
+
+    private static void star(Scanner in) {
+    }
+
+    private static void where(Scanner in) {
+    }
+
+    private static void visited(Scanner in) {
+
+    }
+
+    private static void ranking(Scanner in) {
+    }
+
+    private static void ranked(Scanner in) {
+    }
+
+    private static void tag(Scanner in) {
+    }
+
+    private static void find(Scanner in) {
+    }
+
+
+    private static void unknown() {
+        System.out.printf(UNKNOWN_MSG);
+    }
+
 }
