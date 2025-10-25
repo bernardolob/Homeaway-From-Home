@@ -22,8 +22,4 @@ public class BookishStudentClass extends AbstractVisitingStudentClass implements
         return StudentType.BOOKISH;
     }
 
-    @Override
-    public void changeHome(Lodging newHome) {
-
-    }
 }

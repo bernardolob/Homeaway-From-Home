@@ -18,11 +18,6 @@ public abstract class AbstractVisitingStudentClass extends AbstractStudentClass 
     }
 
     @Override
-    public void changeHome(Lodging newHome) {
-        super.changeHome(newHome);
-    }
-
-    @Override
     public boolean hasNotVisited() {
         return visits.isEmpty();
     }
