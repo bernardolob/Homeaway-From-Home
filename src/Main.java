@@ -1,4 +1,7 @@
+import java.io.*;
 import java.util.Scanner;
+import system.App;
+import system.AppClass;
 
 public class Main {
 
@@ -126,7 +129,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String command;
-//        bound = null;
+        App s = new AppClass();
         do {
             command = in.next().toUpperCase();
             executeCommand(in, command);
@@ -179,9 +182,26 @@ public class Main {
     }
 
     private static void save() {
+        // TODO
+//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+//            out.writeObject();
+//            out.flush();
+//            out.close();
+//        } catch (IOException e) {
+//            throw new NoSystemException();
+//        }
     }
 
-    private static void load(Scanner in) {
+    private static App load(Scanner in) {
+        App app = null;
+//        try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
+//            app = (App) inFile.readObject();
+//            inFile.close();
+//
+//        } catch (IOException | ClassNotFoundException e) {
+//            app = new AppClass();
+//        }
+        return app;
     }
 
     private static void service(Scanner in) {

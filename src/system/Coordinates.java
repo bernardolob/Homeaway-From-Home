@@ -1,4 +1,4 @@
-package System;
+package system;
 
 public record Coordinates(long x, long y) {
 
