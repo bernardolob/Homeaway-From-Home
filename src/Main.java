@@ -3,12 +3,14 @@ import java.util.Scanner;
 import Exceptions.*;
 import system.App;
 import system.AppClass;
+import system.service.ServiceType;
+import system.student.StudentType;
 
 public class Main {
 
 // CONSTANTS
 
-    // NOTA: Perguntar à professora se é melhor ter uma (ou mais) classe(s) só para as constantes.
+    // TODO NOTA: Perguntar à professora se é melhor ter uma (ou mais) classe(s) só para as constantes.
 
     /************ Commands ************/
     private static final String EXIT_CMD 		= "EXIT";
@@ -302,5 +304,78 @@ public class Main {
     private static void unknown() {
         System.out.printf(UNKNOWN_MSG);
     }
+
+
+    /**
+     * Converts a string representation of a student type to its corresponding StudentType enum.
+     *
+     * @param type - the string representing a student type
+     * @pre - type must not be null
+     * @return - the corresponding StudentType enum; null if no match is found
+     */
+    private static StudentType getStudentType(String type) {
+        StudentType studentType = null;
+        switch (type) {
+            case BOOKISH_TYPE  -> studentType = StudentType.BOOKISH;
+            case OUTGOING_TYPE -> studentType = StudentType.OUTGOING;
+            case THRIFTY_TYPE  -> studentType = StudentType.THRIFTY;
+        }
+        return studentType;
+    }
+
+    /**
+     * Converts a StudentType enum to its corresponding string representation.
+     *
+     * @param type - the StudentType enum to convert
+     * @pre - type must not be null
+     * @return - the string representation of the student type; null if no match is found
+     */
+    private static String getStudentType(StudentType type) {
+        String studentType = null;
+        switch (type) {
+            case BOOKISH  -> studentType = BOOKISH_TYPE;
+            case OUTGOING -> studentType = OUTGOING_TYPE;
+            case THRIFTY  -> studentType = THRIFTY_TYPE;
+        }
+        return studentType;
+    }
+
+
+    /**
+     * Converts a ServiceType enum to its corresponding string representation.
+     *
+     * @param type - the ServiceType enum to convert
+     * @pre - type must not be null
+     * @return - the string representation of the service type; null if no match is found
+     */
+    private static String getServiceType(ServiceType type) {
+        String stringType = null;
+        switch (type) {
+            case EATING  -> stringType = EATING_TYPE;
+            case LEISURE -> stringType = LEISURE_TYPE;
+            case LODGING -> stringType = LODGING_TYPE;
+        }
+        return stringType;
+    }
+
+    /**
+     * Converts a string representation of a service type to its corresponding ServiceType enum.
+     *
+     * @param stringType - the string representing a service type
+     * @pre - stringType must not be null
+     * @return - the corresponding ServiceType enum; null if no match is found
+     */
+    private static ServiceType getServiceType(String stringType) {
+        ServiceType type = null;
+        switch (stringType) {
+            case EATING_TYPE  -> type = ServiceType.EATING;
+            case LEISURE_TYPE -> type = ServiceType.LEISURE;
+            case LODGING_TYPE -> type = ServiceType.LODGING;
+        }
+        return type;
+    }
+
+
+
 
 }
