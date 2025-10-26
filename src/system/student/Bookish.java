@@ -1,4 +1,6 @@
 package system.student;
 
-public interface Bookish extends VisitingStudent{
+import java.io.Serializable;
+
+public interface Bookish extends Serializable, VisitingStudent{
 }

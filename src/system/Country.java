@@ -1,4 +1,6 @@
 package system;
 
-public interface Country  {
+import java.io.Serializable;
+
+public interface Country extends Serializable {
 }

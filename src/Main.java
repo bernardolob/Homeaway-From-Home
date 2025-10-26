@@ -1,5 +1,6 @@
-import java.io.*;
 import java.util.Scanner;
+
+import Exceptions.*;
 import system.App;
 import system.AppClass;
 
@@ -77,6 +78,8 @@ public class Main {
     private static final String HELP_MSG        = "%s - %s\n";
     // Exit
     private static final String EXIT_MSG        = "Bye!\n";
+    // Bounds
+    private static final String BOUNDS_MSG      = "%s created\n";
     // Save
     private static final String SAVE_MSG        = "%s saved.\n";
     // Load
@@ -128,49 +131,82 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        String command;
-        App s = new AppClass();
+        Commands command;
+        App app = new AppClass();
         do {
-            command = in.next().toUpperCase();
-            executeCommand(in, command);
-        } while (!command.equals(EXIT_CMD));
+            command = getCommand(in.next().toUpperCase());
+            executeCommand(app, in, command);
+        } while (!Commands.EXIT.equals(command));
         in.close();
+    }
+
+    private static Commands getCommand(String command) {
+        switch (command) {
+            case EXIT_CMD -> {return Commands.EXIT;}
+            case HELP_CMD -> {return Commands.HELP;}
+            case BOUNDS_CMD -> {return Commands.BOUNDS;}
+            case SAVE_CMD -> {return Commands.SAVE;}
+            case LOAD_CMD -> {return Commands.LOAD;}
+            case SERVICE_CMD -> {return Commands.SERVICE;}
+            case SERVICES_CMD -> {return Commands.SERVICES;}
+            case STUDENT_CMD -> {return Commands.STUDENT;}
+            case LEAVE_CMD -> {return Commands.LEAVE;}
+            case STUDENTS_CMD -> {return Commands.STUDENTS;}
+            case GO_CMD -> {return Commands.GO;}
+            case MOVE_CMD -> {return Commands.MOVE;}
+            case USERS_CMD -> {return Commands.USERS;}
+            case STAR_CMD -> {return Commands.STAR;}
+            case WHERE_CMD -> {return Commands.WHERE;}
+            case VISITED_CMD -> {return Commands.VISITED;}
+            case RANKING_CMD -> {return Commands.RANKING;}
+            case RANKED_CMD -> {return Commands.RANKED;}
+            case TAG_CMD -> {return Commands.TAG;}
+            case FIND_CMD -> {return Commands.FIND;}
+            default -> {return null;}
+        }
     }
 
     /**
      * Executes a specific command based on user input.
      *
      * @param in - Scanner object for reading user input
-     * @param command - the command string to execute
-     * @pre - 'in' must not be null, and 'command' must be a valid string
+     * @param command - the command to execute
+     * @pre - 'in' must not be null
      */
-    private static void executeCommand(Scanner in, String command) {
-        switch (command) {
-            case EXIT_CMD -> exit();
-            case HELP_CMD -> help();
-            case BOUNDS_CMD -> bounds(in);
-            case SAVE_CMD -> save();
-            case LOAD_CMD -> load(in);
-            case SERVICE_CMD -> service(in);
-            case SERVICES_CMD -> services();
-            case STUDENT_CMD -> student(in);
-            case LEAVE_CMD -> leave(in);
-            case STUDENTS_CMD -> students();
-            case GO_CMD -> go(in);
-            case MOVE_CMD -> move(in);
-            case USERS_CMD -> users(in);
-            case STAR_CMD -> star(in);
-            case WHERE_CMD -> where(in);
-            case VISITED_CMD -> visited(in);
-            case RANKING_CMD -> ranking(in);
-            case RANKED_CMD -> ranked(in);
-            case TAG_CMD -> tag(in);
-            case FIND_CMD -> find(in);
-            default -> unknown();
+    private static void executeCommand(App app, Scanner in, Commands command) {
+        try {
+            switch (command) {
+                case EXIT -> exit(app);
+                case HELP -> help();
+                case BOUNDS -> bounds(app, in);
+                case LOAD -> load(app, in);
+                case SAVE -> save(app);
+                case SERVICE -> service(, in);
+                case SERVICES -> services();
+                case STUDENT -> student(, in);
+                case LEAVE -> leave(, in);
+                case STUDENTS -> students();
+                case GO -> go(, in);
+                case MOVE -> move(, in);
+                case USERS -> users(, in);
+                case STAR -> star(, in);
+                case WHERE -> where(, in);
+                case VISITED -> visited(, in);
+                case RANKING -> ranking(, in);
+                case RANKED -> ranked(, in);
+                case TAG -> tag(, in);
+                case FIND -> find(app, in);
+                case null -> unknown();
+            }
+        } catch (UndefinedBoundsException e) {
+            System.out.printf(UNDEFINED_BOUNDS_ERR);
         }
     }
 
-    private static void exit() {
+    private static void exit(App app) {
+        System.out.printf(EXIT_MSG);
+        if (!app.isUndefined())
+            app.saveArea();
     }
 
     private static void help() {
@@ -178,78 +214,88 @@ public class Main {
             System.out.printf(HELP_MSG, c.name().toLowerCase(), c.getDescription());
     }
 
-    private static void bounds(Scanner in) {
-    }
-
-    private static void save() {
-        // TODO
-//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
-//            out.writeObject();
-//            out.flush();
-//            out.close();
-//        } catch (IOException e) {
-//            throw new NoSystemException();
-//        }
-    }
-
-    private static App load(Scanner in) {
-        App app = null;
-//        try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
-//            app = (App) inFile.readObject();
-//            inFile.close();
-//
-//        } catch (IOException | ClassNotFoundException e) {
-//            app = new AppClass();
-//        }
-        return app;
-    }
-
-    private static void service(Scanner in) {
+    private static void bounds(App app, Scanner in) {
+        long yMax = in.nextLong();
+        long xMin = in.nextLong();
+        long yMin = in.nextLong();
+        long xMax = in.nextLong();
+        String areaName = in.nextLine().trim();
+        try {
+            app.createArea(xMin, yMin, xMax, yMax, areaName);
+            System.out.printf(BOUNDS_MSG, areaName);
+        } catch (ExistingBoundException e) {
+            System.out.printf(EXISTING_BOUNDS_ERR);
+        } catch (InvalidBoundsException e) {
+            System.out.printf(INVALID_BOUNDS_ERR);
+        }
 
     }
 
-    private static void services() {
+    private static void save(App app) {
+        try {
+            String areaName = app.saveArea();
+            System.out.printf(SAVE_MSG, areaName);
+        } catch (UndefinedBoundsException e) {
+            System.out.printf(UNDEFINED_BOUNDS_ERR);;
+        }
     }
 
-    private static void student(Scanner in) {
+    private static void load(App app, Scanner in) {
+        String area = in.nextLine().trim();
+        try {
+            app.loadArea(area);
+            System.out.printf(LOAD_MSG, area);
+        } catch (NonExistingBoundsException e) {
+            System.out.printf(NON_EXISTING_BOUNDS_ERR, area);
+        }
     }
 
-    private static void leave(Scanner in) {
-    }
-
-    private static void students() {
-    }
-
-    private static void go(Scanner in) {
-    }
-
-    private static void move(Scanner in) {
-    }
-
-    private static void users(Scanner in) {
-
-    }
-
-    private static void star(Scanner in) {
-    }
-
-    private static void where(Scanner in) {
-    }
-
-    private static void visited(Scanner in) {
+    private static void service(App app, Scanner in) {
 
     }
 
-    private static void ranking(Scanner in) {
+    private static void services(App app) {
     }
 
-    private static void ranked(Scanner in) {
+    private static void student(App app, Scanner in) {
     }
 
-    private static void tag(Scanner in) {
+    private static void leave(App app, Scanner in) {
     }
 
-    private static void find(Scanner in) {
+    private static void students(App app) {
+    }
+
+    private static void go(App app, Scanner in) {
+    }
+
+    private static void move(App app, Scanner in) {
+    }
+
+    private static void users(App app, Scanner in) {
+
+    }
+
+    private static void star(App app, Scanner in) {
+    }
+
+    private static void where(App app, Scanner in) {
+    }
+
+    private static void visited(App app, Scanner in) {
+
+    }
+
+    private static void ranking(App app, Scanner in) {
+    }
+
+    private static void ranked(App app, Scanner in) {
+    }
+
+    private static void tag(App app, Scanner in) {
+    }
+
+    private static void find(App app, Scanner in) {
     }
 
 

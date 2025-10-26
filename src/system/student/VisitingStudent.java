@@ -3,7 +3,9 @@ package system.student;
 import dataStructures.Iterator;
 import system.service.Service;
 
-public interface VisitingStudent {
+import java.io.Serializable;
+
+public interface VisitingStudent extends Serializable {
 
     /**
      * Adds a visit to the specified service for the student. The behavior depends on the service type:

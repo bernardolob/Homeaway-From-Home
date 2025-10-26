@@ -3,7 +3,9 @@ package system.student;
 import dataStructures.Iterator;
 import system.service.*;
 
-public interface Student {
+import java.io.Serializable;
+
+public interface Student extends Serializable {
 
     /**
      * Retrieves the type of the student.
