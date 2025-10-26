@@ -1,6 +1,6 @@
 package dataStructures;
 
-import dataStructures.exceptions.*;
+import dataStructures.exceptions.NoSuchElementException;
 
 
 /**
@@ -34,8 +34,10 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      * currentSize is initialized as 0.
      */
     public SortedDoublyLinkedList(Comparator<E> comparator) {
-        //TODO: Left as an exercise.
         this.comparator = comparator;
+        head = null;
+        tail = null;
+        currentSize = 0;
     }
 
     /**
@@ -69,8 +71,9 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      * @throws NoSuchElementException - if size() == 0
      */
     public E getMin( ) {
-        //TODO: Left as an exercise.
-        return null;
+        if (isEmpty())
+            throw new NoSuchElementException();
+        return head.getElement();
     }
 
     /**
@@ -79,16 +82,19 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      * @throws NoSuchElementException - if size() == 0
      */
     public E getMax( ) {
-        //TODO: Left as an exercise.
-        return null;
+        if (isEmpty())
+            throw new NoSuchElementException();
+        return tail.getElement();
     }
     /**
      * Returns the first occurrence of the element equals to the given element in the list.
      * @return element in the list or null
      */
     public E get(E element) {
-        //TODO: Left as an exercise.
-        return null;
+        DoublyListNode<E> n = getNode(element);
+        if (n == null)
+            return null;
+        else return n.getElement();
     }
 
     /**
@@ -99,7 +105,7 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      */
     public boolean contains(E element) {
         //TODO: Left as an exercise.
-        return true;
+        return get(element) != null;
     }
 
     /**
@@ -108,7 +114,64 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      * @param element to be inserted
      */
     public void add(E element) {
-        //TODO: Left as an exercise.
+        if (isEmpty()) {
+            addMin(element);
+        } else {
+            if (comparator.compare(head.getElement(), element) > 0)
+                addMin(element);
+            else if (comparator.compare(tail.getElement(), element) < 0) {
+                addMax(element);
+            } else {
+                DoublyListNode<E> comparingNode = head.getNext();
+                while (comparator.compare(comparingNode.getElement(), element) <= 0)
+                    comparingNode = comparingNode.getNext();
+                addBeforeNode(element, comparingNode);
+            }
+        }
+    }
+
+    /**
+     * Adds a node before another.
+     * @param element - to be inserted
+     * @param node - node after the new node to be inserted.
+     */
+    private void addBeforeNode(E element, DoublyListNode<E> node) {
+        DoublyListNode<E> newNode = new DoublyListNode<>(element, node.getPrevious(), node);
+        node.getPrevious().setNext(newNode);
+        node.setPrevious(newNode);
+        currentSize++;
+    }
+
+    /**
+     * Adds the minimum node.
+     * @param element - to be inserted
+     */
+    private void addMin(E element) {
+        DoublyListNode<E> newNode = new DoublyListNode<>(element);
+        if (isEmpty()) {
+            tail = newNode;
+        } else {
+            head.setPrevious(newNode);
+            newNode.setNext(head);
+        }
+        head = newNode;
+        currentSize++;
+    }
+
+    /**
+     * Adds the maximum node.
+     * @param element - to be inserted
+     */
+    private void addMax(E element) {
+        DoublyListNode<E> newNode = new DoublyListNode<>(element);
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
+            newNode.setPrevious(tail);
+        }
+        tail = newNode;
+        currentSize++;
     }
 
     /**
@@ -116,7 +179,38 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      * @return element removed from the list or null if !belongs(element)
      */
     public E remove(E element) {
-        //TODO: Left as an exercise.
+        DoublyListNode<E> node = getNode(element);
+        if (node == null)
+            return null;
+        E result = node.getElement();
+        DoublyListNode<E> prev = node.getPrevious();
+        DoublyListNode<E> next = node.getNext();
+        if (prev != null)
+            prev.setNext(next);
+        if (next != null)
+            next.setPrevious(prev);
+        if (node == head)
+            head = next;
+        if (node == tail)
+            tail = prev;
+        currentSize--;
+        return result;
+    }
+
+
+    /**
+     * Returns the first occurrence of the element equals to the given element in the list.
+     * @return element in the list or null
+     */
+    private DoublyListNode<E> getNode(E element) {
+        if (isEmpty())
+            return null;
+        DoublyListNode<E> node = head;
+        while (node != null) {
+            if (comparator.compare(node.getElement(), element) == 0)
+                return node;
+            node = node.getNext();
+        }
         return null;
     }
 }
