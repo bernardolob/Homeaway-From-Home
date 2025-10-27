@@ -1,4 +1,6 @@
 package system.service;
 
-public interface Leisure extends Service{
+import java.io.Serializable;
+
+public interface Leisure extends Serializable, Service{
 }

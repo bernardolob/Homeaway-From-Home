@@ -1,6 +1,8 @@
 package system.service;
 
-public interface Service {
+import java.io.Serializable;
+
+public interface Service extends Serializable {
     /**
      * Returns the name of the service.
      *

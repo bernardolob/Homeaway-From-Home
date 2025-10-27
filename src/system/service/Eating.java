@@ -1,4 +1,6 @@
 package system.service;
 
-public interface Eating extends LimitedService{
+import java.io.Serializable;
+
+public interface Eating extends Serializable, LimitedService{
 }

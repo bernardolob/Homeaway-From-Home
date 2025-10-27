@@ -1,4 +1,6 @@
 package system.service;
 
-public interface LimitedService extends Service{
+import java.io.Serializable;
+
+public interface LimitedService extends Serializable, Service{
 }

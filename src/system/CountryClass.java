@@ -6,9 +6,10 @@ import system.student.StudentNameComparator;
 
 public class CountryClass implements Country {
     private String countryName;
-    private SortedList<Student> citizens;
+    private List<Student> citizens;
 
     public CountryClass(String countryName) {
-        citizens = new SortedDoublyLinkedList<>(new StudentNameComparator());
+        this.countryName = countryName;
+        citizens = new DoublyLinkedList<>();
     }
 }

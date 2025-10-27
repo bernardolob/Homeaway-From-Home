@@ -73,7 +73,4 @@ public class AppClass implements App {
         currentArea = new AreaClass(areaName, bottomLeft, topRight);
     }
 
-    public void testSave() {
-        System.out.println(currentArea.getAreaName());
-    }
 }

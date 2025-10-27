@@ -10,5 +10,4 @@ public interface App {
 
     void createArea(long xMin, long yMin, long xMax, long yMax, String areaName);
 
-    void testSave();
 }

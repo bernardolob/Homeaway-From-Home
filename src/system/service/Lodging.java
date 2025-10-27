@@ -1,6 +1,8 @@
 package system.service;
 
-public interface Lodging extends LimitedService{
+import java.io.Serializable;
+
+public interface Lodging extends Serializable, LimitedService{
     boolean isCheaper(Lodging home);
 
 }
