@@ -325,6 +325,7 @@ public class Main {
             case BOOKISH_TYPE  -> studentType = StudentType.BOOKISH;
             case OUTGOING_TYPE -> studentType = StudentType.OUTGOING;
             case THRIFTY_TYPE  -> studentType = StudentType.THRIFTY;
+            default -> throw new InvalidStudentType();
         }
         return studentType;
     }
@@ -342,6 +343,7 @@ public class Main {
             case BOOKISH  -> studentType = BOOKISH_TYPE;
             case OUTGOING -> studentType = OUTGOING_TYPE;
             case THRIFTY  -> studentType = THRIFTY_TYPE;
+            default -> throw new InvalidStudentType();
         }
         return studentType;
     }
@@ -360,6 +362,7 @@ public class Main {
             case EATING  -> stringType = EATING_TYPE;
             case LEISURE -> stringType = LEISURE_TYPE;
             case LODGING -> stringType = LODGING_TYPE;
+            default -> throw new InvalidServiceType();
         }
         return stringType;
     }
@@ -377,6 +380,7 @@ public class Main {
             case EATING_TYPE  -> type = ServiceType.EATING;
             case LEISURE_TYPE -> type = ServiceType.LEISURE;
             case LODGING_TYPE -> type = ServiceType.LODGING;
+            default -> throw new InvalidServiceType();
         }
         return type;
     }

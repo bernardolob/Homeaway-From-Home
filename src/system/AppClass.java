@@ -1,6 +1,9 @@
 package system;
 
 import Exceptions.*;
+import system.service.ServiceType;
+import system.student.StudentType;
+
 import java.io.*;
 
 public class AppClass implements App {
@@ -17,6 +20,10 @@ public class AppClass implements App {
 
     public boolean isUndefined() {
         return currentArea == null;
+    }
+
+    private Coordinates convertCoordinates(long x, long y) {
+        return new Coordinates(x, y);
     }
 
     public String saveArea() {
@@ -72,6 +79,10 @@ public class AppClass implements App {
         Coordinates bottomLeft = new Coordinates(xMin, yMin);
         Coordinates topRight = new Coordinates(xMax, yMax);
         currentArea = new AreaClass(areaName, bottomLeft, topRight);
+    }
+
+    public void addService(String type, long latitude, long longitude, int price, int value, String name) {
+
     }
 
 }
