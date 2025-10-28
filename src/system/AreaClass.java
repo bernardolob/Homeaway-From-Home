@@ -10,7 +10,7 @@ public class AreaClass implements Area {
 
     private static final int NUMBER_OF_RANKS = 5;
 
-    private List<Service> servicesByInsertion;
+    private final List<Service> servicesByInsertion;
     private final SortedList<Service> servicesByName;
     private final List<TwoWayList<Service>> servicesByRank;
     private SortedList<Student> studentsByName;
