@@ -89,7 +89,7 @@ public class Main {
     // Service and Student
     private static final String ADDED_MSG       = "%s %s added.\n";
     // Services
-    private static final String SERVICES_MSG    = "%s: %s %d %d.\n";
+    private static final String SERVICES_MSG    = "%s: %s (%d, %d).\n";
     private static final String NO_SERVICES_MSG = "No services yet!\n";
     // Leave
     private static final String LEAVE_MSG       = "%s has left.\n";
