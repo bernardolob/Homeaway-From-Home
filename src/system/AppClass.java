@@ -9,6 +9,7 @@ public class AppClass implements App {
 
     private static final char SPACE = ' ';
     private static final char HYPHEN = '-';
+    private static final String FILE_TYPE = ".ser";
 
     public AppClass() {
         currentArea = null;
@@ -60,7 +61,7 @@ public class AppClass implements App {
     }
 
     private String getFileName(String s) {
-        return s.replace(SPACE, HYPHEN).concat(".dat");
+        return s.replace(SPACE, HYPHEN).concat(FILE_TYPE);
     }
 
     public void createArea(long xMin, long yMin, long xMax, long yMax, String areaName) {
