@@ -253,7 +253,13 @@ public class Main {
     }
 
     private static void service(App app, Scanner in) {
-
+        String type=in.nextLine();
+        long latitude=in.nextLong();
+        long longitude=in.nextLong();
+        int price=in.nextInt();
+        int value=in.nextInt();
+        String name=in.nextLine().trim();
+        app.addService(type,latitude,longitude,price,value,name);
     }
 
     private static void services(App app) {
