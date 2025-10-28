@@ -6,8 +6,8 @@ public class LeisureServiceClass extends AbstractServiceClass implements Leisure
 
     private final int discount;
 
-    public LeisureServiceClass(Coordinates coordinates, int price, String name, ServiceType type, int discount) {
-        super(coordinates, price, name, type);
+    public LeisureServiceClass(Coordinates coordinates, int price, String name, int discount) {
+        super(coordinates, price, name);
         this.discount = discount;
     }
 
@@ -20,6 +20,10 @@ public class LeisureServiceClass extends AbstractServiceClass implements Leisure
      */
     public float getPrice() {
         return price * (1 - ((float) discount /100));
+    }
+
+    public ServiceType getType() {
+        return ServiceType.LEISURE;
     }
 
 }

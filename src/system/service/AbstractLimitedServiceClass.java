@@ -9,10 +9,10 @@ public abstract class AbstractLimitedServiceClass extends AbstractServiceClass i
 
     private final TwoWayList<String> presentStudents; // Maybe better to have String instead of Student for Serializable
 
-    private int capacity;
+    private final int capacity;
 
-    public AbstractLimitedServiceClass(Coordinates coordinates, int price, String name, ServiceType type, int capacity) {
-        super(coordinates, price, name, type);
+    public AbstractLimitedServiceClass(Coordinates coordinates, int price, String name, int capacity) {
+        super(coordinates, price, name);
         this.capacity = capacity;
         presentStudents = new DoublyLinkedList<>();
     }

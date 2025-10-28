@@ -253,13 +253,26 @@ public class Main {
     }
 
     private static void service(App app, Scanner in) {
-        String type=in.nextLine();
-        long latitude=in.nextLong();
-        long longitude=in.nextLong();
-        int price=in.nextInt();
-        int value=in.nextInt();
-        String name=in.nextLine().trim();
-        app.addService(type,latitude,longitude,price,value,name);
+        try {
+            String type = in.nextLine();
+            long latitude = in.nextLong();
+            long longitude = in.nextLong();
+            int price = in.nextInt();
+            int value = in.nextInt();
+            String name = in.nextLine().trim();
+            if (app.isUndefined())
+                throw new UndefinedBoundsException();
+            app.addService(getServiceType(type), latitude, longitude, price, value, name);
+        } catch (UndefinedBoundsException e) {
+            System.out.printf(UNDEFINED_BOUNDS_ERR);
+        } catch (InvalidServiceTypeException e) {
+            System.out.printf(INVALID_SERVICE_TYPE_ERR);
+        } catch (InvalidLocationException e) {
+            System.out.printf(INVALID_LOCATION_ERR);
+        } catch (InvalidMenuPriceException e) {
+            e.getMessage();
+        }
+
     }
 
     private static void services(App app) {
@@ -320,12 +333,12 @@ public class Main {
      * @return - the corresponding StudentType enum; null if no match is found
      */
     private static StudentType getStudentType(String type) {
-        StudentType studentType = null;
+        StudentType studentType;
         switch (type) {
             case BOOKISH_TYPE  -> studentType = StudentType.BOOKISH;
             case OUTGOING_TYPE -> studentType = StudentType.OUTGOING;
             case THRIFTY_TYPE  -> studentType = StudentType.THRIFTY;
-            default -> throw new InvalidStudentType();
+            default -> throw new InvalidStudentTypeException();
         }
         return studentType;
     }
@@ -338,12 +351,12 @@ public class Main {
      * @return - the string representation of the student type; null if no match is found
      */
     private static String getStudentType(StudentType type) {
-        String studentType = null;
+        String studentType;
         switch (type) {
             case BOOKISH  -> studentType = BOOKISH_TYPE;
             case OUTGOING -> studentType = OUTGOING_TYPE;
             case THRIFTY  -> studentType = THRIFTY_TYPE;
-            default -> throw new InvalidStudentType();
+            default -> throw new InvalidStudentTypeException();
         }
         return studentType;
     }
@@ -357,12 +370,12 @@ public class Main {
      * @return - the string representation of the service type; null if no match is found
      */
     private static String getServiceType(ServiceType type) {
-        String stringType = null;
+        String stringType;
         switch (type) {
             case EATING  -> stringType = EATING_TYPE;
             case LEISURE -> stringType = LEISURE_TYPE;
             case LODGING -> stringType = LODGING_TYPE;
-            default -> throw new InvalidServiceType();
+            default -> throw new InvalidServiceTypeException();
         }
         return stringType;
     }
@@ -375,12 +388,12 @@ public class Main {
      * @return - the corresponding ServiceType enum; null if no match is found
      */
     private static ServiceType getServiceType(String stringType) {
-        ServiceType type = null;
+        ServiceType type;
         switch (stringType) {
             case EATING_TYPE  -> type = ServiceType.EATING;
             case LEISURE_TYPE -> type = ServiceType.LEISURE;
             case LODGING_TYPE -> type = ServiceType.LODGING;
-            default -> throw new InvalidServiceType();
+            default -> throw new InvalidServiceTypeException();
         }
         return type;
     }

@@ -1,5 +1,7 @@
 package system;
 
+import system.service.ServiceType;
+
 import java.io.Serializable;
 
 public interface Area extends Serializable {
@@ -9,5 +11,9 @@ public interface Area extends Serializable {
     Coordinates getBottomLeft();
 
     Coordinates getTopRight();
+
+    boolean isInside(Coordinates coordinates);
+
+    void addService(ServiceType type, Coordinates coordinates, int price, int value, String name);
 
 }

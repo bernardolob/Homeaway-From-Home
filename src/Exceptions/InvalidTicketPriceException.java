@@ -2,7 +2,7 @@ package Exceptions;
 
 import java.io.Serial;
 
-public class InvalidServiceType extends RuntimeException {
+public class InvalidTicketPriceException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 0L;
 }

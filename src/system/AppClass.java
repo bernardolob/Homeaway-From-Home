@@ -2,9 +2,10 @@ package system;
 
 import Exceptions.*;
 import system.service.ServiceType;
-import system.student.StudentType;
 
 import java.io.*;
+
+import static system.service.ServiceType.*;
 
 public class AppClass implements App {
 
@@ -81,8 +82,12 @@ public class AppClass implements App {
         currentArea = new AreaClass(areaName, bottomLeft, topRight);
     }
 
-    public void addService(String type, long latitude, long longitude, int price, int value, String name) {
-
+    public void addService(ServiceType type, long latitude, long longitude, int price, int value, String name) {
+        // TODO
+        Coordinates serviceCoordinates = new Coordinates(longitude, latitude);
+        currentArea.addService(type, serviceCoordinates, price, value, name);
     }
+
+
 
 }

@@ -13,15 +13,13 @@ public abstract class AbstractServiceClass implements Service {
     private Coordinates coordinates;
     protected int price;
     private String name;
-    private ServiceType type;
     private int evaluations;
     private int evalSum;
 
-    public AbstractServiceClass(Coordinates coordinates, int price, String name, ServiceType type){
+    public AbstractServiceClass(Coordinates coordinates, int price, String name){
         this.coordinates = coordinates;
         this.price = price;
         this.name = name;
-        this.type = type;
         evaluations = 1;
         evalSum = DEFAULT_RATING;
         tags = new DoublyLinkedList<>();
@@ -39,9 +37,7 @@ public abstract class AbstractServiceClass implements Service {
         return coordinates.getX();
     }
 
-    public ServiceType getType() {
-        return type;
-    }
+    public abstract ServiceType getType();
 
     public float getPrice() {
         return price;
