@@ -89,11 +89,13 @@ public class Main {
     private static final String SAVE_MSG        = "%s saved.\n";
     // Load
     private static final String LOAD_MSG        = "%s loaded.\n";
-    // Service and Student
-    private static final String ADDED_MSG       = "%s %s added.\n";
+    // Service
+    private static final String SERVICE_MSG     = "%s %s added.\n";
     // Services
     private static final String SERVICES_MSG    = "%s: %s (%d, %d).\n";
     private static final String NO_SERVICES_MSG = "No services yet!\n";
+    // Student
+    private static final String STUDENT_MSG     = "%s added.\n";
     // Leave
     private static final String LEAVE_MSG       = "%s has left.\n";
     // Students
@@ -266,7 +268,7 @@ public class Main {
             name = in.nextLine().trim();
             if (app.isUndefined()) throw new UndefinedBoundsException();
             app.addService(getServiceType(type), latitude, longitude, price, value, name);
-            System.out.printf(ADDED_MSG, type, name);
+            System.out.printf(SERVICE_MSG, type, name);
         } catch (UndefinedBoundsException e) {
             System.out.printf(UNDEFINED_BOUNDS_ERR);
         } catch (InvalidServiceTypeException e) {
@@ -303,6 +305,28 @@ public class Main {
     }
 
     private static void student(App app, Scanner in) {
+        String name = null;
+        String home = null;
+        try {
+            String type = in.nextLine().trim();
+            name = in.nextLine().trim();
+            String country = in.nextLine().trim();
+            home = in.nextLine().trim();
+            if (app.isUndefined()) throw new UndefinedBoundsException();
+            // Succeeded
+            app.addStudent(getStudentType(type), name, country, home);
+            System.out.printf(STUDENT_MSG, name);
+        } catch (UndefinedBoundsException e) {
+            System.out.printf(UNDEFINED_BOUNDS_ERR);
+        } catch (InvalidStudentTypeException e) {
+            System.out.printf(INVALID_STUDENT_ERR);
+        } catch (NonExistingLodgingException e) {
+            System.out.printf(NON_EXISTING_LODGING_ERR, name);
+        } catch (LodgingFullException e) {
+            System.out.printf(LODGING_FULL_ERR, app.getServiceName(home));
+        } catch (AlreadyExistsException e) {
+            System.out.printf(ALREADY_EXISTS_ERR, app.getStudentName(name));
+        }
     }
 
     private static void leave(App app, Scanner in) {
@@ -348,6 +372,8 @@ public class Main {
         System.out.printf(UNKNOWN_MSG);
     }
 
+
+    // TODO PASSAR ISTO PARA O ENUM!!!
 
     /**
      * Converts a string representation of a student type to its corresponding StudentType enum.

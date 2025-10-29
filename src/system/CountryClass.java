@@ -12,4 +12,13 @@ public class CountryClass implements Country {
         this.countryName = countryName;
         citizens = new DoublyLinkedList<>();
     }
+
+    @Override
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void addCitizen(Student citizen) {
+        citizens.addLast(citizen);
+    }
 }

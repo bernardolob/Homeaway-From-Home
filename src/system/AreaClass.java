@@ -3,8 +3,8 @@ package system;
 import exceptions.*;
 import dataStructures.*;
 import system.service.*;
-import system.student.Student;
-import system.student.StudentNameComparator;
+import system.student.*;
+import system.student.StudentType;
 
 public class AreaClass implements Area {
 
@@ -16,8 +16,8 @@ public class AreaClass implements Area {
     private final List<Service> servicesByInsertion;
     private final SortedList<Service> servicesByName;
     private final List<TwoWayList<Service>> servicesByRank;
-    private SortedList<Student> studentsByName;
-    private List<Country> countries;
+    private final SortedList<Student> studentsByName;
+    private final List<Country> countries;
 
     private final String name;
     private final Coordinates bottomLeft;
@@ -85,6 +85,58 @@ public class AreaClass implements Area {
             return null;
         return s.getName();
     }
+
+    public String getStudentName(String studentName) {
+        Student s = getStudent(studentName);
+        if (s == null)
+            return null;
+        return s.getName();
+    }
+
+    private Country getCountry(String countryName) {
+        Iterator<Country> it = countries.iterator();
+        while (it.hasNext()) {
+            Country country = it.next();
+            if (country.getCountryName().equalsIgnoreCase(countryName))
+                return country;
+        }
+        return null;
+    }
+
+    private Student getStudent(String studentName) {
+        Iterator<Student> it = studentsByName.iterator();
+        while (it.hasNext()) {
+            Student student = it.next();
+            if (student.getName().equalsIgnoreCase(studentName))
+                return student;
+        }
+        return null;
+    }
+
+    private boolean hasStudent(String studentName) {
+        return getStudent(studentName) == null;
+    }
+
+    @Override
+    public void addStudent(StudentType studentType, String name, String countryName, String home) {
+        Lodging lodging = (Lodging) getService(home);
+        if (lodging == null)
+            throw new NonExistingLodgingException();
+        if (lodging.isFull())
+            throw new LodgingFullException();
+        if (hasStudent(name))
+            throw new AlreadyExistsException();
+
+        Country country = getCountry(countryName);
+        if (country == null) {
+            country = new CountryClass(countryName);
+            countries.addLast(country);
+        }
+        Student newStudent = studentType.createStudent(name, lodging);
+        lodging.addStudent(newStudent);
+        country.addCitizen(newStudent);
+    }
+
 
     private Service getService(String serviceName) {
         Iterator<Service> it = servicesByName.iterator();

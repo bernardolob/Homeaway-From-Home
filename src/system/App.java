@@ -3,6 +3,7 @@ package system;
 import dataStructures.Iterator;
 import system.service.Service;
 import system.service.ServiceType;
+import system.student.StudentType;
 
 public interface App {
 
@@ -21,4 +22,8 @@ public interface App {
     String getAreaName();
 
     String getServiceName(String serviceName);
+
+    String getStudentName(String studentName);
+
+    void addStudent(StudentType studentType, String name, String country, String home);
 }

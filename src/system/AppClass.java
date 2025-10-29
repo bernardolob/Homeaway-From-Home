@@ -4,6 +4,7 @@ import exceptions.*;
 import dataStructures.Iterator;
 import system.service.Service;
 import system.service.ServiceType;
+import system.student.StudentType;
 
 import java.io.*;
 
@@ -99,6 +100,15 @@ public class AppClass implements App {
     @Override
     public String getServiceName(String serviceName) {
         return currentArea.getServiceName(serviceName);
+    }
+
+    public String getStudentName(String studentName) {
+        return currentArea.getStudentName(studentName);
+    }
+
+    @Override
+    public void addStudent(StudentType studentType, String name, String country, String home) {
+        currentArea.addStudent(studentType, name, country, home);
     }
 
 
