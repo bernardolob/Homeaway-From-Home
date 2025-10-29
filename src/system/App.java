@@ -33,4 +33,6 @@ public interface App {
     boolean isListingAllStudents(String country);
 
     Iterator<Student> getStudentIterator(String country);
+
+    Service getStudentLocation(String studentName);
 }

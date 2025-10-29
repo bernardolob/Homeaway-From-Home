@@ -134,6 +134,14 @@ public class AreaClass implements Area {
         else return null;
     }
 
+    @Override
+    public Service getStudentLocationName(String studentName) {
+        Student s = getStudent(studentName);
+        if (s == null)
+            throw new NonExistingStudentException();
+        return s.getLocation();
+    }
+
 
     private Service getService(String serviceName) {
         Iterator<Service> it = servicesByName.iterator();

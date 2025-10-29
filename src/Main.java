@@ -436,6 +436,14 @@ public class Main {
     }
 
     private static void where(App app, Scanner in) {
+        String studentName = in.nextLine().trim();
+        try {
+            Service location = app.getStudentLocation(studentName);
+            System.out.printf(WHERE_MSG, app.getStudentName(studentName), location.getName(),
+                    location.getStringType(), location.getLatitude(), location.getLongitude());
+        } catch (NonExistingStudentException e) {
+            System.out.printf(STUDENT_DOES_NOT_EXIST, studentName);
+        }
     }
 
     private static void visited(App app, Scanner in) {

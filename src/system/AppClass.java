@@ -130,5 +130,10 @@ public class AppClass implements App {
         else return currentArea.getCountryStudentsIterator(country);
     }
 
+    @Override
+    public Service getStudentLocation(String studentName) {
+        return currentArea.getStudentLocationName(studentName);
+    }
+
 
 }
