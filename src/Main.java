@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 import exceptions.*;
 import dataStructures.Iterator;
-import system.App;
-import system.AppClass;
+import system.*;
 import system.service.Service;
 import system.service.ServiceType;
+import system.student.Student;
 import system.student.StudentType;
 
 public class Main {
@@ -105,6 +105,7 @@ public class Main {
     // Go
     private static final String GO_MSG          = "‰s in now at %s.\n";
     private static final String DISTRACTED      = "%s is distracted!\n";
+    private static final String ALREADYTHERE_MSG = "Already there!\n";
     // Move
     private static final String MOVE_MSG        = "lodging %s is now %s's home. %s is at home.\n";
     // Users
@@ -130,6 +131,7 @@ public class Main {
     private static final String NO_TAG_MSG      = "There are no services with this tag!\n";
     // Find
     private static final String FIND_MSG = "%s\n";
+    private static final String STUDENT_DOES_NOT_EXIST= "%s does not exist!\n";
 
 
 
@@ -192,7 +194,7 @@ public class Main {
                 case SERVICES -> services(app, in);
                 case STUDENT -> student(app, in);
                 case LEAVE -> leave(app, in);
-                case STUDENTS -> students(app);
+                case STUDENTS -> students(app, in);
                 case GO -> go(app, in);
                 case MOVE -> move(app, in);
                 case USERS -> users(app, in);
@@ -333,15 +335,47 @@ public class Main {
         String name = in.nextLine().trim();
         if(app.getStudentName(name).equals(name)){
             app.removeStudent(name);
+            System.out.printf(LEAVE_MSG, name);
         }
         else{
-            System.out.printf(LEAVE_MSG, name);}
+            System.out.printf(STUDENT_DOES_NOT_EXIST, name);
+            }
     }
 
-    private static void students(App app) {
+    private static void students(App app, Scanner in) {
     }
-
+ //GO_MSG precisa 2 arg, so tem 1. eu n sei como mudar
     private static void go(App app, Scanner in) {
+        String name = in.nextLine().trim();
+       String location = in.nextLine().trim();
+         try{
+             if(!app.getStudentName(name).equals(name)){
+                 System.out.printf(STUDENT_DOES_NOT_EXIST, name);
+             }
+             else if(app.getStudentName(name).equals(name) && app.getStudent(name).getStudentType().equals(THRIFTY_TYPE)
+             && location.equals(EATING_TYPE) && app.thriftyCheapest(app.getStudentName(name))<app.eatingLocationPrice(location)){
+                 app.goStudent(name,location);
+                 System.out.printf(DISTRACTED, name);
+                 System.out.printf(GO_MSG, name,location);
+             }
+             else if(!app.getServiceType(location).equals(EATING_TYPE)|| !app.getServiceType(location).equals(LEISURE_TYPE)){
+                 System.out.printf(INVALID_SERVICE_ERR, location);
+             }
+             else if(app.getStudentLocation(name).equals(location)){
+                 System.out.printf(ALREADYTHERE_MSG);
+             }
+             else{
+                 app.goStudent(name,location);
+                 System.out.printf(GO_MSG, name, location);
+             }
+         }
+        catch(InvalidLocationException e){
+            System.out.printf(UNKNOWN_LOCATION_ERR,location);
+        }
+         catch(EatingFullException e){
+             System.out.printf(EATING_FULL_ERR,location);
+         }
+
     }
 
     private static void move(App app, Scanner in) {
