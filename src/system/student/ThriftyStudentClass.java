@@ -35,4 +35,10 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
     public Iterator<Service> getVisitsIterator() {
         return null;
     }
+
+    @Override
+    public String getStringType() {
+        return StudentType.THRIFTY.toString().toLowerCase();
+    }
+
 }

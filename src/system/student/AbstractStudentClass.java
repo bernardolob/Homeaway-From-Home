@@ -44,4 +44,8 @@ public abstract class AbstractStudentClass implements Student {
 
     public abstract StudentType getType();
 
+    @Override
+    public String getLocationName() {
+        return getLocation().getName();
+    }
 }

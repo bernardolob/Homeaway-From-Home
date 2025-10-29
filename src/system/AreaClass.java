@@ -93,30 +93,6 @@ public class AreaClass implements Area {
         return s.getName();
     }
 
-    private Country getCountry(String countryName) {
-        Iterator<Country> it = countries.iterator();
-        while (it.hasNext()) {
-            Country country = it.next();
-            if (country.getCountryName().equalsIgnoreCase(countryName))
-                return country;
-        }
-        return null;
-    }
-
-    private Student getStudent(String studentName) {
-        Iterator<Student> it = studentsByName.iterator();
-        while (it.hasNext()) {
-            Student student = it.next();
-            if (student.getName().equalsIgnoreCase(studentName))
-                return student;
-        }
-        return null;
-    }
-
-    private boolean hasStudent(String studentName) {
-        return getStudent(studentName) == null;
-    }
-
     @Override
     public void addStudent(StudentType studentType, String name, String countryName, String home) {
         Lodging lodging = (Lodging) getService(home);
@@ -135,6 +111,27 @@ public class AreaClass implements Area {
         Student newStudent = studentType.createStudent(name, lodging);
         lodging.addStudent(newStudent);
         country.addCitizen(newStudent);
+    }
+
+    @Override
+    public void removeStudent(String name) {
+        Student student = getStudent(name);
+        if (student == null)
+            throw new NonExistingStudentException();
+        studentsByName.remove(student);
+    }
+
+    @Override
+    public Iterator<Student> getAllStudentsIterator() {
+        return studentsByName.iterator();
+    }
+
+    @Override
+    public Iterator<Student> getCountryStudentsIterator(String country) {
+        Country c = getCountry(country);
+        if (c != null)
+            return c.getStudentsIterator();
+        else return null;
     }
 
 
@@ -181,5 +178,30 @@ public class AreaClass implements Area {
             throw new AlreadyExistsException();
         return new LodgingServiceClass(coordinates, roomPrice, name, capacity);
     }
+
+    private Country getCountry(String countryName) {
+        Iterator<Country> it = countries.iterator();
+        while (it.hasNext()) {
+            Country country = it.next();
+            if (country.getCountryName().equalsIgnoreCase(countryName))
+                return country;
+        }
+        return null;
+    }
+
+    private Student getStudent(String studentName) {
+        Iterator<Student> it = studentsByName.iterator();
+        while (it.hasNext()) {
+            Student student = it.next();
+            if (student.getName().equalsIgnoreCase(studentName))
+                return student;
+        }
+        return null;
+    }
+
+    private boolean hasStudent(String studentName) {
+        return getStudent(studentName) == null;
+    }
+
 
 }

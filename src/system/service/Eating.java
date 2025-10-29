@@ -5,6 +5,5 @@ import java.io.Serializable;
 public interface Eating extends Serializable, LimitedService{
 
     ServiceType getType();
-    String getStringType();
 
 }

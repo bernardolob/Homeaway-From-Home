@@ -19,4 +19,10 @@ public class OutgoingStudentClass extends AbstractVisitingStudentClass implement
             visits.addLast(s);
         }
     }
+
+    @Override
+    public String getStringType() {
+        return StudentType.OUTGOING.toString().toLowerCase();
+    }
+
 }

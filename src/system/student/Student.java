@@ -78,4 +78,19 @@ public interface Student extends Serializable {
      */
     Iterator<Service> getVisitsIterator();
 
+    /**
+     * Returns the type of the student (e.g., bookish, outgoing, thrifty).
+     *
+     * @return - The service type
+     */
+    String getStringType();
+
+
+    /**
+     * Retrieves the name of current location of the student,
+     * which is the service they are currently located at.
+     * @pre - the student must have a valid location assigned
+     * @return - the service (String) where the student is currently located
+     */
+    String getLocationName();
 }

@@ -12,6 +12,7 @@ public class Main {
 
 // CONSTANTS
 
+
     // TODO NOTA: Perguntar à professora se é melhor ter uma (ou mais) classe(s) só para as constantes.
 
     /************ Commands ************/
@@ -110,7 +111,6 @@ public class Main {
     // Move
     private static final String MOVE_MSG        = "lodging %s is now %s's home. %s is at home.\n";
     private static final String ALREADY_HOME_MSG    = "That is %s's home!\n";
-    private static final String UNACCEPTABLE_HOME = "Move is not acceptable for %s!\n";
     // Users
     private static final String USERS_MSG       = "%s: %s\n";
     private static final String NO_USERS_MSG    = "No students on %s!";
@@ -260,14 +260,13 @@ public class Main {
     }
 
     private static void service(App app, Scanner in) {
-        String name = null;
+        String type = in.next().toLowerCase();
+        long latitude = in.nextLong();
+        long longitude = in.nextLong();
+        int price = in.nextInt();
+        int value = in.nextInt();
+        String name = in.nextLine().trim();
         try {
-            String type = in.next().toLowerCase();
-            long latitude = in.nextLong();
-            long longitude = in.nextLong();
-            int price = in.nextInt();
-            int value = in.nextInt();
-            name = in.nextLine().trim();
             if (app.isUndefined()) throw new UndefinedBoundsException();
             app.addService(getServiceType(type), latitude, longitude, price, value, name);
             System.out.printf(SERVICE_MSG, type, name);
@@ -307,13 +306,11 @@ public class Main {
     }
 
     private static void student(App app, Scanner in) {
-        String name = null;
-        String home = null;
+        String type = in.nextLine().trim();
+        String name = in.nextLine().trim();
+        String country = in.nextLine().trim();
+        String home = in.nextLine().trim();
         try {
-            String type = in.nextLine().trim();
-            name = in.nextLine().trim();
-            String country = in.nextLine().trim();
-            home = in.nextLine().trim();
             if (app.isUndefined()) throw new UndefinedBoundsException();
             // Succeeded
             app.addStudent(getStudentType(type), name, country, home);
@@ -333,17 +330,35 @@ public class Main {
 
     private static void leave(App app, Scanner in) {
         String name = in.nextLine().trim();
-        if(app.getStudentName(name).equals(name)){
+        try {
+            if (app.isUndefined()) throw new UndefinedBoundsException();
             app.removeStudent(name);
             System.out.printf(LEAVE_MSG, name);
+        } catch (UndefinedBoundsException e) {
+            System.out.printf(UNDEFINED_BOUNDS_ERR);
+        } catch (AlreadyExistsException e) {
+            System.out.printf(NON_EXISTING_ERR, name);
         }
-        else{
-            System.out.printf(STUDENT_DOES_NOT_EXIST, name);
-            }
     }
 
     private static void students(App app, Scanner in) {
+        String country = in.nextLine();
+        Iterator<Student> it = app.getStudentIterator(country);
+        if (it == null)
+            System.out.printf(NO_COUNTRY_MSG, country);
+        else if (!it.hasNext())
+            if (app.isListingAllStudents(country))
+                System.out.printf(NO_STUDENTS_MSG);
+            else
+                System.out.printf(NO_COUNTRY_MSG, country);
+        else {
+            while (it.hasNext()) {
+                Student s = it.next();
+                System.out.printf(STUDENTS_MSG, s.getName(), s.getStringType(), s.getLocationName());
+            }
+        }
     }
+
  //GO_MSG precisa 2 arg, so tem 1. eu n sei como mudar
     private static void go(App app, Scanner in) {
         String name = in.nextLine().trim();
@@ -445,7 +460,7 @@ public class Main {
     }
 
 
-    // TODO PASSAR ISTO PARA O ENUM!!!
+    // TODO: PASSAR ISTO PARA O ENUM!!!
 
     /**
      * Converts a string representation of a student type to its corresponding StudentType enum.

@@ -3,6 +3,7 @@ package system;
 import dataStructures.Iterator;
 import system.service.Service;
 import system.service.ServiceType;
+import system.student.Student;
 import system.student.StudentType;
 
 import java.io.Serializable;
@@ -26,4 +27,10 @@ public interface Area extends Serializable {
     String getStudentName(String studentName);
 
     void addStudent(StudentType studentType, String name, String country, String home);
+
+    void removeStudent(String name);
+
+    Iterator<Student> getAllStudentsIterator();
+
+    Iterator<Student> getCountryStudentsIterator(String country);
 }

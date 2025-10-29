@@ -21,4 +21,9 @@ public class CountryClass implements Country {
     public void addCitizen(Student citizen) {
         citizens.addLast(citizen);
     }
+
+    @Override
+    public Iterator<Student> getStudentsIterator() {
+        return citizens.iterator();
+    }
 }

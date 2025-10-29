@@ -3,6 +3,7 @@ package system;
 import dataStructures.Iterator;
 import system.service.Service;
 import system.service.ServiceType;
+import system.student.Student;
 import system.student.StudentType;
 
 public interface App {
@@ -26,4 +27,10 @@ public interface App {
     String getStudentName(String studentName);
 
     void addStudent(StudentType studentType, String name, String country, String home);
+
+    void removeStudent(String name);
+
+    boolean isListingAllStudents(String country);
+
+    Iterator<Student> getStudentIterator(String country);
 }

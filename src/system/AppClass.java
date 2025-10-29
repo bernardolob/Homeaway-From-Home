@@ -4,6 +4,7 @@ import exceptions.*;
 import dataStructures.Iterator;
 import system.service.Service;
 import system.service.ServiceType;
+import system.student.Student;
 import system.student.StudentType;
 
 import java.io.*;
@@ -15,6 +16,7 @@ public class AppClass implements App {
     private static final char SPACE = ' ';
     private static final char HYPHEN = '-';
     private static final String FILE_TYPE = ".ser";
+    private static final String ALL_STUDENTS = "ALL";
 
     public AppClass() {
         currentArea = null;
@@ -109,6 +111,23 @@ public class AppClass implements App {
     @Override
     public void addStudent(StudentType studentType, String name, String country, String home) {
         currentArea.addStudent(studentType, name, country, home);
+    }
+
+    @Override
+    public void removeStudent(String name) {
+        currentArea.removeStudent(name);
+    }
+
+    @Override
+    public boolean isListingAllStudents(String country) {
+        return country.equalsIgnoreCase(ALL_STUDENTS);
+    }
+
+    @Override
+    public Iterator<Student> getStudentIterator(String country) {
+        if (isListingAllStudents(country))
+            return currentArea.getAllStudentsIterator();
+        else return currentArea.getCountryStudentsIterator(country);
     }
 
 
