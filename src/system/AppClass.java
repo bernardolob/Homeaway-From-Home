@@ -132,7 +132,7 @@ public class AppClass implements App {
 
     @Override
     public Service getStudentLocation(String studentName) {
-        return currentArea.getStudentLocationName(studentName);
+        return currentArea.getStudentLocation(studentName);
     }
 
 

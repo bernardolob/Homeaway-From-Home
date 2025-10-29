@@ -320,7 +320,7 @@ public class Main {
         } catch (InvalidStudentTypeException e) {
             System.out.printf(INVALID_STUDENT_ERR);
         } catch (NonExistingLodgingException e) {
-            System.out.printf(NON_EXISTING_LODGING_ERR, name);
+            System.out.printf(NON_EXISTING_LODGING_ERR, home);
         } catch (LodgingFullException e) {
             System.out.printf(LODGING_FULL_ERR, app.getServiceName(home));
         } catch (AlreadyExistsException e) {
@@ -342,7 +342,7 @@ public class Main {
     }
 
     private static void students(App app, Scanner in) {
-        String country = in.nextLine();
+        String country = in.nextLine().trim();
         Iterator<Student> it = app.getStudentIterator(country);
         if (it == null)
             System.out.printf(NO_COUNTRY_MSG, country);

@@ -34,5 +34,5 @@ public interface Area extends Serializable {
 
     Iterator<Student> getCountryStudentsIterator(String country);
 
-    Service getStudentLocationName(String studentName);
+    Service getStudentLocation(String studentName);
 }

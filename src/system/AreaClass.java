@@ -111,6 +111,7 @@ public class AreaClass implements Area {
         Student newStudent = studentType.createStudent(name, lodging);
         lodging.addStudent(newStudent);
         country.addCitizen(newStudent);
+        studentsByName.add(newStudent);
     }
 
     @Override
@@ -135,7 +136,7 @@ public class AreaClass implements Area {
     }
 
     @Override
-    public Service getStudentLocationName(String studentName) {
+    public Service getStudentLocation(String studentName) {
         Student s = getStudent(studentName);
         if (s == null)
             throw new NonExistingStudentException();
@@ -208,7 +209,7 @@ public class AreaClass implements Area {
     }
 
     private boolean hasStudent(String studentName) {
-        return getStudent(studentName) == null;
+        return getStudent(studentName) != null;
     }
 
 
