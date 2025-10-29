@@ -330,6 +330,12 @@ public class Main {
     }
 
     private static void leave(App app, Scanner in) {
+        String name = in.nextLine().trim();
+        if(app.getStudentName(name).equals(name)){
+            app.removeStudent(name);
+        }
+        else{
+            System.out.printf(LEAVE_MSG, name);}
     }
 
     private static void students(App app) {
