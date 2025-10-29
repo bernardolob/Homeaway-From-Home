@@ -80,6 +80,7 @@ public class Main {
     /************ Messages ************/
     // General
     private static final String UNKNOWN_MSG     = "Unknown command. Type help to see available commands.\n";
+    private static final String DOES_NOT_EXIST= "%s does not exist!\n";
     // Help
     private static final String HELP_MSG        = "%s - %s\n";
     // Exit
@@ -97,7 +98,6 @@ public class Main {
     private static final String NO_SERVICES_MSG = "No services yet!\n";
     // Student
     private static final String STUDENT_MSG     = "%s added.\n";
-    private static final String STUDENT_DOES_NOT_EXIST= "%s does not exist!\n";
     // Leave
     private static final String LEAVE_MSG       = "%s has left.\n";
     // Students
@@ -365,7 +365,7 @@ public class Main {
        String location = in.nextLine().trim();
          try{
              if(!app.getStudentName(name).equals(name)){
-                 System.out.printf(STUDENT_DOES_NOT_EXIST, name);
+                 System.out.printf(DOES_NOT_EXIST, name);
              }
              else if(app.getStudentName(name).equals(name) && app.getStudent(name).getStudentType().equals(THRIFTY_TYPE)
              && location.equals(EATING_TYPE) && app.thriftyCheapest(app.getStudentName(name))<app.eatingLocationPrice(location)){
@@ -399,7 +399,7 @@ public class Main {
 
         try{
              if(!app.getStudentName(student).equals(student)){
-                System.out.printf(STUDENT_DOES_NOT_EXIST, student);
+                System.out.printf(DOES_NOT_EXIST, student);
         }
              else if(app.getStudent(student).getStudentType().equals(THRIFTY_TYPE)) {
                  if (!app.isLodgingCheaper(student, service)) {
@@ -433,6 +433,17 @@ public class Main {
     }
 
     private static void star(App app, Scanner in) {
+        int stars = in.nextInt();
+        String service = in.nextLine().trim();
+        if(1>=stars || stars>=5){
+            System .out.printf(INVALID_EVALUATION_ERR);
+        }
+        else if(!app.getServiceName(service).equals(service)){
+            System .out.printf(DOES_NOT_EXIST, service);
+        }
+        else{
+            app.evaluate(service);
+        }
     }
 
     private static void where(App app, Scanner in) {
