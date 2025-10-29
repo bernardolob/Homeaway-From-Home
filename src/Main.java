@@ -1,8 +1,10 @@
 import java.util.Scanner;
 
-import Exceptions.*;
+import exceptions.*;
+import dataStructures.Iterator;
 import system.App;
 import system.AppClass;
+import system.service.Service;
 import system.service.ServiceType;
 import system.student.StudentType;
 
@@ -53,6 +55,7 @@ public class Main {
     private static final String INVALID_LOCATION_ERR     = "Invalid location!\n";
     private static final String INVALID_MENU_ERR         = "Invalid menu price!\n";
     private static final String INVALID_TICKET_ERR       = "Invalid ticket price!\n";
+    private static final String INVALID_ROOM_ERR         = "Invalid room price!\n";
     private static final String INVALID_DISCOUNT_ERR     = "Invalid discount price!\n";
     private static final String INVALID_CAPACITY_ERR     = "Invalid capacity!\n";
     private static final String ALREADY_EXISTS_ERR       = "%s already exists!\n";
@@ -81,7 +84,7 @@ public class Main {
     // Exit
     private static final String EXIT_MSG        = "Bye!\n";
     // Bounds
-    private static final String BOUNDS_MSG      = "%s created\n";
+    private static final String BOUNDS_MSG      = "%s created.\n";
     // Save
     private static final String SAVE_MSG        = "%s saved.\n";
     // Load
@@ -184,7 +187,7 @@ public class Main {
                 case LOAD -> load(app, in);
                 case SAVE -> save(app);
                 case SERVICE -> service(app, in);
-                case SERVICES -> services(app);
+                case SERVICES -> services(app, in);
                 case STUDENT -> student(app, in);
                 case LEAVE -> leave(app, in);
                 case STUDENTS -> students(app);
@@ -246,23 +249,24 @@ public class Main {
         String area = in.nextLine().trim();
         try {
             app.loadArea(area);
-            System.out.printf(LOAD_MSG, area);
+            System.out.printf(LOAD_MSG, app.getAreaName());
         } catch (NonExistingBoundsException e) {
             System.out.printf(NON_EXISTING_BOUNDS_ERR, area);
         }
     }
 
     private static void service(App app, Scanner in) {
+        String name = null;
         try {
-            String type = in.nextLine();
+            String type = in.next().toLowerCase();
             long latitude = in.nextLong();
             long longitude = in.nextLong();
             int price = in.nextInt();
             int value = in.nextInt();
-            String name = in.nextLine().trim();
-            if (app.isUndefined())
-                throw new UndefinedBoundsException();
+            name = in.nextLine().trim();
+            if (app.isUndefined()) throw new UndefinedBoundsException();
             app.addService(getServiceType(type), latitude, longitude, price, value, name);
+            System.out.printf(ADDED_MSG, type, name);
         } catch (UndefinedBoundsException e) {
             System.out.printf(UNDEFINED_BOUNDS_ERR);
         } catch (InvalidServiceTypeException e) {
@@ -270,12 +274,32 @@ public class Main {
         } catch (InvalidLocationException e) {
             System.out.printf(INVALID_LOCATION_ERR);
         } catch (InvalidMenuPriceException e) {
-            e.getMessage();
+            System.out.printf(INVALID_MENU_ERR);
+        } catch (InvalidRoomPriceException e) {
+            System.out.printf(INVALID_ROOM_ERR);
+        } catch (InvalidTicketPriceException e) {
+            System.out.printf(INVALID_TICKET_ERR);
+        } catch (InvalidDiscountException e) {
+            System.out.printf(INVALID_DISCOUNT_ERR);
+        } catch (InvalidCapacityException e) {
+            System.out.printf(INVALID_CAPACITY_ERR);
+        } catch (AlreadyExistsException e) {
+            System.out.printf(ALREADY_EXISTS_ERR, app.getServiceName(name));
         }
-
     }
 
-    private static void services(App app) {
+    private static void services(App app, Scanner in) {
+        in.nextLine();
+        Iterator<Service> it = app.getServicesIterator();
+        if (!it.hasNext())
+            System.out.printf(NO_SERVICES_MSG);
+        else {
+            while (it.hasNext()) {
+                Service s = it.next();
+                System.out.printf(SERVICES_MSG, s.getName(), s.getStringType(), s.getLatitude(), s.getLongitude());
+            }
+        }
+
     }
 
     private static void student(App app, Scanner in) {
@@ -334,7 +358,7 @@ public class Main {
      */
     private static StudentType getStudentType(String type) {
         StudentType studentType;
-        switch (type) {
+        switch (type.toLowerCase()) {
             case BOOKISH_TYPE  -> studentType = StudentType.BOOKISH;
             case OUTGOING_TYPE -> studentType = StudentType.OUTGOING;
             case THRIFTY_TYPE  -> studentType = StudentType.THRIFTY;
@@ -389,7 +413,7 @@ public class Main {
      */
     private static ServiceType getServiceType(String stringType) {
         ServiceType type;
-        switch (stringType) {
+        switch (stringType.toLowerCase()) {
             case EATING_TYPE  -> type = ServiceType.EATING;
             case LEISURE_TYPE -> type = ServiceType.LEISURE;
             case LODGING_TYPE -> type = ServiceType.LODGING;

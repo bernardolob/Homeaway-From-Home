@@ -5,4 +5,6 @@ import java.io.Serializable;
 public interface Leisure extends Serializable, Service{
 
     ServiceType getType();
+    String getStringType();
+
 }

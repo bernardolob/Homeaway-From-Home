@@ -32,6 +32,13 @@ public interface Service extends Serializable {
     ServiceType getType();
 
     /**
+     * Returns the type of the service (e.g., eating, lodging, leisure).
+     *
+     * @return - The service type
+     */
+    String getStringType();
+
+    /**
      * Returns the price of the service.
      *
      * @return - The price of the service

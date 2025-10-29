@@ -10,4 +10,8 @@ public class EatingServiceClass extends AbstractLimitedServiceClass implements E
     public ServiceType getType() {
         return ServiceType.EATING;
     }
+
+    public String getStringType() {
+        return ServiceType.EATING.name().toLowerCase();
+    }
 }

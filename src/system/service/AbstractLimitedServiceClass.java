@@ -1,6 +1,6 @@
 package system.service;
 
-import Exceptions.ServiceFullException;
+import exceptions.ServiceFullException;
 import dataStructures.DoublyLinkedList;
 import dataStructures.TwoWayList;
 import system.Coordinates;

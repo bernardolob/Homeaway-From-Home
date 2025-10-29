@@ -26,4 +26,9 @@ public class LeisureServiceClass extends AbstractServiceClass implements Leisure
         return ServiceType.LEISURE;
     }
 
+    @Override
+    public String getStringType() {
+        return ServiceType.LEISURE.name().toLowerCase();
+    }
+
 }

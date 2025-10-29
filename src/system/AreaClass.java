@@ -1,6 +1,6 @@
 package system;
 
-import Exceptions.*;
+import exceptions.*;
 import dataStructures.*;
 import system.service.*;
 import system.student.Student;
@@ -9,6 +9,9 @@ import system.student.StudentNameComparator;
 public class AreaClass implements Area {
 
     private static final int NUMBER_OF_RANKS = 5;
+
+    private final Comparator<Service> serviceComparator;
+    private final Comparator<Student> studentComparator;
 
     private final List<Service> servicesByInsertion;
     private final SortedList<Service> servicesByName;
@@ -25,11 +28,17 @@ public class AreaClass implements Area {
         this.bottomLeft = bottomLeft;
         this.topRight = topRight;
 
+        serviceComparator = new ServiceNameComparator();
+        studentComparator = new StudentNameComparator();
+
         servicesByInsertion = new DoublyLinkedList<>();
-        servicesByName = new SortedDoublyLinkedList<>(new ServiceNameComparator());
+        servicesByName = new SortedDoublyLinkedList<>(serviceComparator);
         servicesByRank = new ListInArray<>(NUMBER_OF_RANKS);
         studentsByName = new SortedDoublyLinkedList<>(new StudentNameComparator());
         countries = new DoublyLinkedList<>();
+        for (int i = 0; i < NUMBER_OF_RANKS; i++) {
+            servicesByRank.add(i, new DoublyLinkedList<>());
+        }
     }
 
     public String getAreaName() {
@@ -66,14 +75,29 @@ public class AreaClass implements Area {
         servicesByRank.get(averageStars).addFirst(newService);
     }
 
-    private boolean hasService(String serviceName) {
+    public Iterator<Service> getServicesIterator() {
+        return servicesByInsertion.iterator();
+    }
+
+    public String getServiceName(String serviceName) {
+        Service s = getService(serviceName);
+        if (s == null)
+            return null;
+        return s.getName();
+    }
+
+    private Service getService(String serviceName) {
         Iterator<Service> it = servicesByName.iterator();
         while (it.hasNext()) {
             Service s = it.next();
-            if (s.getName().equals(serviceName))
-                return true;
+            if (s.getName().equalsIgnoreCase(serviceName))
+                return s;
         }
-        return false;
+        return null;
+    }
+
+    private boolean hasService(String serviceName) {
+        return getService(serviceName) != null;
     }
 
     private Service addLeisure(Coordinates coordinates, int ticketPrice, int discount, String name) {

@@ -1,8 +1,8 @@
-package Exceptions;
+package exceptions;
 
 import java.io.Serial;
 
-public class InvalidTicketPriceException extends RuntimeException {
+public class InvalidLocationException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 0L;
 }

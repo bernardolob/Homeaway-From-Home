@@ -1,8 +1,8 @@
-package Exceptions;
+package exceptions;
 
 import java.io.Serial;
 
-public class InvalidServiceTypeException extends RuntimeException {
+public class InvalidCapacityException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 0L;
 }

@@ -1,8 +1,8 @@
-package Exceptions;
+package exceptions;
 
 import java.io.Serial;
 
-public class InvalidMenuPriceException extends RuntimeException {
+public class InvalidDiscountException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 0L;
 }

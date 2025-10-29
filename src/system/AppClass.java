@@ -1,11 +1,11 @@
 package system;
 
-import Exceptions.*;
+import exceptions.*;
+import dataStructures.Iterator;
+import system.service.Service;
 import system.service.ServiceType;
 
 import java.io.*;
-
-import static system.service.ServiceType.*;
 
 public class AppClass implements App {
 
@@ -35,7 +35,7 @@ public class AppClass implements App {
             out.writeObject(currentArea);
             out.flush();
         } catch (IOException e) {
-            throw new UndefinedBoundsException();
+            System.out.println(e);;
         }
         return currentArea.getAreaName();
     }
@@ -83,11 +83,23 @@ public class AppClass implements App {
     }
 
     public void addService(ServiceType type, long latitude, long longitude, int price, int value, String name) {
-        // TODO
         Coordinates serviceCoordinates = new Coordinates(longitude, latitude);
         currentArea.addService(type, serviceCoordinates, price, value, name);
     }
 
+    public Iterator<Service> getServicesIterator() {
+        return currentArea.getServicesIterator();
+    }
+
+    @Override
+    public String getAreaName() {
+        return currentArea.getAreaName();
+    }
+
+    @Override
+    public String getServiceName(String serviceName) {
+        return currentArea.getServiceName(serviceName);
+    }
 
 
 }

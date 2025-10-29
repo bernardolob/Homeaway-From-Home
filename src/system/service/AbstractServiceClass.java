@@ -37,8 +37,6 @@ public abstract class AbstractServiceClass implements Service {
         return coordinates.getX();
     }
 
-    public abstract ServiceType getType();
-
     public float getPrice() {
         return price;
     }

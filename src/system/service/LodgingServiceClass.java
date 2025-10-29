@@ -16,4 +16,8 @@ public class LodgingServiceClass extends AbstractLimitedServiceClass implements 
     public ServiceType getType() {
         return ServiceType.LODGING;
     }
+
+    public String getStringType() {
+        return ServiceType.LODGING.name().toLowerCase();
+    }
 }

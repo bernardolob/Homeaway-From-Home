@@ -3,6 +3,8 @@ package dataStructures;
 import dataStructures.exceptions.InvalidPositionException;
 import dataStructures.exceptions.NoSuchElementException;
 
+import java.io.Serializable;
+
 /**
  * List (sequence) Abstract Data Type 
  * Includes description of general methods to be implemented by lists.
@@ -12,7 +14,7 @@ import dataStructures.exceptions.NoSuchElementException;
  * 
  */
 
-public interface List<E> {
+public interface List<E> extends Serializable {
     int NOT_FOUND=-1;
     /**
      * Returns true iff the list contains no elements.
