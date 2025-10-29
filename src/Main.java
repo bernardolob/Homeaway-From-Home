@@ -96,6 +96,7 @@ public class Main {
     private static final String NO_SERVICES_MSG = "No services yet!\n";
     // Student
     private static final String STUDENT_MSG     = "%s added.\n";
+    private static final String STUDENT_DOES_NOT_EXIST= "%s does not exist!\n";
     // Leave
     private static final String LEAVE_MSG       = "%s has left.\n";
     // Students
@@ -108,6 +109,8 @@ public class Main {
     private static final String ALREADYTHERE_MSG = "Already there!\n";
     // Move
     private static final String MOVE_MSG        = "lodging %s is now %s's home. %s is at home.\n";
+    private static final String ALREADY_HOME_MSG    = "That is %s's home!\n";
+    private static final String UNACCEPTABLE_HOME = "Move is not acceptable for %s!\n";
     // Users
     private static final String USERS_MSG       = "%s: %s\n";
     private static final String NO_USERS_MSG    = "No students on %s!";
@@ -131,12 +134,9 @@ public class Main {
     private static final String NO_TAG_MSG      = "There are no services with this tag!\n";
     // Find
     private static final String FIND_MSG = "%s\n";
-    private static final String STUDENT_DOES_NOT_EXIST= "%s does not exist!\n";
 
 
-
-
-/******************************** MAIN ********************************/
+    /******************************** MAIN ********************************/
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -379,6 +379,38 @@ public class Main {
     }
 
     private static void move(App app, Scanner in) {
+        String student = in.nextLine().trim();
+        String service = in.nextLine().trim();
+
+        try{
+             if(!app.getStudentName(student).equals(student)){
+                System.out.printf(STUDENT_DOES_NOT_EXIST, student);
+        }
+             else if(app.getStudent(student).getStudentType().equals(THRIFTY_TYPE)) {
+                 if (!app.isLodgingCheaper(student, service)) {
+                     System.out.printf(UNACCEPTABLE_HOME, student);
+                 } else {
+                     app.setHome(student, service);
+                     System.out.printf(MOVE_MSG, service, student, student);
+                 }
+             }
+            else {
+                 app.setHome(student, service);
+                 System.out.printf(MOVE_MSG, service, student, student);
+             }
+        }
+        catch (NonExistingBoundsException e) {
+            System.out.printf(NON_EXISTING_BOUNDS_ERR, student);}
+
+        catch(NonExistingLodgingException e) {
+                System.out.printf(NON_EXISTING_LODGING_ERR, service);
+            }
+        catch(AlreadyHomeException e){
+            System.out.printf(ALREADY_HOME_MSG, student);
+        }
+        catch(LodgingFullException e){
+            System.out.printf(LODGING_FULL_ERR, student);
+        }
     }
 
     private static void users(App app, Scanner in) {
