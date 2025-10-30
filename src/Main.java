@@ -493,18 +493,34 @@ public class Main {
             System.out.printf(DOES_NOT_EXIST, name);
         } else if (app.getstudentType(name)) {
             System.out.printf(THRIFTY_MSG, name);
-        } else if (app.hasNotVisited(name)){
-            System.out.printf(NO_VISITED_MSG, name);}
-        else{
-        Iterator<Service> it = app.getServicesIterator();
-        while (it.hasNext()) {
-            System.out.printf(VISITED_MSG, it.next().getName());
+        } else if (app.hasNotVisited(name)) {
+            System.out.printf(NO_VISITED_MSG, name);
+        } else {
+            Iterator<Service> it = app.getServicesIterator();
+            while (it.hasNext()) {
+                System.out.printf(VISITED_MSG, it.next().getName());
+            }
         }
     }
-}
 
     private static void ranking(App app, Scanner in) {
-    }
+        in.hasNextLine();
+        try {
+            Iterator<Service> it = app.getSortedServicesIterator();
+            if (!it.hasNext()) {
+                System.out.printf(NO_RANKING_MSG);
+            }
+            System.out.printf(RANKING_MSG);
+            while (it.hasNext()) {
+                Service s = it.next();
+                System.out.printf(RANKING_MSG, s.getName(), s.getAverageStars());
+            }
+        } catch (NonExistingBoundsExceptione) {
+            System.out.printf(BOUND_NOT_DEFINED_MSG);
+        } catch (NoServicesException e)
+        System.out.printf(RANKING_NO_SERVICES_MSG);
+
+        }
 
     private static void ranked(App app, Scanner in) {
         String type = in.next().toLowerCase();
@@ -527,14 +543,15 @@ public class Main {
                     Service s = it.next();
                     if (s.getType().equals(sType) && s.getAverageStars() == stars) {
                         String name = s.getName();
-                        System.out.printf(RANKED_MSG, name);
+                        System.out.printf(RANKED_MSG);
                     }
                 }
             }
         }
         catch (NonExistingBoundsException e){
             System.out.printf(BOUND_NOT_DEFINED_MSG);
-        }catch(InvalidServiceTypeException e){
+        }
+        catch (InvalidServiceTypeException e){
             System.out.printf(INVALID_SERVICE_TYPE_ERR);
         }
     }
