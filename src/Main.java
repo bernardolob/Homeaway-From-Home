@@ -507,6 +507,36 @@ public class Main {
     }
 
     private static void ranked(App app, Scanner in) {
+        String type = in.next().toLowerCase();
+        String studentName = in.nextLine().trim();
+        ServiceType sType = getServiceType(type);
+        int stars = in.nextInt();
+        try {
+            if (stars > 5 || stars < 1) {
+                System.out.printf(INVALID_EVALUATION_ERR);
+            }
+            else if(!app.getStudentName(studentName).equals(studentName)){
+                System.out.printf(DOES_NOT_EXIST, studentName);
+            }
+            else if(app.noServHasNStars(sType, stars)){
+                System.out.printf(NO_RANKED_MSG, type);
+            }
+            else {
+                Iterator<Service> it = app.getSortedServicesIterator();
+                while (it.hasNext()) {
+                    Service s = it.next();
+                    if (s.getType().equals(sType) && s.getAverageStars() == stars) {
+                        String name = s.getName();
+                        System.out.printf(RANKED_MSG, name);
+                    }
+                }
+            }
+        }
+        catch (NonExistingBoundsException e){
+            System.out.printf(BOUND_NOT_DEFINED_MSG);
+        }catch(InvalidServiceTypeException e){
+            System.out.printf(INVALID_SERVICE_TYPE_ERR);
+        }
     }
 
     private static void tag(App app, Scanner in) {
