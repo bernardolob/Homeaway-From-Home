@@ -16,122 +16,123 @@ public class Main {
     // TODO NOTA: Perguntar à professora se é melhor ter uma (ou mais) classe(s) só para as constantes.
 
     /************ Commands ************/
-    private static final String EXIT_CMD 		= "EXIT";
-    private static final String HELP_CMD 		= "HELP";
-    private static final String BOUNDS_CMD 		= "BOUNDS";
-    private static final String SAVE_CMD 		= "SAVE";
-    private static final String LOAD_CMD 		= "LOAD";
-    private static final String SERVICE_CMD 	= "SERVICE";
-    private static final String SERVICES_CMD    = "SERVICES";
-    private static final String STUDENT_CMD     = "STUDENT";
-    private static final String LEAVE_CMD       = "LEAVE";
-    private static final String STUDENTS_CMD    = "STUDENTS";
-    private static final String GO_CMD          = "GO";
-    private static final String MOVE_CMD        = "MOVE";
-    private static final String USERS_CMD       = "USERS";
-    private static final String WHERE_CMD       = "WHERE";
-    private static final String VISITED_CMD     = "VISITED";
-    private static final String STAR_CMD        = "STAR";
-    private static final String RANKING_CMD     = "RANKING";
-    private static final String RANKED_CMD      = "RANKED";
-    private static final String TAG_CMD         = "TAG";
-    private static final String FIND_CMD        = "FIND";
+    private static final String EXIT_CMD = "EXIT";
+    private static final String HELP_CMD = "HELP";
+    private static final String BOUNDS_CMD = "BOUNDS";
+    private static final String SAVE_CMD = "SAVE";
+    private static final String LOAD_CMD = "LOAD";
+    private static final String SERVICE_CMD = "SERVICE";
+    private static final String SERVICES_CMD = "SERVICES";
+    private static final String STUDENT_CMD = "STUDENT";
+    private static final String LEAVE_CMD = "LEAVE";
+    private static final String STUDENTS_CMD = "STUDENTS";
+    private static final String GO_CMD = "GO";
+    private static final String MOVE_CMD = "MOVE";
+    private static final String USERS_CMD = "USERS";
+    private static final String WHERE_CMD = "WHERE";
+    private static final String VISITED_CMD = "VISITED";
+    private static final String STAR_CMD = "STAR";
+    private static final String RANKING_CMD = "RANKING";
+    private static final String RANKED_CMD = "RANKED";
+    private static final String TAG_CMD = "TAG";
+    private static final String FIND_CMD = "FIND";
 
     /************ Types ************/
     // Services
-    private static final String EATING_TYPE     = "eating";
-    private static final String LODGING_TYPE    = "lodging";
-    private static final String LEISURE_TYPE    = "leisure";
+    private static final String EATING_TYPE = "eating";
+    private static final String LODGING_TYPE = "lodging";
+    private static final String LEISURE_TYPE = "leisure";
     // Students
-    private static final String BOOKISH_TYPE    = "bookish";
-    private static final String OUTGOING_TYPE   = "outgoing";
-    private static final String THRIFTY_TYPE    = "thrifty";
+    private static final String BOOKISH_TYPE = "bookish";
+    private static final String OUTGOING_TYPE = "outgoing";
+    private static final String THRIFTY_TYPE = "thrifty";
 
     /************ Errors ************/
-    private static final String UNDEFINED_BOUNDS_ERR     = "System bounds not defined.\n";
-    private static final String INVALID_BOUNDS_ERR       = "Invalid bounds.\n";
-    private static final String EXISTING_BOUNDS_ERR      = "Bounds already exists. Please load it!\n";
-    private static final String NON_EXISTING_BOUNDS_ERR  = "Bounds %s does not exists.\n";
+    private static final String UNDEFINED_BOUNDS_ERR = "System bounds not defined.\n";
+    private static final String INVALID_BOUNDS_ERR = "Invalid bounds.\n";
+    private static final String EXISTING_BOUNDS_ERR = "Bounds already exists. Please load it!\n";
+    private static final String NON_EXISTING_BOUNDS_ERR = "Bounds %s does not exists.\n";
     private static final String INVALID_SERVICE_TYPE_ERR = "Invalid service type!\n";
-    private static final String INVALID_LOCATION_ERR     = "Invalid location!\n";
-    private static final String INVALID_MENU_ERR         = "Invalid menu price!\n";
-    private static final String INVALID_TICKET_ERR       = "Invalid ticket price!\n";
-    private static final String INVALID_ROOM_ERR         = "Invalid room price!\n";
-    private static final String INVALID_DISCOUNT_ERR     = "Invalid discount price!\n";
-    private static final String INVALID_CAPACITY_ERR     = "Invalid capacity!\n";
-    private static final String ALREADY_EXISTS_ERR       = "%s already exists!\n";
-    private static final String INVALID_STUDENT_ERR      = "Invalid student type!\n";
+    private static final String INVALID_LOCATION_ERR = "Invalid location!\n";
+    private static final String INVALID_MENU_ERR = "Invalid menu price!\n";
+    private static final String INVALID_TICKET_ERR = "Invalid ticket price!\n";
+    private static final String INVALID_ROOM_ERR = "Invalid room price!\n";
+    private static final String INVALID_DISCOUNT_ERR = "Invalid discount price!\n";
+    private static final String INVALID_CAPACITY_ERR = "Invalid capacity!\n";
+    private static final String ALREADY_EXISTS_ERR = "%s already exists!\n";
+    private static final String INVALID_STUDENT_ERR = "Invalid student type!\n";
     private static final String NON_EXISTING_LODGING_ERR = "lodging %s does not exist!\n";
-    private static final String LODGING_FULL_ERR         = "lodging %s is full!\n";
-    private static final String UNKNOWN_LOCATION_ERR     = "Unknown %s!\n";
-    private static final String NON_EXISTING_ERR         = "%s does not exist!\n";
-    private static final String INVALID_SERVICE_ERR      = "%s is not a valid service!\n";
-    private static final String ALREADY_THERE_ERR        = "Already there!\n";
-    private static final String EATING_FULL_ERR          = "eating %s is full!\n";
-    private static final String ALREADY_HOME_ERR         = "That is %s's home!\n";
-    private static final String UNACCEPTABLE_MOVE_ERR    = "Move is not acceptable for %s!\n";
-    private static final String NON_EXISTING_ORDER_ERR   = "This order does not exists!\n";
-    private static final String NO_USERS_SERVICE_ERR     = "%s does not control student entry and exit!\n";
-    private static final String IS_THRIFTY_ERR           = "%s is thrifty!\n";
-    private static final String INVALID_EVALUATION_ERR   = "Invalid evaluation!\n";
-    private static final String INVALID_STARS_ERR        = "Invalid stars!\n";
-    private static final String NO_SERVICE_TYPE_ERR      = "No %s services!\n";
+    private static final String LODGING_FULL_ERR = "lodging %s is full!\n";
+    private static final String UNKNOWN_LOCATION_ERR = "Unknown %s!\n";
+    private static final String NON_EXISTING_ERR = "%s does not exist!\n";
+    private static final String INVALID_SERVICE_ERR = "%s is not a valid service!\n";
+    private static final String ALREADY_THERE_ERR = "Already there!\n";
+    private static final String EATING_FULL_ERR = "eating %s is full!\n";
+    private static final String ALREADY_HOME_ERR = "That is %s's home!\n";
+    private static final String UNACCEPTABLE_MOVE_ERR = "Move is not acceptable for %s!\n";
+    private static final String NON_EXISTING_ORDER_ERR = "This order does not exists!\n";
+    private static final String NO_USERS_SERVICE_ERR = "%s does not control student entry and exit!\n";
+    private static final String IS_THRIFTY_ERR = "%s is thrifty!\n";
+    private static final String INVALID_EVALUATION_ERR = "Invalid evaluation!\n";
+    private static final String INVALID_STARS_ERR = "Invalid stars!\n";
+    private static final String NO_SERVICE_TYPE_ERR = "No %s services!\n";
 
     /************ Messages ************/
     // General
-    private static final String UNKNOWN_MSG     = "Unknown command. Type help to see available commands.\n";
-    private static final String DOES_NOT_EXIST= "%s does not exist!\n";
+    private static final String UNKNOWN_MSG = "Unknown command. Type help to see available commands.\n";
+    private static final String DOES_NOT_EXIST = "%s does not exist!\n";
     // Help
-    private static final String HELP_MSG        = "%s - %s\n";
+    private static final String HELP_MSG = "%s - %s\n";
     // Exit
-    private static final String EXIT_MSG        = "Bye!\n";
+    private static final String EXIT_MSG = "Bye!\n";
     // Bounds
-    private static final String BOUNDS_MSG      = "%s created.\n";
+    private static final String BOUNDS_MSG = "%s created.\n";
     // Save
-    private static final String SAVE_MSG        = "%s saved.\n";
+    private static final String SAVE_MSG = "%s saved.\n";
     // Load
-    private static final String LOAD_MSG        = "%s loaded.\n";
+    private static final String LOAD_MSG = "%s loaded.\n";
     // Service
-    private static final String SERVICE_MSG     = "%s %s added.\n";
+    private static final String SERVICE_MSG = "%s %s added.\n";
     // Services
-    private static final String SERVICES_MSG    = "%s: %s (%d, %d).\n";
+    private static final String SERVICES_MSG = "%s: %s (%d, %d).\n";
     private static final String NO_SERVICES_MSG = "No services yet!\n";
     // Student
-    private static final String STUDENT_MSG     = "%s added.\n";
+    private static final String STUDENT_MSG = "%s added.\n";
     // Leave
-    private static final String LEAVE_MSG       = "%s has left.\n";
+    private static final String LEAVE_MSG = "%s has left.\n";
     // Students
-    private static final String STUDENTS_MSG    = "%s: %s at %s.\n";
+    private static final String STUDENTS_MSG = "%s: %s at %s.\n";
     private static final String NO_STUDENTS_MSG = "No students yet!\n";
-    private static final String NO_COUNTRY_MSG  = "No students from %s!\n";
+    private static final String NO_COUNTRY_MSG = "No students from %s!\n";
     // Go
-    private static final String GO_MSG          = "‰s in now at %s.\n";
-    private static final String DISTRACTED      = "%s is distracted!\n";
+    private static final String GO_MSG = "‰s in now at %s.\n";
+    private static final String DISTRACTED = "%s is distracted!\n";
     private static final String ALREADYTHERE_MSG = "Already there!\n";
     // Move
-    private static final String MOVE_MSG        = "lodging %s is now %s's home. %s is at home.\n";
-    private static final String ALREADY_HOME_MSG    = "That is %s's home!\n";
+    private static final String MOVE_MSG = "lodging %s is now %s's home. %s is at home.\n";
+    private static final String ALREADY_HOME_MSG = "That is %s's home!\n";
     // Users
-    private static final String USERS_MSG       = "%s: %s\n";
-    private static final String NO_USERS_MSG    = "No students on %s!";
+    private static final String USERS_MSG = "%s: %s\n";
+    private static final String NO_USERS_MSG = "No students on %s!";
     // Where
-    private static final String WHERE_MSG       = "%s is at %s %s (%d, %d).\n";
+    private static final String WHERE_MSG = "%s is at %s %s (%d, %d).\n";
     // Visited
-    private static final String VISITED_MSG     = "%s\n";
-    private static final String NO_VISITED_MSG  = "%s has not visited any locations!\n";
+    private static final String VISITED_MSG = "%s\n";
+    private static final String THRIFTY_MSG = "%s is thrifty!\n";
+    private static final String NO_VISITED_MSG = "%s has not visited any locations!\n";
     // Star
-    private static final String STAR_MSG        = "Your evaluation has been registered!\n";
+    private static final String STAR_MSG = "Your evaluation has been registered!\n";
     // Ranking
-    private static final String DESCENDING_MSG  = "Services sorted in descending order\n";
-    private static final String RANKING_MSG     = "%s: %d\n"; // Enunciado inconsistente com o ponto final
-    private static final String NO_RANKING_MSG  = "No services in the system.\n";
+    private static final String DESCENDING_MSG = "Services sorted in descending order\n";
+    private static final String RANKING_MSG = "%s: %d\n"; // Enunciado inconsistente com o ponto final
+    private static final String NO_RANKING_MSG = "No services in the system.\n";
     // Ranked
     private static final String RANKED_HEAD_MSG = "%s services closer with %d average\n";
-    private static final String RANKED_MSG      = "%s\n";
-    private static final String NO_RANKED_MSG   = "No %s services with average!\n";
+    private static final String RANKED_MSG = "%s\n";
+    private static final String NO_RANKED_MSG = "No %s services with average!\n";
     // Tag
-    private static final String TAG_MSG         = "%s %s\n";
-    private static final String NO_TAG_MSG      = "There are no services with this tag!\n";
+    private static final String TAG_MSG = "%s %s\n";
+    private static final String NO_TAG_MSG = "There are no services with this tag!\n";
     // Find
     private static final String FIND_MSG = "%s\n";
 
@@ -151,34 +152,76 @@ public class Main {
 
     private static Commands getCommand(String command) {
         switch (command) {
-            case EXIT_CMD -> {return Commands.EXIT;}
-            case HELP_CMD -> {return Commands.HELP;}
-            case BOUNDS_CMD -> {return Commands.BOUNDS;}
-            case SAVE_CMD -> {return Commands.SAVE;}
-            case LOAD_CMD -> {return Commands.LOAD;}
-            case SERVICE_CMD -> {return Commands.SERVICE;}
-            case SERVICES_CMD -> {return Commands.SERVICES;}
-            case STUDENT_CMD -> {return Commands.STUDENT;}
-            case LEAVE_CMD -> {return Commands.LEAVE;}
-            case STUDENTS_CMD -> {return Commands.STUDENTS;}
-            case GO_CMD -> {return Commands.GO;}
-            case MOVE_CMD -> {return Commands.MOVE;}
-            case USERS_CMD -> {return Commands.USERS;}
-            case STAR_CMD -> {return Commands.STAR;}
-            case WHERE_CMD -> {return Commands.WHERE;}
-            case VISITED_CMD -> {return Commands.VISITED;}
-            case RANKING_CMD -> {return Commands.RANKING;}
-            case RANKED_CMD -> {return Commands.RANKED;}
-            case TAG_CMD -> {return Commands.TAG;}
-            case FIND_CMD -> {return Commands.FIND;}
-            default -> {return null;}
+            case EXIT_CMD -> {
+                return Commands.EXIT;
+            }
+            case HELP_CMD -> {
+                return Commands.HELP;
+            }
+            case BOUNDS_CMD -> {
+                return Commands.BOUNDS;
+            }
+            case SAVE_CMD -> {
+                return Commands.SAVE;
+            }
+            case LOAD_CMD -> {
+                return Commands.LOAD;
+            }
+            case SERVICE_CMD -> {
+                return Commands.SERVICE;
+            }
+            case SERVICES_CMD -> {
+                return Commands.SERVICES;
+            }
+            case STUDENT_CMD -> {
+                return Commands.STUDENT;
+            }
+            case LEAVE_CMD -> {
+                return Commands.LEAVE;
+            }
+            case STUDENTS_CMD -> {
+                return Commands.STUDENTS;
+            }
+            case GO_CMD -> {
+                return Commands.GO;
+            }
+            case MOVE_CMD -> {
+                return Commands.MOVE;
+            }
+            case USERS_CMD -> {
+                return Commands.USERS;
+            }
+            case STAR_CMD -> {
+                return Commands.STAR;
+            }
+            case WHERE_CMD -> {
+                return Commands.WHERE;
+            }
+            case VISITED_CMD -> {
+                return Commands.VISITED;
+            }
+            case RANKING_CMD -> {
+                return Commands.RANKING;
+            }
+            case RANKED_CMD -> {
+                return Commands.RANKED;
+            }
+            case TAG_CMD -> {
+                return Commands.TAG;
+            }
+            case FIND_CMD -> {
+                return Commands.FIND;
+            }
+            default -> {
+                return null;
+            }
         }
     }
 
     /**
      * Executes a specific command based on user input.
      *
-     * @param in - Scanner object for reading user input
+     * @param in      - Scanner object for reading user input
      * @param command - the command to execute
      * @pre - 'in' must not be null
      */
@@ -245,7 +288,8 @@ public class Main {
             String areaName = app.saveArea();
             System.out.printf(SAVE_MSG, areaName);
         } catch (UndefinedBoundsException e) {
-            System.out.printf(UNDEFINED_BOUNDS_ERR);;
+            System.out.printf(UNDEFINED_BOUNDS_ERR);
+            ;
         }
     }
 
@@ -359,37 +403,31 @@ public class Main {
         }
     }
 
- //GO_MSG precisa 2 arg, so tem 1. eu n sei como mudar
+    //GO_MSG precisa 2 arg, so tem 1. eu n sei como mudar
     private static void go(App app, Scanner in) {
         String name = in.nextLine().trim();
-       String location = in.nextLine().trim();
-         try{
-             if(!app.getStudentName(name).equals(name)){
-                 System.out.printf(DOES_NOT_EXIST, name);
-             }
-             else if(app.getStudentName(name).equals(name) && app.getStudent(name).getStudentType().equals(THRIFTY_TYPE)
-             && location.equals(EATING_TYPE) && app.thriftyCheapest(app.getStudentName(name))<app.eatingLocationPrice(location)){
-                 app.goStudent(name,location);
-                 System.out.printf(DISTRACTED, name);
-                 System.out.printf(GO_MSG, name,location);
-             }
-             else if(!app.getServiceType(location).equals(EATING_TYPE)|| !app.getServiceType(location).equals(LEISURE_TYPE)){
-                 System.out.printf(INVALID_SERVICE_ERR, location);
-             }
-             else if(app.getStudentLocation(name).equals(location)){
-                 System.out.printf(ALREADYTHERE_MSG);
-             }
-             else{
-                 app.goStudent(name,location);
-                 System.out.printf(GO_MSG, name, location);
-             }
-         }
-        catch(InvalidLocationException e){
-            System.out.printf(UNKNOWN_LOCATION_ERR,location);
+        String location = in.nextLine().trim();
+        try {
+            if (!app.getStudentName(name).equals(name)) {
+                System.out.printf(DOES_NOT_EXIST, name);
+            } else if (app.getStudentName(name).equals(name) && app.getStudent(name).getStudentType().equals(THRIFTY_TYPE)
+                    && location.equals(EATING_TYPE) && app.thriftyCheapest(app.getStudentName(name)) < app.eatingLocationPrice(location)) {
+                app.goStudent(name, location);
+                System.out.printf(DISTRACTED, name);
+                System.out.printf(GO_MSG, name, location);
+            } else if (!app.getServiceType(location).equals(EATING_TYPE) || !app.getServiceType(location).equals(LEISURE_TYPE)) {
+                System.out.printf(INVALID_SERVICE_ERR, location);
+            } else if (app.getStudentLocation(name).equals(location)) {
+                System.out.printf(ALREADYTHERE_MSG);
+            } else {
+                app.goStudent(name, location);
+                System.out.printf(GO_MSG, name, location);
+            }
+        } catch (InvalidLocationException e) {
+            System.out.printf(UNKNOWN_LOCATION_ERR, location);
+        } catch (EatingFullException e) {
+            System.out.printf(EATING_FULL_ERR, location);
         }
-         catch(EatingFullException e){
-             System.out.printf(EATING_FULL_ERR,location);
-         }
 
     }
 
@@ -397,33 +435,27 @@ public class Main {
         String student = in.nextLine().trim();
         String service = in.nextLine().trim();
 
-        try{
-             if(!app.getStudentName(student).equals(student)){
+        try {
+            if (!app.getStudentName(student).equals(student)) {
                 System.out.printf(DOES_NOT_EXIST, student);
-        }
-             else if(app.getStudent(student).getStudentType().equals(THRIFTY_TYPE)) {
-                 if (!app.isLodgingCheaper(student, service)) {
-                     System.out.printf(UNACCEPTABLE_HOME, student);
-                 } else {
-                     app.setHome(student, service);
-                     System.out.printf(MOVE_MSG, service, student, student);
-                 }
-             }
-            else {
-                 app.setHome(student, service);
-                 System.out.printf(MOVE_MSG, service, student, student);
-             }
-        }
-        catch (NonExistingBoundsException e) {
-            System.out.printf(NON_EXISTING_BOUNDS_ERR, student);}
-
-        catch(NonExistingLodgingException e) {
-                System.out.printf(NON_EXISTING_LODGING_ERR, service);
+            } else if (app.getStudent(student).getStudentType().equals(THRIFTY_TYPE)) {
+                if (!app.isLodgingCheaper(student, service)) {
+                    System.out.printf(UNACCEPTABLE_HOME, student);
+                } else {
+                    app.setHome(student, service);
+                    System.out.printf(MOVE_MSG, service, student, student);
+                }
+            } else {
+                app.setHome(student, service);
+                System.out.printf(MOVE_MSG, service, student, student);
             }
-        catch(AlreadyHomeException e){
+        } catch (NonExistingBoundsException e) {
+            System.out.printf(NON_EXISTING_BOUNDS_ERR, student);
+        } catch (NonExistingLodgingException e) {
+            System.out.printf(NON_EXISTING_LODGING_ERR, service);
+        } catch (AlreadyHomeException e) {
             System.out.printf(ALREADY_HOME_MSG, student);
-        }
-        catch(LodgingFullException e){
+        } catch (LodgingFullException e) {
             System.out.printf(LODGING_FULL_ERR, student);
         }
     }
@@ -435,13 +467,11 @@ public class Main {
     private static void star(App app, Scanner in) {
         int stars = in.nextInt();
         String service = in.nextLine().trim();
-        if(1>=stars || stars>=5){
-            System .out.printf(INVALID_EVALUATION_ERR);
-        }
-        else if(!app.getServiceName(service).equals(service)){
-            System .out.printf(DOES_NOT_EXIST, service);
-        }
-        else{
+        if (1 >= stars || stars >= 5) {
+            System.out.printf(INVALID_EVALUATION_ERR);
+        } else if (!app.getServiceName(service).equals(service)) {
+            System.out.printf(DOES_NOT_EXIST, service);
+        } else {
             app.evaluate(service);
         }
     }
@@ -458,8 +488,20 @@ public class Main {
     }
 
     private static void visited(App app, Scanner in) {
-
+        String name = in.nextLine().trim();
+        if (!app.getServiceName(name).equals(name)) {
+            System.out.printf(DOES_NOT_EXIST, name);
+        } else if (app.getstudentType(name)) {
+            System.out.printf(THRIFTY_MSG, name);
+        } else if (app.hasNotVisited(name)){
+            System.out.printf(NO_VISITED_MSG, name);}
+        else{
+        Iterator<Service> it = app.getServicesIterator();
+        while (it.hasNext()) {
+            System.out.printf(VISITED_MSG, it.next().getName());
+        }
     }
+}
 
     private static void ranking(App app, Scanner in) {
     }
