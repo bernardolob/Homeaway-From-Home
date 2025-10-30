@@ -1,5 +1,7 @@
 package system.service;
 
+import system.Coordinates;
+
 import java.io.Serializable;
 
 public interface Service extends Serializable {
@@ -60,4 +62,13 @@ public interface Service extends Serializable {
      * @return - The average star rating of the service
      */
     int getAverageStars();
+
+    void evaluate(int stars, String tag);
+
+    boolean hasTag(String tag);
+
+    long distanceFrom(Coordinates other);
+
+    Coordinates getCoordinates();
+
 }

@@ -5,8 +5,8 @@ import dataStructures.*;
 import system.student.StudentNameComparator;
 
 public class CountryClass implements Country {
-    private String countryName;
-    private List<Student> citizens;
+    private final String countryName;
+    private final List<Student> citizens;
 
     public CountryClass(String countryName) {
         this.countryName = countryName;
@@ -25,5 +25,10 @@ public class CountryClass implements Country {
     @Override
     public Iterator<Student> getStudentsIterator() {
         return citizens.iterator();
+    }
+
+    @Override
+    public void removeCitizen(Student student) {
+        citizens.remove(citizens.indexOf(student));
     }
 }

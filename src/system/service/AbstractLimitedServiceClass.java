@@ -1,5 +1,6 @@
 package system.service;
 
+import dataStructures.TwoWayIterator;
 import exceptions.ServiceFullException;
 import dataStructures.DoublyLinkedList;
 import dataStructures.TwoWayList;
@@ -29,7 +30,11 @@ public abstract class AbstractLimitedServiceClass extends AbstractServiceClass i
     }
 
     public void removeStudent(Student student) {
-        //TODO: Still missing try catch and have to see about the TwoWayList<Student> or String.
+        //TODO: Still missing try catch.
         presentStudents.remove(presentStudents.indexOf(student));
+    }
+
+    public TwoWayIterator<Student> getPresentStudents() {
+        return presentStudents.twoWayiterator();
     }
 }

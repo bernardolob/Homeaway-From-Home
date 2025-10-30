@@ -1,29 +1,35 @@
 package system.student;
 
 import dataStructures.Iterator;
-import system.service.Lodging;
-import system.service.LodgingServiceClass;
-import system.service.Service;
+import exceptions.AlreadyHomeException;
+import exceptions.ServiceFullException;
+import exceptions.UnacceptableMoveException;
+import system.Country;
+import system.service.*;
 
 public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty {
 
+    private float cheapestEating;
 
-    public ThriftyStudentClass(String name, Lodging home) {
-        super(name, home);
+
+    public ThriftyStudentClass(String name, Lodging home, Country country) {
+        super(name, home, country);
+        cheapestEating = -1;
     }
 
     @Override
     public void changeHome(Lodging newHome) {
-        if (newHome.isCheaper(getHome()))
-            super.changeHome(newHome);
+        if (newHome == home)
+            throw new AlreadyHomeException();
+        if (newHome.isFull())
+            throw new ServiceFullException();
+        if (!newHome.isCheaper(getHome()))
+            throw new UnacceptableMoveException();
+        super.changeHome(newHome);
     }
 
     public StudentType getType() {
         return StudentType.THRIFTY;
-    }
-
-    public boolean isThrifty() {
-        return true;
     }
 
     @Override
@@ -39,6 +45,23 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
     @Override
     public String getStringType() {
         return StudentType.THRIFTY.toString().toLowerCase();
+    }
+
+
+
+    public boolean isDistracted(Service s) {
+        if (!(s instanceof Eating))
+            return false;
+        if (cheapestEating == -1)
+            return false;
+        return s.getPrice() > cheapestEating;
+    }
+
+    @Override
+    public void saveVisit(Service s) {
+        if (s instanceof Eating)
+            if (cheapestEating == -1 || s.getPrice() < cheapestEating)
+                cheapestEating = s.getPrice();
     }
 
 }

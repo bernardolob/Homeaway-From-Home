@@ -1,12 +1,13 @@
 package system.student;
 
+import system.Country;
 import system.service.Lodging;
 import system.service.Service;
 
 public class OutgoingStudentClass extends AbstractVisitingStudentClass implements Outgoing {
 
-    public OutgoingStudentClass(String name, Lodging home) {
-        super(name, home);
+    public OutgoingStudentClass(String name, Lodging home, Country country) {
+        super(name, home, country);
     }
 
     public StudentType getType() {

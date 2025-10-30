@@ -2,17 +2,21 @@ package system.service;
 
 import dataStructures.DoublyLinkedList;
 import dataStructures.List;
+import dataStructures.SortedDoublyLinkedList;
+import dataStructures.SortedList;
 import system.Coordinates;
 
 public abstract class AbstractServiceClass implements Service {
 
     private static final int DEFAULT_RATING = 4;
 
-    private List<String> tags;
+    private static final String TAG_REGEX = " ";
 
-    private Coordinates coordinates;
+    private SortedList<String> tags;
+
+    private final Coordinates coordinates;
     protected int price;
-    private String name;
+    private final String name;
     private int evaluations;
     private int evalSum;
 
@@ -22,7 +26,7 @@ public abstract class AbstractServiceClass implements Service {
         this.name = name;
         evaluations = 1;
         evalSum = DEFAULT_RATING;
-        tags = new DoublyLinkedList<>();
+        tags = new SortedDoublyLinkedList<>(new TagComparator());
     }
 
     public String getName() {
@@ -50,5 +54,26 @@ public abstract class AbstractServiceClass implements Service {
         return Math.round((float) evalSum /evaluations);
     }
 
+    @Override
+    public void evaluate(int stars, String tag) {
+        addEvaluation(stars);
+        for (String s : tag.split(TAG_REGEX))
+            if (!tags.contains(s))
+                tags.add(s);
+    }
 
+    @Override
+    public boolean hasTag(String tag) {
+        return tags.contains(tag);
+    }
+
+    @Override
+    public long distanceFrom(Coordinates other) {
+        return coordinates.manhattanDistanceFrom(other);
+    }
+
+    @Override
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
 }

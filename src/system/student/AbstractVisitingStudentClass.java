@@ -3,6 +3,7 @@ package system.student;
 import dataStructures.DoublyLinkedList;
 import dataStructures.Iterator;
 import dataStructures.List;
+import system.Country;
 import system.service.Lodging;
 import system.service.Service;
 
@@ -11,10 +12,10 @@ public abstract class AbstractVisitingStudentClass extends AbstractStudentClass 
 
     protected List<Service> visits;
 
-    public AbstractVisitingStudentClass(String name, Lodging home) {
-        super(name, home);
+    public AbstractVisitingStudentClass(String name, Lodging home, Country country) {
+        super(name, home, country);
         visits = new DoublyLinkedList<>();
-
+        saveVisit(home);
     }
 
     @Override
@@ -22,7 +23,6 @@ public abstract class AbstractVisitingStudentClass extends AbstractStudentClass 
         return visits.isEmpty();
     }
 
-    public abstract void saveVisit(Service s);
 
     public Iterator<Service> getVisitsIterator() {
         return visits.iterator();

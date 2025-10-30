@@ -30,4 +30,11 @@ public enum Commands {
         return description;
     }
 
+    public static Commands fromCommandString(String command) {
+        for (Commands c : values()) {
+            if (c.toString().equalsIgnoreCase(command))
+                return c;
+        }
+        return null;
     }
+}

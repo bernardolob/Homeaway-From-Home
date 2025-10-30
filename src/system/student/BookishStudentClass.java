@@ -1,13 +1,14 @@
 package system.student;
 
 import dataStructures.*;
+import system.Country;
 import system.service.*;
 
 
 public class BookishStudentClass extends AbstractVisitingStudentClass implements Bookish {
 
-    public BookishStudentClass(String name, Lodging home) {
-        super(name, home);
+    public BookishStudentClass(String name, Lodging home, Country country) {
+        super(name, home, country);
     }
 
     @Override

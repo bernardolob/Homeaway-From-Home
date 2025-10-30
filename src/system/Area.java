@@ -1,6 +1,7 @@
 package system;
 
 import dataStructures.Iterator;
+import dataStructures.TwoWayIterator;
 import system.service.Service;
 import system.service.ServiceType;
 import system.student.Student;
@@ -35,4 +36,28 @@ public interface Area extends Serializable {
     Iterator<Student> getCountryStudentsIterator(String country);
 
     Service getStudentLocation(String studentName);
+
+    boolean goStudent(String name, String location);
+
+    void setHome(String student, String lodging);
+
+    TwoWayIterator<Student> getUsers(String order, String service);
+
+    Iterator<Service> getVisitsIterator(String student);
+
+    void evaluate(String service, int stars, String tag);
+
+    Iterator<Iterator<Service>> getRankingServices();
+
+    Iterator<Service> getTaggedServices(String tag);
+
+    Iterator<Service> getRankedIterator(Coordinates studentCoordinates, int stars, ServiceType serviceType);
+
+    Coordinates getStudentCoordinates(String studentName);
+
+    boolean hasServiceType(ServiceType type);
+
+    boolean hasServiceAvg(int stars);
+
+    Service find(String studentName, ServiceType type);
 }

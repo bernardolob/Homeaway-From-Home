@@ -1,6 +1,7 @@
 package system.student;
 
 import dataStructures.Iterator;
+import system.Coordinates;
 import system.service.*;
 
 import java.io.Serializable;
@@ -49,18 +50,12 @@ public interface Student extends Serializable {
 
     /**
      * Updates the student's current location to the specified service.
+     *
      * @param s - the new service to set as the student's current location
+     * @return
      * @pre - the service must be valid
      */
-    void changeLocation(Service s);
-
-
-    /**
-     * Checks if the student is of type Thrifty.
-     * @pre - the student's type must be properly initialized
-     * @return - true if the student is Thrifty, false otherwise
-     */
-    boolean isThrifty();
+    boolean changeLocation(Service s);
 
 
     /**
@@ -93,4 +88,10 @@ public interface Student extends Serializable {
      * @return - the service (String) where the student is currently located
      */
     String getLocationName();
+
+    void saveVisit(Service service);
+
+    void removeStudent();
+
+    Coordinates getCoordinates();
 }

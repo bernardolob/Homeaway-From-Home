@@ -12,4 +12,6 @@ public interface Country extends Serializable {
     void addCitizen(Student citizen);
 
     Iterator<Student> getStudentsIterator();
+
+    void removeCitizen(Student student);
 }
