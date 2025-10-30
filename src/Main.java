@@ -513,6 +513,30 @@ public class Main {
     }
 
     private static void find(App app, Scanner in) {
+        String name = in.nextLine().trim();
+        String sType = in.nextLine();
+        ServiceType type = getServiceType(sType);
+        try {
+            if (!app.getStudentName(name).equals(name)) {
+                System.out.printf(DOES_NOT_EXIST, name);
+            }
+            else if (app.noTypeServices(type)) {
+                System.out.printf(NO_TYPE_MSG, sType);
+            }
+            else {
+                if (app.isThrifty(name) && app.updates(name, type)) {
+                    String service = app.find(name, type);
+                    System.out.printf(PLACE_MSG, service);
+                    System.out.printf(UPDATED_MSG, name);
+                } else {
+                    String service = app.find(name, type);
+                    System.out.printf(FIND_MSG, service);
+                }
+            }
+        }
+        catch (InvalidServiceTypeException e) {
+            System.out.printf(NO_TYPE_MSG, sType);
+        }
     }
 
 
