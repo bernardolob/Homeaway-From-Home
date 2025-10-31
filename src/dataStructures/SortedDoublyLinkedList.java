@@ -2,6 +2,11 @@ package dataStructures;
 
 import dataStructures.exceptions.NoSuchElementException;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serial;
+
 
 /**
  * Sorted Doubly linked list Implementation
@@ -15,19 +20,44 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
     /**
      *  Node at the head of the list.
      */
-    private DoublyListNode<E> head;
+    private transient DoublyListNode<E> head;
     /**
      * Node at the tail of the list.
      */
-    private DoublyListNode<E> tail;
+    private transient DoublyListNode<E> tail;
     /**
      * Number of elements in the list.
      */
-    private int currentSize;
+    private transient int currentSize;
     /**
      * Comparator of elements.
      */
     private final Comparator<E> comparator;
+
+    @Serial
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject(); // escreve os campos normais (não temos aqui, mas é boa prática)
+        oos.writeInt(currentSize); // escreve o tamanho
+        DoublyListNode<E> node = head;
+        while (node != null) {
+            oos.writeObject(node.getElement()); // escreve cada elemento
+            node = node.getNext();
+        }
+        oos.flush();
+    }
+
+
+    @Serial
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject(); // lê os campos normais
+        int size = ois.readInt(); // lê o tamanho
+        for (int i = 0; i < size; i++) {
+            @SuppressWarnings("unchecked")
+            E element = (E) ois.readObject();
+            add(element); // recria os nós
+        }
+    }
+
     /**
      * Constructor of an empty sorted double linked list.
      * head and tail are initialized as null.
