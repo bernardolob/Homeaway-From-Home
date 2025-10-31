@@ -273,17 +273,11 @@ public class AreaClass implements Area {
             }
         }
         else {
-            switch (type) {
-                case LODGING -> {
-                    return cheapestLodging;
-                }
-                case EATING -> {
-                    return cheapestEating;
-                }
-                case LEISURE -> {
-                    return cheapestLeisure;
-                }
-            }
+            return switch (type) {
+                case LODGING    -> cheapestLodging;
+                case EATING     -> cheapestEating;
+                case LEISURE    -> cheapestLeisure;
+            };
         }
         return null;
     }
@@ -340,21 +334,18 @@ public class AreaClass implements Area {
 
     private void checkForCheapest(Service s) {
         switch (s.getType()) {
-            case LODGING -> {
-                if (cheapestLodging == null || s.getPrice() < cheapestLodging.getPrice()) {
+            case LODGING :
+                if (cheapestLodging == null || s.getPrice() < cheapestLodging.getPrice())
                     cheapestLodging = (Lodging) s;
-                }
-            }
-            case LEISURE -> {
-                if (cheapestLeisure == null || s.getPrice() < cheapestLeisure.getPrice()) {
+                break;
+            case LEISURE :
+                if (cheapestLeisure == null || s.getPrice() < cheapestLeisure.getPrice())
                     cheapestLeisure = (Leisure) s;
-                }
-            }
-            case EATING -> {
-                if (cheapestEating == null || s.getPrice() < cheapestEating.getPrice()) {
+                break;
+            case EATING :
+                if (cheapestEating == null || s.getPrice() < cheapestEating.getPrice())
                     cheapestEating = (Eating) s;
-                }
-            }
+                break;
         }
     }
 }

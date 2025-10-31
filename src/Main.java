@@ -16,6 +16,7 @@ public class Main {
 
 
     /************ Errors ************/
+
     private static final String UNDEFINED_BOUNDS_ERR     = "System bounds not defined.\n";
     private static final String INVALID_BOUNDS_ERR       = "Invalid bounds.\n";
     private static final String EXISTING_BOUNDS_ERR      = "Bounds already exists. Please load it!\n";
@@ -76,7 +77,6 @@ public class Main {
     private static final String DISTRACTED_MSG  = " %s is distracted!\n";
     // Move
     private static final String MOVE_MSG        = "lodging %s is now %s's home. %s is at home.\n";
-    private static final String ALREADY_HOME_MSG    = "That is %s's home!\n";
     // Users
     private static final String USERS_MSG       = "%s: %s\n";
     private static final String NO_USERS_MSG    = "No students on %s!\n";
@@ -358,7 +358,7 @@ public class Main {
         } catch (NonExistingStudentException e) {
             System.out.printf(NON_EXISTING_ERR, student);
         } catch (AlreadyHomeException e){
-            System.out.printf(ALREADY_HOME_MSG, app.getStudentName(student));
+            System.out.printf(ALREADY_HOME_ERR, app.getStudentName(student));
         } catch (ServiceFullException e){
             System.out.printf(LODGING_FULL_ERR, lodging);
         } catch (UnacceptableMoveException e) {
@@ -374,25 +374,11 @@ public class Main {
             if (!CRESCENT.equals(order) && !DECRESCENT.equals(order))
                 throw new InvalidOrderException();
             TwoWayIterator<Student> it = app.getUsers(order, service);
+            String serviceName = app.getServiceName(service);
             if (CRESCENT.equals(order)) {
-                if (!it.hasNext())
-                    System.out.printf(NO_USERS_MSG, app.getServiceName(service));
-                else {
-                    while (it.hasNext()) {
-                        Student s = it.next();
-                        System.out.printf(USERS_MSG, s.getName(), s.getStringType());
-                    }
-                }
+                listUsersCrescent(it, serviceName);
             } else {
-                it.fullForward();
-                if (!it.hasPrevious())
-                    System.out.printf(NO_USERS_MSG, app.getServiceName(service));
-                else {
-                    while (it.hasPrevious()) {
-                        Student s = it.previous();
-                        System.out.printf(USERS_MSG, s.getName(), s.getStringType());
-                    }
-                }
+                listUsersDecrescent(it, serviceName);
             }
         } catch (UndefinedBoundsException e) {
             System.out.printf(UNDEFINED_BOUNDS_ERR);
@@ -543,5 +529,30 @@ public class Main {
 
     private static void unknown() {
         System.out.printf(UNKNOWN_MSG);
+    }
+
+    private static void listUsersCrescent(TwoWayIterator<Student> it, String serviceName) {
+        it.rewind();
+        if (!it.hasNext())
+            System.out.printf(NO_USERS_MSG, serviceName);
+        else {
+            while (it.hasNext()) {
+                Student s = it.next();
+                System.out.printf(USERS_MSG, s.getName(), s.getStringType());
+            }
+        }
+    }
+
+    private static void listUsersDecrescent(TwoWayIterator<Student> it, String serviceName) {
+        it.fullForward();
+        if (!it.hasPrevious())
+            System.out.printf(NO_USERS_MSG, serviceName);
+        else {
+            while (it.hasPrevious()) {
+                Student s = it.previous();
+                System.out.printf(USERS_MSG, s.getName(), s.getStringType());
+            }
+        }
+
     }
 }
