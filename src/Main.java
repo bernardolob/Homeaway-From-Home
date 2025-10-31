@@ -7,10 +7,14 @@ import system.*;
 import system.service.Service;
 import system.student.Student;
 
+/**
+ * @author Guilherme Santos (65443) gj.santos@campus.fct.unl.pt
+ * @author Bernardo Lobão   (68022) b.lobao@campus.fct.unl.pt
+ */
+
 public class Main {
 
 // CONSTANTS
-
 
     /************ Errors ************/
 
@@ -157,17 +161,29 @@ public class Main {
         }
     }
 
+    /**
+     * Exits application.
+     * @param app to exit
+     */
     private static void exit(App app) {
         System.out.printf(EXIT_MSG);
         if (!app.isUndefined())
             app.saveArea();
     }
 
+    /**
+     * Lists commands and each command description.
+     */
     private static void help() {
         for (Commands c : Commands.values())
             System.out.printf(HELP_MSG, c.name().toLowerCase(), c.getDescription());
     }
 
+    /**
+     * Creates a new bound.
+     * @param app current application
+     * @param in scanner
+     */
     private static void bounds(App app, Scanner in) {
         long yMax = in.nextLong();
         long xMin = in.nextLong();
@@ -184,6 +200,10 @@ public class Main {
         }
     }
 
+    /**
+     * Saves current area to a file in the project directory.
+     * @param app
+     */
     private static void save(App app) {
         try {
             String areaName = app.saveArea();
@@ -193,6 +213,11 @@ public class Main {
         }
     }
 
+    /**
+     * Loads an area stored in the project files.
+     * @param app current application
+     * @param in scanner
+     */
     private static void load(App app, Scanner in) {
         String area = in.nextLine().trim();
         try {
@@ -203,6 +228,11 @@ public class Main {
         }
     }
 
+    /**
+     * Creates a new service.
+     * @param app current application
+     * @param in scanner
+     */
     private static void service(App app, Scanner in) {
         String type = in.next().toLowerCase();
         long latitude = in.nextLong();
@@ -235,6 +265,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists all services of the current area.
+     * @param app current application
+     * @param in scanner
+     */
     private static void services(App app, Scanner in) {
         in.nextLine();
         try {
@@ -253,6 +288,11 @@ public class Main {
         }
     }
 
+    /**
+     * Creates a new student.
+     * @param app current application
+     * @param in scanner
+     */
     private static void student(App app, Scanner in) {
         String type = in.nextLine().trim();
         String name = in.nextLine().trim();
@@ -275,6 +315,11 @@ public class Main {
         }
     }
 
+    /**
+     * Deletes a student from the system.
+     * @param app current application
+     * @param in scanner
+     */
     private static void leave(App app, Scanner in) {
         String name = in.nextLine().trim();
         try {
@@ -289,6 +334,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists all students or students from a determined country.
+     * @param app current application
+     * @param in scanner
+     */
     private static void students(App app, Scanner in) {
         String country = in.nextLine().trim();
         try {
@@ -313,6 +363,11 @@ public class Main {
         }
     }
 
+    /**
+     * Changes a student's location.
+     * @param app current application
+     * @param in scanner
+     */
     private static void go(App app, Scanner in) {
         String name = in.nextLine().trim();
         String location = in.nextLine().trim();
@@ -339,6 +394,11 @@ public class Main {
         }
     }
 
+    /**
+     * Changes the student's home.
+     * @param app current application
+     * @param in scanner
+     */
     private static void move(App app, Scanner in) {
         String student = in.nextLine().trim();
         String lodging = in.nextLine().trim();
@@ -363,6 +423,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists students in a determined limited service.
+     * @param app current application
+     * @param in scanner
+     */
     private static void users(App app, Scanner in) {
         String order = in.next().trim();
         String service = in.nextLine().trim();
@@ -388,6 +453,11 @@ public class Main {
         }
     }
 
+    /**
+     * Rates a service.
+     * @param app current application
+     * @param in scanner
+     */
     private static void star(App app, Scanner in) {
         int stars = in.nextInt();
         String service = in.nextLine().trim();
@@ -405,6 +475,11 @@ public class Main {
         }
     }
 
+    /**
+     * Shows the location of a determined student.
+     * @param app current application
+     * @param in scanner
+     */
     private static void where(App app, Scanner in) {
         String studentName = in.nextLine().trim();
         try {
@@ -419,6 +494,11 @@ public class Main {
         }
     }
 
+    /**
+     * List the locations visited by a visiting student.
+     * @param app application
+     * @param in scanner
+     */
     private static void visited(App app, Scanner in) {
         String student = in.nextLine().trim();
         try {
@@ -442,6 +522,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists all services ordered by rating.
+     * @param app application
+     * @param in scanner
+     */
     private static void ranking(App app, Scanner in) {
         in.nextLine();
         try {
@@ -463,6 +548,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists the nearest services with a determined rating from a student.
+     * @param app application
+     * @param in scanner
+     */
     private static void ranked(App app, Scanner in) {
         String typeString = in.next().trim();
         int stars = in.nextInt();
@@ -490,6 +580,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists all services with a certain tag.
+     * @param app application
+     * @param in scanner
+     */
     private static void tag(App app, Scanner in) {
         String tag = in.nextLine().trim();
         try {
@@ -507,6 +602,11 @@ public class Main {
         }
     }
 
+    /**
+     * Gets the best service for a certain student.
+     * @param app application
+     * @param in scanner
+     */
     private static void find(App app, Scanner in) {
         String studentName = in.nextLine().trim();
         String serviceType = in.nextLine().trim();
@@ -524,10 +624,18 @@ public class Main {
         }
     }
 
+    /**
+     * Prints unknown command message.
+     */
     private static void unknown() {
         System.out.printf(UNKNOWN_MSG);
     }
 
+    /**
+     * Lists users command in a crescent order.
+     * @param it student iterator
+     * @param serviceName service name
+     */
     private static void listUsersCrescent(TwoWayIterator<Student> it, String serviceName) {
         it.rewind();
         if (!it.hasNext())
@@ -540,6 +648,11 @@ public class Main {
         }
     }
 
+    /**
+     * Lists users command in a decrescent order.
+     * @param it student iterator
+     * @param serviceName service name
+     */
     private static void listUsersDecrescent(TwoWayIterator<Student> it, String serviceName) {
         it.fullForward();
         if (!it.hasPrevious())
