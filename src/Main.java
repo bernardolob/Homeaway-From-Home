@@ -12,9 +12,6 @@ public class Main {
 // CONSTANTS
 
 
-    // TODO NOTA: Perguntar à professora se é melhor ter uma (ou mais) classe(s) só para as constantes.
-
-
     /************ Errors ************/
 
     private static final String UNDEFINED_BOUNDS_ERR     = "System bounds not defined.\n";

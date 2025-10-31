@@ -30,7 +30,6 @@ public abstract class AbstractLimitedServiceClass extends AbstractServiceClass i
     }
 
     public void removeStudent(Student student) {
-        //TODO: Still missing try catch.
         presentStudents.remove(presentStudents.indexOf(student));
     }
 

@@ -134,7 +134,6 @@ public class SortedDoublyLinkedList<E> implements SortedList<E> {
      * @return true iff the element exists in the list.
      */
     public boolean contains(E element) {
-        //TODO: Left as an exercise.
         return get(element) != null;
     }
 
