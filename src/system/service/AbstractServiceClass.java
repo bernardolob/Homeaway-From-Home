@@ -1,7 +1,5 @@
 package system.service;
 
-import dataStructures.DoublyLinkedList;
-import dataStructures.List;
 import dataStructures.SortedDoublyLinkedList;
 import dataStructures.SortedList;
 import system.Coordinates;

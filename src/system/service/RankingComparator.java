@@ -1,4 +1,5 @@
 package system.service;
+
 import dataStructures.Comparator;
 
 public class RankingComparator implements Comparator<Service> {

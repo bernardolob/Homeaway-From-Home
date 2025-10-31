@@ -1,7 +1,6 @@
 package system.service;
 
 import system.Coordinates;
-
 import java.io.Serializable;
 
 public interface Service extends Serializable {

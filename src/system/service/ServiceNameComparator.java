@@ -1,6 +1,6 @@
 package system.service;
+
 import dataStructures.Comparator;
-import system.student.Student;
 
 public class ServiceNameComparator implements Comparator<Service> {
 

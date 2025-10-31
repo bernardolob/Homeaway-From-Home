@@ -1,7 +1,6 @@
 package system.service;
 
 import dataStructures.Predicate;
-import system.Coordinates;
 
 public record ServiceTypeFilter(ServiceType type) implements Predicate<Service> {
 
