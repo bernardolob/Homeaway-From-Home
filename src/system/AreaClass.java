@@ -64,11 +64,10 @@ public class AreaClass implements Area {
     public void addService(ServiceType type, Coordinates coordinates, int price, int value, String name) {
         if (!isInside(coordinates))
             throw new InvalidLocationException();
-        Service newService = switch (type) {
-            case LEISURE    -> addLeisure(coordinates, price, value, name);
-            case EATING     -> addEating(coordinates, price, value, name);
-            case LODGING    -> addLodging(coordinates, price, value, name);
-        };
+        type.checkArguments(price, value);
+        if (hasService(name))
+            throw new AlreadyExistsException();
+        Service newService = type.createService(coordinates, price, value, name);
         servicesByName.add(newService);
         servicesByInsertion.addLast(newService);
         int averageStars = newService.getAverageStars();
@@ -313,36 +312,6 @@ public class AreaClass implements Area {
 
     private boolean hasService(String serviceName) {
         return getService(serviceName) != null;
-    }
-
-    private Service addLeisure(Coordinates coordinates, int ticketPrice, int discount, String name) {
-        if (ticketPrice <= 0)
-            throw new InvalidTicketPriceException();
-        if (discount < 0 || discount > 100)
-            throw new InvalidDiscountException();
-        if (hasService(name))
-            throw new AlreadyExistsException();
-        return new LeisureServiceClass(coordinates, ticketPrice, name, discount);
-    }
-
-    private Service addEating(Coordinates coordinates, int menuPrice, int capacity, String name) {
-        if (menuPrice <= 0)
-            throw new InvalidMenuPriceException();
-        if (capacity <= 0)
-            throw new InvalidCapacityException();
-        if (hasService(name))
-            throw new AlreadyExistsException();
-        return new EatingServiceClass(coordinates, menuPrice, name, capacity);
-    }
-
-    private Service addLodging(Coordinates coordinates, int roomPrice, int capacity, String name) {
-        if (roomPrice <= 0)
-            throw new InvalidRoomPriceException();
-        if (capacity <= 0)
-            throw new InvalidCapacityException();
-        if (hasService(name))
-            throw new AlreadyExistsException();
-        return new LodgingServiceClass(coordinates, roomPrice, name, capacity);
     }
 
     private Country getCountry(String countryName) {
