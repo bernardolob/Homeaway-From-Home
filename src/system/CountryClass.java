@@ -1,8 +1,9 @@
 package system;
 
+import dataStructures.DoublyLinkedList;
+import dataStructures.Iterator;
+import dataStructures.List;
 import system.student.Student;
-import dataStructures.*;
-import system.student.StudentNameComparator;
 
 public class CountryClass implements Country {
     private final String countryName;

@@ -1,7 +1,5 @@
 package system;
 
-import dataStructures.DoublyLinkedList;
-import dataStructures.List;
 import dataStructures.TwoWayIterator;
 import exceptions.*;
 import dataStructures.Iterator;

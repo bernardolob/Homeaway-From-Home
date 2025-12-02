@@ -1,7 +1,7 @@
 package system;
 
-import exceptions.*;
 import dataStructures.*;
+import exceptions.*;
 import system.service.*;
 import system.student.*;
 import system.student.StudentType;

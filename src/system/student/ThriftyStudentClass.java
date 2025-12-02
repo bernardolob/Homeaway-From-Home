@@ -1,6 +1,5 @@
 package system.student;
 
-import dataStructures.Iterator;
 import exceptions.AlreadyHomeException;
 import exceptions.ServiceFullException;
 import exceptions.UnacceptableMoveException;
