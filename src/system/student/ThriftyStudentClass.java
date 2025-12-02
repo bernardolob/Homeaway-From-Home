@@ -33,16 +33,6 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
     }
 
     @Override
-    public boolean hasNotVisited() {
-        return false;
-    }
-
-    @Override
-    public Iterator<Service> getVisitsIterator() {
-        return null;
-    }
-
-    @Override
     public String getStringType() {
         return StudentType.THRIFTY.toString().toLowerCase();
     }
@@ -58,7 +48,7 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
     }
 
     @Override
-    public void saveVisit(Service s) {
+    public void processVisit(Service s) {
         if (s instanceof Eating)
             if (cheapestEating == -1 || s.getPrice() < cheapestEating)
                 cheapestEating = s.getPrice();

@@ -1,6 +1,5 @@
 package system.student;
 
-import dataStructures.Iterator;
 import system.Coordinates;
 import system.service.*;
 
@@ -23,6 +22,11 @@ public interface Student extends Serializable {
      */
     String getName();
 
+    /**
+     *
+     * @return
+     */
+    Coordinates getCoordinates();
 
     /**
      * Retrieves the lodging service where the student is currently staying.
@@ -57,22 +61,6 @@ public interface Student extends Serializable {
      */
     boolean changeLocation(Service s);
 
-
-    /**
-     * Checks if the student has not visited any service.
-     * @pre - the student's visit status must be properly initialized
-     * @return - true if the student has not visited any service, false otherwise
-     */
-    boolean hasNotVisited();
-
-
-    /**
-     * Retrieves an iterator for the list of services the student has visited.
-     * @pre - the visits list must be initialized and contain the services the student has visited
-     * @return - an iterator for the student's visited services
-     */
-    Iterator<Service> getVisitsIterator();
-
     /**
      * Returns the type of the student (e.g., bookish, outgoing, thrifty).
      *
@@ -89,9 +77,8 @@ public interface Student extends Serializable {
      */
     String getLocationName();
 
-    void saveVisit(Service service);
+    void processVisit(Service service);
 
     void removeStudent();
 
-    Coordinates getCoordinates();
 }

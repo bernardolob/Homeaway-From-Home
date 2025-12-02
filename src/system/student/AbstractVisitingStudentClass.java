@@ -15,7 +15,7 @@ public abstract class AbstractVisitingStudentClass extends AbstractStudentClass 
     public AbstractVisitingStudentClass(String name, Lodging home, Country country) {
         super(name, home, country);
         visits = new DoublyLinkedList<>();
-        saveVisit(home);
+        processVisit(home);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class BookishStudentClass extends AbstractVisitingStudentClass implements
     }
 
     @Override
-    public void saveVisit(Service s) {
+    public void processVisit(Service s) {
         if (s.getType().equals(ServiceType.LEISURE) && visits.indexOf(s) == -1) {
             visits.addLast(s);
         }

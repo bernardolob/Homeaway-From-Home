@@ -56,7 +56,7 @@ public abstract class AbstractStudentClass implements Student {
         }
         if (location instanceof Eating)
             ((Eating) location).removeStudent(this);
-        saveVisit(service);
+        processVisit(service);
         location = service;
         return isDistracted(service);
     }
@@ -72,7 +72,7 @@ public abstract class AbstractStudentClass implements Student {
         return false;
     }
 
-    public abstract void saveVisit(Service s);
+    public abstract void processVisit(Service s);
 
     @Override
     public void removeStudent() {

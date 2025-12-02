@@ -15,7 +15,7 @@ public class OutgoingStudentClass extends AbstractVisitingStudentClass implement
     }
 
     @Override
-    public void saveVisit(Service s) {
+    public void processVisit(Service s) {
         if (visits.indexOf(s) == -1) {
             visits.addLast(s);
         }

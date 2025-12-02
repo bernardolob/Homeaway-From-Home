@@ -183,9 +183,9 @@ public class AreaClass implements Area {
         if (student == null) {
             throw new NonExistingStudentException();
         }
-        if (student instanceof Thrifty)
+        if (!(student instanceof VisitingStudent))
             throw new ThriftyStudentException();
-        return student.getVisitsIterator();
+        return ((VisitingStudent) student).getVisitsIterator();
     }
 
     @Override
