@@ -225,9 +225,7 @@ public class ListInArray<E> implements List<E> {
     @SuppressWarnings("unchecked")
     private void resize() {
         E[] newElems = (E[]) new Object[elems.length*FACTOR];
-        for (int i = 0; i < counter; i++) {
-            newElems[i] = elems[i];
-        }
+        if (counter >= 0) System.arraycopy(elems, 0, newElems, 0, counter);
         elems = newElems;
     }
 }

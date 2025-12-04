@@ -18,13 +18,13 @@ public class InOrderIterator<E> implements Iterator<E> {
     /**
      * Root Node
      */
-    private BTNode<E> root;
+    private final BTNode<E> root;
 
     /**
      *
-     * @param root
+     * @param root node
      */
-    public  InOrderIterator(BTNode<E> root) {
+    public InOrderIterator(BTNode<E> root) {
         this.root=root;
         rewind();
     }
@@ -56,8 +56,11 @@ public class InOrderIterator<E> implements Iterator<E> {
     }
 
     private void advance() {
-        //TODO: Left as an exercise.
-        
+        if (next == null)
+            return;
+        if (next.getRightChild() != null)
+            next = ((BTNode<E>) next.getRightChild()).furtherLeftElement();
+        else next = (BTNode<E>) getLastRightParent(next);
     }
 
 
@@ -70,5 +73,13 @@ public class InOrderIterator<E> implements Iterator<E> {
             next=null;
         else
             next=root.furtherLeftElement();
+    }
+
+    private Node<E> getLastRightParent(BTNode<E> node) {
+        if (node == null || node.getParent() == null)
+            return null;
+        if (node.equals(((BTNode<E>)node.getParent()).getLeftChild()))
+            return node.getParent();
+        return getLastRightParent((BTNode<E>) node.getParent());
     }
 }

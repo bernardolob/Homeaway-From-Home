@@ -21,7 +21,7 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Constructor
-     * @param elem
+     * @param elem new element
      */
     BTNode(E elem){
         this(elem,null,null,null);
@@ -29,47 +29,50 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Constructor
-     * @param elem
-     * @param parent
+     * @param elem new element
+     * @param parent node
      */
     BTNode(E elem, BTNode<E> parent) {
         this(elem,parent,null,null);
     }
     /**
      * Constructor
-     * @param elem
-     * @param parent
-     * @param leftChild
-     * @param rightChild
+     * @param elem new element
+     * @param parent node
+     * @param leftChild node
+     * @param rightChild node
      */
     BTNode(E elem, BTNode<E> parent, BTNode<E> leftChild, BTNode<E> rightChild){
-        //TODO: Left as an exercise.
+        this.element = elem;
+        this.parent = parent;
+        this.leftChild = leftChild;
+        this.rightChild = rightChild;
     }
 
     /**
      *  Returns the element of the node
-     * @return
+     * @return node element
      */
     public E getElement() {
         return element;
     }
     /**
      * Returns the left son of node
-     * @return
+     * @return left child
      */
     public Node<E> getLeftChild(){
         return leftChild;
     }
     /**
      * Returns the right son of node
-     * @return
+     * @return right child
      */
     public Node<E> getRightChild(){
         return rightChild;
     }
     /**
      * Returns the parent of node
-     * @return
+     * @return parent
      */
     public Node<E> getParent(){
         return parent;
@@ -77,7 +80,7 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Returns true if node n does not have any children.
-     * @return
+     * @return if is a leaf
      */
     boolean isLeaf() {
         return getLeftChild()== null && getRightChild()==null;
@@ -85,7 +88,7 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Update the element
-     * @param elem
+     * @param elem new element
      */
     public void setElement(E elem) {
         element=elem;
@@ -93,7 +96,7 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Update the left child
-     * @param node
+     * @param node left child node
      */
     public void setLeftChild(Node<E> node) {
         leftChild=node;
@@ -101,7 +104,7 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Update the right child
-     * @param node
+     * @param node right child node
      */
     public void setRightChild(Node<E> node) {
         rightChild=node;
@@ -109,7 +112,7 @@ class BTNode<E> implements Node<E> {
 
     /**
      * Update the parent
-     * @param node
+     * @param node parent node
      */
     public void setParent(Node<E> node) {
         parent=node;
@@ -125,29 +128,40 @@ class BTNode<E> implements Node<E> {
     /**
      * Returns the height of the subtree rooted at this node.
      */
-
     public int getHeight() {
-        //TODO: Left as an exercise.
-        return 0;
+        if (isLeaf())
+            return 0;
+        BTNode<E> left= (BTNode<E>)getLeftChild();
+        BTNode<E> right= (BTNode<E>)getRightChild();
+        if (left==null)
+            return 1+right.getHeight();
+        if (right == null)
+            return 1+left.getHeight();
+        return 1 + Math.max(left.getHeight(),right.getHeight());
     }
 
     /**
      *
-     * @return
+     * @return the furthermost left element of the tree.
      */
     BTNode<E> furtherLeftElement() {
-        //TODO: Left as an exercise.
-	return null;
+        BTNode<E> node = this;
+        while(node.leftChild!=null){
+            node = (BTNode<E>) node.leftChild;
+        }
+        return node;
     }
 
-   /**
+    /**
      *
-     * @return
+     * @return the furthermost right element of the tree.
      */
     BTNode<E> furtherRightElement() {
-         //TODO: Left as an exercise.
-	return null;
+        BTNode<E> node = this;
+        while(node.rightChild!=null){
+            node = (BTNode<E>) node.rightChild;
+        }
+        return node;
     }
 
-   //new methods: Left as an exercise.
 }

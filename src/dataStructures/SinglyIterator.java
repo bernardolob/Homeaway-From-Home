@@ -12,7 +12,7 @@ class SinglyIterator<E>  implements Iterator<E> {
     /**
      * First node of the list.
      */
-    private SinglyListNode<E> first;
+    private final SinglyListNode<E> first;
 
     /**
      * Node with the next element in the iteration.

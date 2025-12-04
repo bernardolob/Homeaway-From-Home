@@ -17,16 +17,16 @@ public interface SortedMap<K extends Comparable<K>, V>
     /**
      * Returns the entry with the smallest key in the dictionary.
      *
-     * @return
-     * @throws EmptyMapException
+     * @return minimum entry
+     * @throws EmptyMapException empty map
      */
     Entry<K,V> minEntry( );
 
     /**
      * Returns the entry with the largest key in the dictionary.
      *
-     * @return
-     * @throws EmptyMapException
+     * @return maximum entry
+     * @throws EmptyMapException empty map
      */
     Entry<K,V> maxEntry( );
 

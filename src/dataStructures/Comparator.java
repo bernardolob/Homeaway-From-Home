@@ -18,9 +18,9 @@ public interface Comparator<E> extends Serializable {
      * signum(compare(x, y)) == -signum(compare(y, x)) for all x and y.
      * relation is transitive: ((compare(x, y)>0) && (compare(y, z)>0)) implies compare(x, z)>0.
      * compare(x, y)==0 implies that signum(compare(x, z))==signum(compare(y, z)) for all z.
-     * @param x
-     * @param y
-     * @return
+     * @param x first element
+     * @param y second element
+     * @return int value of x - y
      */
     int compare(E x, E y);
 }

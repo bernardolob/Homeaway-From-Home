@@ -1,4 +1,5 @@
 package dataStructures;
+
 /**
  * Map with a singly linked list with head and size
  * @author AED  Team

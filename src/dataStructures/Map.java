@@ -13,24 +13,24 @@ import java.io.Serializable;
 public interface Map<K,V> extends Serializable {
 
     record Entry<K,V>(K key,V value) implements Serializable {
-        
+        @Override
         public boolean equals(Object obj) {
-           //TODO: Left as an exercise.
-            return false;
-
+            if (!(obj instanceof Map.Entry<?, ?>))
+                return false;
+            return key.equals(((Map.Entry<?,?>)obj).key) && value.equals(((Map.Entry<?,?>)obj).value);
         }
     }
     /**
      * Returns true iff the dictionary contains no entries.
      * @return true if dictionary is empty
      */
-    boolean isEmpty( );                                           
+    boolean isEmpty( );
 
     /**
      * Returns the number of entries in the dictionary.
      * @return number of elements in the dictionary
      */
-    int size( );                                                  
+    int size( );
 
     /**
      * If there is an entry in the dictionary whose key is the specified key,
@@ -60,7 +60,7 @@ public interface Map<K,V> extends Serializable {
      * @return previous value associated with key, 
      * or null if the dictionary does not an entry with that key
      */
-    V remove( K key );                                
+    V remove( K key );
 
     /**
      * Returns an iterator of the entries in the dictionary.

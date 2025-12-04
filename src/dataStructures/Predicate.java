@@ -11,8 +11,8 @@ package dataStructures;
 public interface Predicate<E> {
     /**
      *  Filter that an element needs to check
-     * @param elem
-     * @return
+     * @param elem element
+     * @return boolean if element checks condition
      */
     boolean check(E elem);
 }
