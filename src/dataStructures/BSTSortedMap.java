@@ -90,10 +90,10 @@ public class BSTSortedMap<K extends Comparable<K>,V> extends BTree<Map.Entry<K,V
     @Override
     public V put(K key, V value) {
         BTNode<Entry<K,V>> node = this.getNode((BTNode<Entry<K, V>>) root, key);
-        if ( node == null || node.getElement().key().compareTo(key) != 0 ) {
-            // Key does not exist, node is "parent"
+        if ( node == null /* Tree is Empty */ ||
+                node.getElement().key().compareTo(key) != 0 /* Key does not exist, node is "parent"  */ ) {
             BTNode<Entry<K,V>> newLeaf = new BTNode<>(new Entry<>(key, value));
-            this.linkSubtreeInsert(newLeaf, node);
+            this.linkSubtreeInsert(newLeaf, node); // "Node" does not have any children
             currentSize++;
             return null;
         } else {
@@ -171,16 +171,26 @@ public class BSTSortedMap<K extends Comparable<K>,V> extends BTree<Map.Entry<K,V
 
     /**
      * Links a new subtree, rooted at the specified node, to the tree.
+     * The parent should NOT have a child on the insertion side
      *
      * @param node - root of the subtree
      * @param parent - parent node for the new subtree
      */
-    private void linkSubtreeInsert(BTNode<Entry<K,V>> node, BTNode<Entry<K,V>> parent) {
+    protected void linkSubtreeInsert(BTNode<Entry<K,V>> node, BTNode<Entry<K,V>> parent) {
         if ( parent == null )
             // Change the root of the tree.
             root = node;
         else {
             if (node != null) {
+                BTNode<Entry<K,V>> oldNodeParent = (BTNode<Entry<K,V>>)node.getParent();
+                // Detach node from old parent
+                if (oldNodeParent != null) {
+                    if (oldNodeParent.getRightChild().equals(node))
+                        oldNodeParent.setRightChild(null);
+                    else
+                        oldNodeParent.setLeftChild(null);
+                }
+                // Set new parent
                 node.setParent(parent);
                 // Change child of parent.
                 if (parent.getElement().key().compareTo(node.getElement().key()) >= 0)
@@ -199,7 +209,7 @@ public class BSTSortedMap<K extends Comparable<K>,V> extends BTree<Map.Entry<K,V
      * @param parent to be linked to grandchild, if not null.
      * @param middle node that is to be removed, child of parent, parent of grandchild
      */
-    private void linkSubtreeRemove(BTNode<Entry<K,V>> grandchild, BTNode<Entry<K,V>> parent, BTNode<Entry<K,V>> middle) {
+    protected void linkSubtreeRemove(BTNode<Entry<K,V>> grandchild, BTNode<Entry<K,V>> parent, BTNode<Entry<K,V>> middle) {
         if (parent == null) {
             // Change the root of the tree.
             if (grandchild != null)

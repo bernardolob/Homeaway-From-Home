@@ -11,44 +11,47 @@ class AVLNode<E> extends BTNode<E> {
 
     public AVLNode(E elem) {
         super(elem);
-        height=0;
+        updateHeight();
     }
-    
+
     public AVLNode( E element, AVLNode<E> parent,
                     AVLNode<E> left, AVLNode<E> right ){
-        super(element,parent,left,right);
-        //TODO: Left as an exercise.
+        super(element, parent, left, right);
+        updateHeight();
     }
     public AVLNode( E element, AVLNode<E> parent){
         super(element, parent,null, null);
-        height= 0;
+        updateHeight();
     }
 
-    private int height(AVLNode<E> no) {
-        if (no==null)	return -1;
-        return no.getHeight();
-    }
     public int getHeight() {
         return height;
+    }
+    private void updateHeight() {
+        height = super.getHeight();
     }
 
     /**
      * Update the left child and height
-     * @param node
+     * @param node node
      */
     public void setLeftChild(AVLNode<E> node) {
-        //TODO: Left as an exercise.
+        super.setLeftChild(node);
+        updateHeight();
     }
 
     /**
      * Update the right child and height
-     * @param node
+     * @param node node
      */
     public void setRightChild(AVLNode<E> node) {
-        //TODO: Left as an exercise.
+        super.setRightChild(node);
+        updateHeight();
     }
 // others public methods
 //TODO: Left as an exercise.
-
+    protected boolean isUnbalanced() {
+        return Math.abs(((AVLNode<E>) getLeftChild()).getHeight() - ((AVLNode<E>) getRightChild()).getHeight()) > 1;
+    }
 
 }
