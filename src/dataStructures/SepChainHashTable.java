@@ -21,7 +21,15 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
     
     public SepChainHashTable( int capacity ){
         super(capacity);
-       //TODO: Left as exercise
+        int primeCapacity = nextPrime(capacity);
+
+        this.table = (Map<K,V>[]) new Map[primeCapacity];
+
+        for (int i = 0; i < primeCapacity; i++) {
+            this.table[i] = new MapSinglyList<K,V>();
+        }
+
+        this.maxSize = (int)(primeCapacity * MAX_LOAD_FACTOR);
     }
 
     // Returns the hash value of the specified key.
@@ -37,8 +45,8 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
      * or null if the dictionary does not have an entry with that key
      */
     public V get(K key) {
-        //TODO: Left as an exercise.
-    	return null;
+        int pos = hash(key);
+        return table[pos].get(key);
     }
 
     /**
@@ -54,38 +62,71 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
     public V put(K key, V value) {
         if (isFull())
             rehash();
-        //TODO: Left as an exercise.
-       
-        return null;
+        if (isFull()) {
+            rehash();
+        }
+
+        int pos = hash(key);
+        V oldValue = table[pos].put(key, value);
+
+        if (oldValue == null) {
+            currentSize++;
+        }
+
+        return oldValue;
     }
 
 
     private void rehash() {
-        //TODO: Left as an exercise.
+        Map<K, V>[] oldTable = table;
+
+        int newCapacity = nextPrime(table.length * 2);
+        table = (Map<K, V>[]) new Map[newCapacity];
+
+        for (int i = 0; i < newCapacity; i++) {
+            table[i] = new MapSinglyList<>();
+        }
+
+        maxSize = (int) (newCapacity * MAX_LOAD_FACTOR);
+        currentSize = 0;
+
+        for (int i = 0; i < oldTable.length; i++) {
+            Iterator<Map.Entry<K, V>> it = oldTable[i].iterator();
+            while (it.hasNext()) {
+                Map.Entry<K, V> entry = it.next();
+                put(entry.key(), entry.value());
+            }
+        }
     }
 
-    /**
-     * If there is an entry in the dictionary whose key is the specified key,
-     * removes it from the dictionary and returns its value;
-     * otherwise, returns null.
-     *
-     * @param key whose entry is to be removed from the map
-     * @return previous value associated with key,
-     * or null if the dictionary does not an entry with that key
-     */
-    public V remove(K key) {
-        //TODO: Left as an exercise.
-        return null;
-    }
+        /**
+         * If there is an entry in the dictionary whose key is the specified key,
+         * removes it from the dictionary and returns its value;
+         * otherwise, returns null.
+         *
+         * @param key whose entry is to be removed from the map
+         * @return previous value associated with key,
+         * or null if the dictionary does not an entry with that key
+         */
+        public V remove (K key){
+            int pos = hash(key);
+            V removed = table[pos].remove(key);
 
-    /**
-     * Returns an iterator of the entries in the dictionary.
-     *
-     * @return iterator of the entries in the dictionary
-     */
-    public Iterator<Entry<K, V>> iterator() {
-        return new SepChainHashTableIterator<>(table);
-    }
+            if (removed != null) {
+                currentSize--;
+            }
+
+            return removed;
+        }
+
+        /**
+         * Returns an iterator of the entries in the dictionary.
+         *
+         * @return iterator of the entries in the dictionary
+         */
+        public Iterator<Entry<K, V>> iterator () {
+            return new SepChainHashTableIterator<>(table);
+        }
 
 
 }
