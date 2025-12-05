@@ -11,7 +11,7 @@ import dataStructures.exceptions.NoSuchElementException;
  */
 class SepChainHashTableIterator<K,V> implements Iterator<Map.Entry<K,V>> {
 
-    private Map<K,V>[] table;
+    private final Map<K,V>[] table;
     private int currentIndex;
     private Iterator<Map.Entry<K,V>> currentIterator;
 

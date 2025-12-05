@@ -9,12 +9,13 @@ import system.student.StudentType;
 public class AreaClass implements Area {
 
     private static final int NUMBER_OF_RANKS = 5;
+    private static final int NUMBER_OF_EXPECTED_COUNTRIES = 20;
 
     private final List<Service> servicesByInsertion;
     private final SortedMap<String, Service> servicesByName;
     private final List<List<Service>> servicesByRank;
     private final SortedMap<String, Student> studentsByName;
-    private final List<Country> countries;
+    private final Map<String, Country> countries;
 
     private Lodging cheapestLodging;
     private Eating  cheapestEating;
@@ -37,7 +38,7 @@ public class AreaClass implements Area {
         servicesByName = new AVLSortedMap<>();
         servicesByRank = new ListInArray<>(NUMBER_OF_RANKS);
         studentsByName = new AVLSortedMap<>();
-        countries = new DoublyLinkedList<>();
+        countries = new SepChainHashTable<>(NUMBER_OF_EXPECTED_COUNTRIES);
         for (int i = 0; i < NUMBER_OF_RANKS; i++) {
             servicesByRank.add(i, new DoublyLinkedList<>());
         }
@@ -107,7 +108,7 @@ public class AreaClass implements Area {
         Country country = getCountry(countryName);
         if (country == null) {
             country = new CountryClass(countryName);
-            countries.addLast(country);
+            countries.put(countryName.toLowerCase(), country);
         }
         Student newStudent = studentType.createStudent(name, lodging, country);
         studentsByName.put(name.toLowerCase(), newStudent);
@@ -302,13 +303,7 @@ public class AreaClass implements Area {
     }
 
     private Country getCountry(String countryName) {
-        Iterator<Country> it = countries.iterator();
-        while (it.hasNext()) {
-            Country country = it.next();
-            if (country.getCountryName().equalsIgnoreCase(countryName))
-                return country;
-        }
-        return null;
+        return countries.get(countryName.toLowerCase());
     }
 
     private Student getStudent(String studentName) {

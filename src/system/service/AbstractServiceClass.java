@@ -9,9 +9,7 @@ public abstract class AbstractServiceClass implements Service {
 
     private static final int DEFAULT_RATING = 4;
 
-    private static final String TAG_REGEX = " ";
-
-    private SortedList<String> tags;
+    private final SortedList<String> tags;
 
     private final Coordinates coordinates;
     protected int price;

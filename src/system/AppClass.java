@@ -35,6 +35,7 @@ public class AppClass implements App {
         return new Coordinates(x, y);
     }
 
+
     public String saveArea() {
         if (isUndefined())
             throw new UndefinedBoundsException();

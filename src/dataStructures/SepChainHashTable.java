@@ -18,7 +18,8 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
     public SepChainHashTable( ){
         this(DEFAULT_CAPACITY);
     }
-    
+
+    @SuppressWarnings({"unchecked"})
     public SepChainHashTable( int capacity ){
         super(capacity);
         int primeCapacity = nextPrime(capacity);
@@ -77,6 +78,7 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
     }
 
 
+    @SuppressWarnings({"unchecked"})
     private void rehash() {
         Map<K, V>[] oldTable = table;
 
@@ -90,10 +92,10 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
         maxSize = (int) (newCapacity * MAX_LOAD_FACTOR);
         currentSize = 0;
 
-        for (int i = 0; i < oldTable.length; i++) {
-            Iterator<Map.Entry<K, V>> it = oldTable[i].iterator();
+        for (Map<K, V> kvMap : oldTable) {
+            Iterator<Entry<K, V>> it = kvMap.iterator();
             while (it.hasNext()) {
-                Map.Entry<K, V> entry = it.next();
+                Entry<K, V> entry = it.next();
                 put(entry.key(), entry.value());
             }
         }

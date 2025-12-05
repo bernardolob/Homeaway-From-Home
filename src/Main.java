@@ -463,7 +463,7 @@ public class Main {
         String service = in.nextLine().trim();
         String tagLine = in.nextLine();
         Scanner tagScanner = new Scanner(tagLine);
-        List<String> tags = new ListInArray<>(50);
+        List<String> tags = new ListInArray<>(15);
         try {
             if (app.isUndefined()) throw new UndefinedBoundsException();
             while (tagScanner.hasNext()) {
