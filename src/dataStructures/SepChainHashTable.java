@@ -78,54 +78,55 @@ public class SepChainHashTable<K,V> extends HashTable<K,V> {
 
 
     private void rehash() {
-        Map<K,V>[] oldTable = table;
+        Map<K, V>[] oldTable = table;
 
         int newCapacity = nextPrime(table.length * 2);
-        table = (Map<K,V>[]) new Map[newCapacity];
+        table = (Map<K, V>[]) new Map[newCapacity];
 
         for (int i = 0; i < newCapacity; i++) {
             table[i] = new MapSinglyList<>();
         }
 
-        maxSize = (int)(newCapacity * MAX_LOAD_FACTOR);
+        maxSize = (int) (newCapacity * MAX_LOAD_FACTOR);
         currentSize = 0;
 
         for (int i = 0; i < oldTable.length; i++) {
-            Iterator<Map.Entry<K,V>> it = oldTable[i].iterator();
+            Iterator<Map.Entry<K, V>> it = oldTable[i].iterator();
             while (it.hasNext()) {
-                Map.Entry<K,V> entry = it.next();
+                Map.Entry<K, V> entry = it.next();
                 put(entry.key(), entry.value());
             }
+        }
     }
 
-    /**
-     * If there is an entry in the dictionary whose key is the specified key,
-     * removes it from the dictionary and returns its value;
-     * otherwise, returns null.
-     *
-     * @param key whose entry is to be removed from the map
-     * @return previous value associated with key,
-     * or null if the dictionary does not an entry with that key
-     */
-    public V remove(K key) {
-        int pos = hash(key);
-        V removed = table[pos].remove(key);
+        /**
+         * If there is an entry in the dictionary whose key is the specified key,
+         * removes it from the dictionary and returns its value;
+         * otherwise, returns null.
+         *
+         * @param key whose entry is to be removed from the map
+         * @return previous value associated with key,
+         * or null if the dictionary does not an entry with that key
+         */
+        public V remove (K key){
+            int pos = hash(key);
+            V removed = table[pos].remove(key);
 
-        if (removed != null) {
-            currentSize--;
+            if (removed != null) {
+                currentSize--;
+            }
+
+            return removed;
         }
 
-        return removed;
-    }
-
-    /**
-     * Returns an iterator of the entries in the dictionary.
-     *
-     * @return iterator of the entries in the dictionary
-     */
-    public Iterator<Entry<K, V>> iterator() {
-        return new SepChainHashTableIterator<>(table);
-    }
+        /**
+         * Returns an iterator of the entries in the dictionary.
+         *
+         * @return iterator of the entries in the dictionary
+         */
+        public Iterator<Entry<K, V>> iterator () {
+            return new SepChainHashTableIterator<>(table);
+        }
 
 
 }
