@@ -45,8 +45,31 @@ package dataStructures;
      // specified number; or zero if all such primes are greater
      // than Integer.MAX VALUE.
      protected static int nextPrime( int number ){
-         //TODO: Left as exercise
-        
+         if (number <= 2) {
+             return 2;
+         }
+
+         if (number % 2 == 0) {
+             number++;
+         }
+
+         while (number < Integer.MAX_VALUE) {
+             boolean isPrime = true;
+
+             for (int i = 3; i * i <= number; i += 2) {
+                 if (number % i == 0) {
+                     isPrime = false;
+                     break;
+                 }
+             }
+
+             if (isPrime) {
+                 return number;
+             }
+
+             number += 2;
+         }
+
          return 0;
      }
 
