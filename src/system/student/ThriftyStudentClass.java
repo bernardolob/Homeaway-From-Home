@@ -8,6 +8,9 @@ import system.service.*;
 
 public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty {
 
+    /**
+     * CheapestEating the student has ever visited.
+     */
     private float cheapestEating;
 
 
@@ -15,6 +18,7 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
         super(name, home, country);
         cheapestEating = -1;
     }
+
 
     @Override
     public void changeHome(Lodging newHome) {
@@ -27,6 +31,7 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
         super.changeHome(newHome);
     }
 
+    @Override
     public StudentType getType() {
         return StudentType.THRIFTY;
     }
@@ -37,7 +42,11 @@ public class ThriftyStudentClass extends AbstractStudentClass implements Thrifty
     }
 
 
-
+    /**
+     * Tells if a Thrifty Student is distracted.
+     * @param s service about to be
+     * @return true if is distracted, false otherwise
+     */
     public boolean isDistracted(Service s) {
         if (!(s instanceof Eating))
             return false;

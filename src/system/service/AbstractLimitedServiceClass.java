@@ -9,8 +9,14 @@ import system.student.Student;
 
 public abstract class AbstractLimitedServiceClass extends AbstractServiceClass implements LimitedService {
 
-    private final TwoWayList<Student> presentStudents; // Maybe better to have String instead of Student for Serializable
+    /**
+     * TwoWayList with all the present students
+     */
+    private final TwoWayList<Student> presentStudents;
 
+    /**
+     * Capacity of the LimitedService
+     */
     private final int capacity;
 
     public AbstractLimitedServiceClass(Coordinates coordinates, int price, String name, int capacity) {

@@ -11,6 +11,10 @@ public class BookishStudentClass extends AbstractVisitingStudentClass implements
         super(name, home, country);
     }
 
+    /**
+     * Record visit only if the service is a Leisure service
+     * @param s service
+     */
     @Override
     public void processVisit(Service s) {
         if (s.getType().equals(ServiceType.LEISURE) && visits.indexOf(s) == -1) {

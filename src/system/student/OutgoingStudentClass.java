@@ -14,6 +14,10 @@ public class OutgoingStudentClass extends AbstractVisitingStudentClass implement
         return StudentType.OUTGOING;
     }
 
+    /**
+     * If the service isn't recorded yet, the visit is added to the visits list.
+     * @param s service
+     */
     @Override
     public void processVisit(Service s) {
         if (visits.indexOf(s) == -1) {

@@ -23,8 +23,8 @@ public interface Student extends Serializable {
     String getName();
 
     /**
-     *
-     * @return
+     * Retrives the student's coordinates.
+     * @return Student Coordinates
      */
     Coordinates getCoordinates();
 

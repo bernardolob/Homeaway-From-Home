@@ -18,7 +18,6 @@ public abstract class AbstractVisitingStudentClass extends AbstractStudentClass 
         processVisit(home);
     }
 
-    @Override
     public boolean hasNotVisited() {
         return visits.isEmpty();
     }

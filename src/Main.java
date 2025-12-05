@@ -202,7 +202,7 @@ public class Main {
 
     /**
      * Saves current area to a file in the project directory.
-     * @param app
+     * @param app application
      */
     private static void save(App app) {
         try {

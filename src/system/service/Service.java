@@ -63,12 +63,39 @@ public interface Service extends Serializable {
      */
     int getAverageStars();
 
-    void evaluate(int stars, List<String> tag);
+    /**
+     * Adds a detailed evaluation with stars and tags.
+     *
+     * @param stars the star rating
+     * @param tags list of tags associated with the evaluation
+     * @pre stars must be between 1 and 5, tag != null
+     */
+    void evaluate(int stars, List<String> tags);
 
+    /**
+     * Checks whether the service contains a specific tag.
+     *
+     * @param tag tag to check
+     * @pre tag != null
+     * @return true if the service contains the tag, false otherwise
+     */
     boolean hasTag(String tag);
 
+    /**
+     * Computes the distance from this service to another coordinate.
+     *
+     * @param other coordinates to measure distance from
+     * @pre other != null
+     * @return distance in the same unit as coordinates
+     */
     long distanceFrom(Coordinates other);
 
+    /**
+     * Returns the coordinates of the service.
+     *
+     * @return the service coordinates
+     */
     Coordinates getCoordinates();
 
 }
+

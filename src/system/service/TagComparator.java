@@ -2,6 +2,9 @@ package system.service;
 
 import dataStructures.Comparator;
 
+/**
+* Compares two tags alphabetically, ignoring case.
+*/
 public class TagComparator implements Comparator<String> {
 
     @Override

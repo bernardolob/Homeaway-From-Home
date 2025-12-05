@@ -26,27 +26,33 @@ public abstract class AbstractServiceClass implements Service {
         tags = new SortedDoublyLinkedList<>(new TagComparator());
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public long getLatitude() {
         return coordinates.getY();
     }
 
+    @Override
     public long getLongitude() {
         return coordinates.getX();
     }
 
+    @Override
     public float getPrice() {
         return price;
     }
 
+    @Override
     public void addEvaluation(int stars) {
         evaluations++;
         evalSum += stars;
     }
 
+    @Override
     public int getAverageStars() {
         return Math.round((float) evalSum /evaluations);
     }
