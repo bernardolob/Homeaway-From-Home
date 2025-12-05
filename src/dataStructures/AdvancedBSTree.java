@@ -6,21 +6,34 @@ package dataStructures;
  * @param <K> Generic Key
  * @param <V> Generic Value
  */
-abstract class AdvancedBSTree <K extends Comparable<K>,V> extends BSTSortedMap<K,V>{
-      /**
- 	* Performs a single left rotation rooted at z node.
- 	* Node y was a  right  child  of z before the  rotation,
- 	* then z becomes the left child of y after the rotation.
- 	* @param z - root of the rotation
-	 * @pre: z has a right child
- 	*/
-	protected void rotateLeft( BTNode<Entry<K,V>> z){
-   	 //TODO: Left as an exercise.
-   	 //  a single rotation modifies a constant number of parent-child relationships,
-    	// it can be implemented in O(1)time
+abstract class AdvancedBSTree<K extends Comparable<K>,V> extends BSTSortedMap<K,V>{
+    /**
+     * Performs a single left rotation rooted at z node.
+     * Node y was a  right  child  of z before the  rotation,
+     * then z becomes the left child of y after the rotation.
+     * @param z - root of the rotation
+     * @pre: z has a right child
+     */
+    protected void rotateLeft( BTNode<Entry<K,V>> z){
+        //TODO: Left as an exercise.
+        //  a single rotation modifies a constant number of parent-child relationships,
+        // it can be implemented in O(1)time
         BTNode<Entry<K,V>> y = (BTNode<Entry<K, V>>) z.getRightChild();
         BTNode<Entry<K,V>> t2 = (BTNode<Entry<K, V>>) y.getLeftChild();
-        rotate(z, y, t2);
+        z.setRightChild(t2);
+        if (t2 != null)
+            t2.setParent(z);
+        if (z.getParent() == null)
+            root = y;
+        else {
+            if (z.equals( ((AVLNode<Entry<K,V>>) z.getParent()).getLeftChild()))
+                ((AVLNode<Entry<K,V>>) z.getParent()).setLeftChild(y);
+            else
+                ((AVLNode<Entry<K,V>>) z.getParent()).setRightChild(y);
+        }
+        y.setParent(z.getParent());
+        z.setParent(y);
+        y.setLeftChild(z);
     }
 
     /**
@@ -36,27 +49,22 @@ abstract class AdvancedBSTree <K extends Comparable<K>,V> extends BSTSortedMap<K
         // it can be implemented in O(1)time
         BTNode<Entry<K,V>> y = (BTNode<Entry<K, V>>) z.getLeftChild();
         BTNode<Entry<K,V>> t2 = (BTNode<Entry<K, V>>) y.getRightChild();
-        rotate(z, y, t2);
+        z.setLeftChild(t2);
+        if (t2 != null)
+            t2.setParent(z);
+        if (z.getParent() == null)
+            root = y;
+        else {
+            if (z.equals( ((AVLNode<Entry<K,V>>) z.getParent()).getLeftChild()))
+                ((AVLNode<Entry<K,V>>) z.getParent()).setLeftChild(y);
+            else
+                ((AVLNode<Entry<K,V>>) z.getParent()).setRightChild(y);
+        }
+        y.setParent(z.getParent());
+        z.setParent(y);
+        y.setRightChild(z);
     }
 
-    /**
-     * Performs a single rotation rooted at z node.
-     * @param z root node
-     * @param y child of z
-     * @param t2 child of y
-     */
-    private void rotate(BTNode<Entry<K, V>> z, BTNode<Entry<K, V>> y, BTNode<Entry<K, V>> t2) {
-        BTNode<Entry<K,V>> zOldParent = (BTNode<Entry<K, V>>) z.getParent();
-        linkSubtreeInsert(t2, z);
-        y.setParent(zOldParent);
-        if (zOldParent != null){
-            if (zOldParent.getLeftChild().equals(z))
-                zOldParent.setLeftChild(y);
-            else
-                zOldParent.setRightChild(y);
-        }
-        linkSubtreeInsert(z, y);
-    }
 
     /**
      * Performs a tri-node restructuring (a single or double rotation rooted at X node).
@@ -85,8 +93,8 @@ abstract class AdvancedBSTree <K extends Comparable<K>,V> extends BSTSortedMap<K
         BTNode<Entry<K,V>> z = (BTNode<Entry<K, V>>) y.getParent();
         BTNode<Entry<K,V>> newRoot;
 
-        if (z.getLeftChild().equals(y)) {
-            if (y.getLeftChild().equals(x)) { // caso 1
+        if (y.equals(z.getLeftChild())) {
+            if (x.equals(y.getLeftChild())) { // caso 1
                 rotateRight(z);
                 newRoot = y;
             } else {                     // caso 2
@@ -95,7 +103,7 @@ abstract class AdvancedBSTree <K extends Comparable<K>,V> extends BSTSortedMap<K
                 newRoot = x;
             }
         } else {
-            if (y.getLeftChild().equals(x)) { // caso 3
+            if (x.equals(y.getLeftChild())) { // caso 3
                 rotateRight(y);
                 rotateLeft(z);
                 newRoot = x;
@@ -104,6 +112,8 @@ abstract class AdvancedBSTree <K extends Comparable<K>,V> extends BSTSortedMap<K
                 newRoot = y;
             }
         }
+        if (newRoot.getParent() == null)
+            root = newRoot;
         return newRoot;
     }
 }

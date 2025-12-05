@@ -11,7 +11,7 @@ class AVLNode<E> extends BTNode<E> {
 
     public AVLNode(E elem) {
         super(elem);
-        updateHeight();
+        this.height = 0;
     }
 
     public AVLNode( E element, AVLNode<E> parent,
@@ -21,14 +21,27 @@ class AVLNode<E> extends BTNode<E> {
     }
     public AVLNode( E element, AVLNode<E> parent){
         super(element, parent,null, null);
-        updateHeight();
+        this.height = 0;
     }
 
     public int getHeight() {
         return height;
     }
-    private void updateHeight() {
-        height = super.getHeight();
+
+    protected void updateHeight() {
+        int leftHeight = -1;
+        int rightHeight = -1;
+
+        AVLNode<E> left = (AVLNode<E>) getLeftChild();
+        AVLNode<E> right = (AVLNode<E>) getRightChild();
+
+        if (left != null)
+            leftHeight = left.getHeight();
+
+        if (right != null)
+            rightHeight = right.getHeight();
+
+        height = 1 + Math.max(leftHeight, rightHeight);
     }
 
     /**
@@ -48,10 +61,53 @@ class AVLNode<E> extends BTNode<E> {
         super.setRightChild(node);
         updateHeight();
     }
-// others public methods
-//TODO: Left as an exercise.
+
+    // others public methods
+    //TODO: Left as an exercise.
+
+    protected int balanceFactor() {
+        int leftHeight = -1;
+        int rightHeight = -1;
+
+        AVLNode<E> left = (AVLNode<E>) getLeftChild();
+        AVLNode<E> right = (AVLNode<E>) getRightChild();
+
+        if (left != null)
+            leftHeight = left.getHeight();
+        if (right != null)
+            rightHeight = right.getHeight();
+
+        return leftHeight - rightHeight;
+    }
+
     protected boolean isUnbalanced() {
-        return Math.abs(((AVLNode<E>) getLeftChild()).getHeight() - ((AVLNode<E>) getRightChild()).getHeight()) > 1;
+        return Math.abs(balanceFactor()) > 1;
+    }
+
+    boolean isInternal() {
+        return !(getParent()==null || (getLeftChild()==null && getRightChild()==null));
+    }
+
+    /**
+     * Return the child of this node with greater height
+     */
+    AVLNode<E> tallerChild()  {
+        int rightHeight = -1;
+        int leftHeight = -1;
+
+        if (getRightChild() != null) {rightHeight = ((AVLNode<E>)getRightChild()).getHeight();}
+        if (getLeftChild() != null) {leftHeight = ((AVLNode<E>)getLeftChild()).getHeight();}
+
+        if (leftHeight > rightHeight)
+            return (AVLNode<E>) getLeftChild();
+        if (leftHeight < rightHeight)
+            return (AVLNode<E>) getRightChild();
+        if (getParent() == null)
+            return (AVLNode<E>) getRightChild();
+        if (((AVLNode<E>)getParent()).getLeftChild().equals(this))
+            return (AVLNode<E>) getLeftChild();
+        else
+            return (AVLNode<E>) getRightChild();
     }
 
 }

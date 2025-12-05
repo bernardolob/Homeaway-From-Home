@@ -60,7 +60,7 @@ public class BSTSortedMap<K extends Comparable<K>,V> extends BTree<Map.Entry<K,V
         return null;
     }
 
-    private BTNode<Entry<K,V>> getNode(BTNode<Entry<K,V>> node, K key) {
+    BTNode<Entry<K,V>> getNode(BTNode<Entry<K, V>> node, K key) {
         if ( node == null )
             return null;
         int compResult = key.compareTo(node.getElement().key());
@@ -185,7 +185,7 @@ public class BSTSortedMap<K extends Comparable<K>,V> extends BTree<Map.Entry<K,V
                 BTNode<Entry<K,V>> oldNodeParent = (BTNode<Entry<K,V>>)node.getParent();
                 // Detach node from old parent
                 if (oldNodeParent != null) {
-                    if (oldNodeParent.getRightChild().equals(node))
+                    if (node.equals(oldNodeParent.getRightChild()))
                         oldNodeParent.setRightChild(null);
                     else
                         oldNodeParent.setLeftChild(null);

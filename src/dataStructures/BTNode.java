@@ -100,6 +100,9 @@ class BTNode<E> implements Node<E> {
      */
     public void setLeftChild(Node<E> node) {
         leftChild=node;
+        if (node instanceof AVLNode) {
+            ((AVLNode<E>) node).updateHeight();
+        }
     }
 
     /**
@@ -108,6 +111,10 @@ class BTNode<E> implements Node<E> {
      */
     public void setRightChild(Node<E> node) {
         rightChild=node;
+        if (node instanceof AVLNode) {
+            ((AVLNode<E>) node).updateHeight();
+        }
+
     }
 
     /**
@@ -116,6 +123,9 @@ class BTNode<E> implements Node<E> {
      */
     public void setParent(Node<E> node) {
         parent=node;
+        if (node instanceof AVLNode) {
+            ((AVLNode<E>) node).updateHeight();
+        }
     }
 
     /**
