@@ -11,10 +11,13 @@ import dataStructures.exceptions.NoSuchElementException;
  */
 class SepChainHashTableIterator<K,V> implements Iterator<Map.Entry<K,V>> {
 
-    //TODO: Left as exercise
+    private Map<K,V>[] table;
+    private int currentIndex;
+    private Iterator<Map.Entry<K,V>> currentIterator;
 
     public SepChainHashTableIterator(Map<K,V>[] table) {
-        //TODO: Left as exercise
+        this.table = table;
+        rewind();
     }
 
     /**
@@ -24,7 +27,16 @@ class SepChainHashTableIterator<K,V> implements Iterator<Map.Entry<K,V>> {
      * @return true iff the iteration has more elements
      */
     public boolean hasNext() {
-	//TODO: Left as exercise
+        if (currentIterator != null && currentIterator.hasNext())
+            return true;
+        while (currentIndex < table.length) {
+            currentIterator = table[currentIndex].iterator();
+            currentIndex++;
+
+            if (currentIterator.hasNext())
+                return true;
+        }
+
         return false;
     }
 
@@ -35,8 +47,10 @@ class SepChainHashTableIterator<K,V> implements Iterator<Map.Entry<K,V>> {
      * @throws NoSuchElementException - if call is made without verifying pre-condition
      */
     public Map.Entry<K,V> next() {
-        //TODO: Left as exercise
-        return null;
+        if (!hasNext())
+            throw new NoSuchElementException();
+
+        return currentIterator.next();
     }
 
     /**
@@ -44,7 +58,18 @@ class SepChainHashTableIterator<K,V> implements Iterator<Map.Entry<K,V>> {
      * After rewind, if the iteration is not empty, next will return the first element.
      */
     public void rewind() {
-        //TODO: Left as exercise
+        currentIndex = 0;
+        currentIterator = null;
+
+        while (currentIndex < table.length) {
+            currentIterator = table[currentIndex].iterator();
+            currentIndex++;
+
+            if (currentIterator.hasNext())
+                return;
+        }
+
+        currentIterator = null;
     }
 }
 
