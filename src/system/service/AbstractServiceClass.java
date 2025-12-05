@@ -1,5 +1,6 @@
 package system.service;
 
+import dataStructures.List;
 import dataStructures.SortedDoublyLinkedList;
 import dataStructures.SortedList;
 import system.Coordinates;
@@ -53,11 +54,13 @@ public abstract class AbstractServiceClass implements Service {
     }
 
     @Override
-    public void evaluate(int stars, String tag) {
+    public void evaluate(int stars, List<String> tags) {
         addEvaluation(stars);
-        for (String s : tag.split(TAG_REGEX))
-            if (!tags.contains(s))
-                tags.add(s);
+        for (int i = 0; i < tags.size(); i++) {
+            String s = tags.get(i);
+            if (!this.tags.contains(s))
+                this.tags.add(s);
+        }
     }
 
     @Override

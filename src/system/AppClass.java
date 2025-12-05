@@ -1,5 +1,6 @@
 package system;
 
+import dataStructures.List;
 import dataStructures.TwoWayIterator;
 import exceptions.*;
 import dataStructures.Iterator;
@@ -169,10 +170,10 @@ public class AppClass implements App {
     }
 
     @Override
-    public void evaluate(String service, int stars, String tag) {
+    public void evaluate(String service, int stars, List<String> tags) {
         if (stars < MIN_STARS || stars > MAX_STARS)
             throw new InvalidEvaluationException();
-        currentArea.evaluate(service, stars, tag);
+        currentArea.evaluate(service, stars, tags);
     }
 
     @Override

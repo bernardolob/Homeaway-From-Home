@@ -1,6 +1,7 @@
 package system;
 
 import dataStructures.Iterator;
+import dataStructures.List;
 import dataStructures.TwoWayIterator;
 import system.service.Service;
 import system.service.ServiceType;
@@ -182,11 +183,11 @@ public interface App {
      *
      * @param service the service name
      * @param stars the number of stars (rating)
-     * @param tag an optional tag for the review
+     * @param tags optional tags for the review
      * @pre stars must be within valid range (e.g., 1–5)
      * @post the evaluation is stored
      */
-    void evaluate(String service, int stars, String tag);
+    void evaluate(String service, int stars, List<String> tags);
 
     /**
      * Returns an iterator of iterators for ranking services.

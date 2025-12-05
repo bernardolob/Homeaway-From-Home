@@ -11,9 +11,9 @@ public class AreaClass implements Area {
     private static final int NUMBER_OF_RANKS = 5;
 
     private final List<Service> servicesByInsertion;
-    private final SortedList<Service> servicesByName;
+    private final SortedMap<String, Service> servicesByName;
     private final List<List<Service>> servicesByRank;
-    private final SortedList<Student> studentsByName;
+    private final SortedMap<String, Student> studentsByName;
     private final List<Country> countries;
 
     private Lodging cheapestLodging;
@@ -34,9 +34,9 @@ public class AreaClass implements Area {
         cheapestLeisure = null;
 
         servicesByInsertion = new DoublyLinkedList<>();
-        servicesByName = new SortedDoublyLinkedList<>(new ServiceNameComparator());
+        servicesByName = new AVLSortedMap<>();
         servicesByRank = new ListInArray<>(NUMBER_OF_RANKS);
-        studentsByName = new SortedDoublyLinkedList<>(new StudentNameComparator());
+        studentsByName = new AVLSortedMap<>();
         countries = new DoublyLinkedList<>();
         for (int i = 0; i < NUMBER_OF_RANKS; i++) {
             servicesByRank.add(i, new DoublyLinkedList<>());
@@ -68,7 +68,7 @@ public class AreaClass implements Area {
         if (hasService(name))
             throw new AlreadyExistsException();
         Service newService = type.createService(coordinates, price, value, name);
-        servicesByName.add(newService);
+        servicesByName.put(name.toLowerCase(), newService);
         servicesByInsertion.addLast(newService);
         int averageStars = newService.getAverageStars();
         if (servicesByRank.get(averageStars-1) == null)
@@ -110,21 +110,20 @@ public class AreaClass implements Area {
             countries.addLast(country);
         }
         Student newStudent = studentType.createStudent(name, lodging, country);
-        studentsByName.add(newStudent);
+        studentsByName.put(name.toLowerCase(), newStudent);
     }
 
     @Override
     public void removeStudent(String name) {
-        Student student = getStudent(name);
+        Student student = studentsByName.remove(name.toLowerCase());
         if (student == null)
             throw new NonExistingStudentException();
         student.removeStudent();
-        studentsByName.remove(student);
     }
 
     @Override
     public Iterator<Student> getAllStudentsIterator() {
-        return studentsByName.iterator();
+        return studentsByName.values();
     }
 
     @Override
@@ -189,12 +188,12 @@ public class AreaClass implements Area {
     }
 
     @Override
-    public void evaluate(String serviceName, int stars, String tag) {
+    public void evaluate(String serviceName, int stars, List<String> tags) {
         Service service = getService(serviceName);
         if (service == null)
             throw new UnknownLocationException();
         int oldAverage = service.getAverageStars();
-        service.evaluate(stars, tag);
+        service.evaluate(stars, tags);
         updateService(oldAverage, service);
     }
 
@@ -295,13 +294,7 @@ public class AreaClass implements Area {
 
 
     private Service getService(String serviceName) {
-        Iterator<Service> it = servicesByName.iterator();
-        while (it.hasNext()) {
-            Service s = it.next();
-            if (s.getName().equalsIgnoreCase(serviceName))
-                return s;
-        }
-        return null;
+        return servicesByName.get(serviceName.toLowerCase());
     }
 
     private boolean hasService(String serviceName) {
@@ -319,13 +312,7 @@ public class AreaClass implements Area {
     }
 
     private Student getStudent(String studentName) {
-        Iterator<Student> it = studentsByName.iterator();
-        while (it.hasNext()) {
-            Student student = it.next();
-            if (student.getName().equalsIgnoreCase(studentName))
-                return student;
-        }
-        return null;
+        return studentsByName.get(studentName.toLowerCase());
     }
 
     private boolean hasStudent(String studentName) {

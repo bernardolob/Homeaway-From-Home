@@ -1,6 +1,7 @@
 package system;
 
 import dataStructures.Iterator;
+import dataStructures.List;
 import dataStructures.TwoWayIterator;
 import system.service.Service;
 import system.service.ServiceType;
@@ -45,7 +46,7 @@ public interface Area extends Serializable {
 
     Iterator<Service> getVisitsIterator(String student);
 
-    void evaluate(String service, int stars, String tag);
+    void evaluate(String service, int stars, List<String> tags);
 
     Iterator<Iterator<Service>> getRankingServices();
 

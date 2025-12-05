@@ -104,7 +104,7 @@ class AVLNode<E> extends BTNode<E> {
             return (AVLNode<E>) getRightChild();
         if (getParent() == null)
             return (AVLNode<E>) getRightChild();
-        if (((AVLNode<E>)getParent()).getLeftChild().equals(this))
+        if (this.equals(((AVLNode<E>)getParent()).getLeftChild()))
             return (AVLNode<E>) getLeftChild();
         else
             return (AVLNode<E>) getRightChild();

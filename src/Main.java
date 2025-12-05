@@ -1,8 +1,8 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import dataStructures.TwoWayIterator;
+import dataStructures.*;
 import exceptions.*;
-import dataStructures.Iterator;
 import system.*;
 import system.service.Service;
 import system.student.Student;
@@ -461,10 +461,16 @@ public class Main {
     private static void star(App app, Scanner in) {
         int stars = in.nextInt();
         String service = in.nextLine().trim();
-        String tag = in.nextLine().trim();
+        String tagLine = in.nextLine();
+        Scanner tagScanner = new Scanner(tagLine);
+        List<String> tags = new ListInArray<>(50);
         try {
             if (app.isUndefined()) throw new UndefinedBoundsException();
-            app.evaluate(service, stars, tag);
+            while (tagScanner.hasNext()) {
+                String tag = tagScanner.next();
+                tags.addLast(tag);
+            }
+            app.evaluate(service, stars, tags);
             System.out.printf(STAR_MSG);
         } catch (UndefinedBoundsException e) {
             System.out.printf(UNDEFINED_BOUNDS_ERR);

@@ -1,5 +1,6 @@
 package system.service;
 
+import dataStructures.List;
 import system.Coordinates;
 import java.io.Serializable;
 
@@ -62,7 +63,7 @@ public interface Service extends Serializable {
      */
     int getAverageStars();
 
-    void evaluate(int stars, String tag);
+    void evaluate(int stars, List<String> tag);
 
     boolean hasTag(String tag);
 
