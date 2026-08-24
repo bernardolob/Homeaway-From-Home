@@ -1,6 +1,6 @@
 # Homeaway From Home! 🏠
 
-**Object-Oriented Programming — 1st Project**
+**Object-Oriented Programming**
 NOVA School of Science and Technology (FCT NOVA)
 
 ## Authors
