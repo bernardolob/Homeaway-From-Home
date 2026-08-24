@@ -1,203 +1,172 @@
-# Homeaway From Home! 🏠
+# HomeAway From Home 🏠
 
-**Object-Oriented Programming**
-NOVA School of Science and Technology (FCT NOVA)
+**Data Structures and Algorithms (AED) — Project 2025/2026**
+NOVA School of Science & Technology
 
-## Authors
-
-- Bernardo Lobão — 68022
+**Authors**
 - Guilherme Santos — 65443
+- Bernardo Cortez de Lobão — 68022
 
-## Overview
+---
 
-**Homeaway From Home** is a console-based application that supports international students in a campus-oriented town by providing information about location-based services useful to them. The system was built for the Lisbon Metropolitan area (Almada, Monte da Caparica, Costa de Caparica) but is designed to generalize to any town, with a strong focus on extensibility for new service and student types.
+## About the project
 
-The application manages:
-- **Services**: location-based points of interest within a defined bounding rectangle
-- **Students**: registered users with different behavioral profiles
-- **Evaluations**: star-based ratings for services
-- **Student mobility**: tracking where students go, live, and (depending on type) what they've visited
+`HomeAway From Home` is a console-based Java application built for the AED course. It helps
+international students in a campus-oriented town find location-based services relevant to
+student life.
 
-## Domain Model
+The app manages a **geographic bounding area** containing **services** and **students**. A
+single area is active at a time, but multiple areas can be saved to and loaded from secondary
+memory (serialized `.ser` files kept in the `data` folder).
 
 ### Services
 
-All services have a `name` and a point location (`latitude`, `longitude`, stored as integers — real values × 10⁹). Every service must lie within the system's defined bounding box.
+Every service has a name and a geographic location (latitude/longitude, stored as integers —
+the real decimal value multiplied by 1,000,000,000). Three types of services are supported:
 
-| Type | Extra Attributes |
-|------|-------------------|
-| **Eating** | Price of the daily student menu |
-| **Lodging** | Weekly price of the student room |
-| **Leisure** | Ticket price + student discount percentage |
+| Type | Extra info |
+|---|---|
+| **Eating** | daily student menu price, number of seats |
+| **Lodging** | monthly room price, number of single rooms |
+| **Leisure** | ticket price, student discount percentage |
 
-The service model is designed to be extended with new service types without breaking existing functionality.
+Services can be evaluated with **star ratings (1–5)** plus a text review, and can be tagged and
+searched by keyword.
 
 ### Students
 
+Three types of students are supported, each with different behavior:
+
 | Type | Behavior |
-|------|----------|
-| **Bookish** | Focused on studying and leisure; stores only leisure locations visited |
-| **Outgoing** | Focused on eating out and exploring; stores every location visited |
-| **Thrifty** | Budget-driven; always tracks the cheapest known eating and lodging service, and only relocates when a cheaper option is found |
+|---|---|
+| **Bookish** | studies and attends Leisure events; stores every Leisure place visited |
+| **Outgoing** | eats out and explores the town; stores every location visited |
+| **Thrifty** | always seeks the cheapest eating/lodging option; doesn't store visit history |
 
-Each student has a current location (either their home lodging or any known service) and a home (a lodging service).
+Students can move around the area, change their home lodging, and be tracked per country,
+per service, or by location.
 
-### Evaluations
-
-- Services are rated with **stars** (1–5).
-- A newly created service starts with a default evaluation of **4 stars**.
-- The displayed evaluation is the **rounded average** (`Math.round`) of all submitted ratings.
-- Services can be listed sorted by evaluation, or filtered by type and specific average.
+---
 
 ## Commands
 
+The application is driven by a text-based command interpreter (case-insensitive commands).
+
 | Command | Description |
 |---|---|
-| `bounds` | Defines the geographic bounding rectangle of the system (resets all data) |
-| `eating` | Adds a new eating service |
-| `lodging` | Adds a new lodging service |
-| `leisure` | Adds a new leisure service |
-| `services` | Lists all services in order of insertion |
-| `student` | Registers a new student (bookish / outgoing / thrifty) |
-| `students` | Lists all registered students |
+| `bounds` | Defines a new geographic bounding rectangle (area) |
+| `save` | Saves the current area to a text file |
+| `load` | Loads a previously saved area |
+| `service` | Adds a new service (eating, lodging or leisure) |
+| `services` | Lists all services, in insertion order |
+| `student` | Adds a new student |
+| `students` | Lists all students, or students from a given country |
 | `leave` | Removes a student from the system |
-| `go` | Moves a student to a service or back home |
-| `move` | Changes a student's home lodging |
-| `star` | Submits a star evaluation (1–5) for a service |
-| `where` | Shows a student's current location |
-| `visited` | Lists locations visited by a student (bookish/outgoing only) |
-| `ranking` | Lists all services sorted by descending evaluation |
-| `ranked` | Lists services of a given type with a given star average |
-| `find` | Finds the most relevant service (nearest, or cheapest) for a student |
-| `help` | Displays all available commands |
-| `exit` | Terminates the program |
+| `go` | Moves a student to an eating or leisure service |
+| `move` | Changes a student's home (lodging) |
+| `users` | Lists students currently present in a given service |
+| `star` | Evaluates a service (1–5 stars + description) |
+| `where` | Locates a student |
+| `visited` | Lists the locations visited by a student |
+| `ranking` | Lists all services ordered by star rating |
+| `ranked` | Lists the closest service(s) of a type with a given rating, relative to a student |
+| `tag` | Lists services whose reviews contain a given word |
+| `find` | Finds the most relevant service of a type for a given student |
+| `help` | Shows all available commands |
+| `exit` | Saves the current area (if any) and terminates the program |
 
-Commands are **case-insensitive**; string arguments (names) are **case-sensitive**. Unknown tokens are each reported individually as `Unknown command`. Error conditions for each command are checked strictly in the order specified by the project statement — the first failing condition determines the output message, but remaining input parameters are always consumed.
+Full behavior, arguments and error messages for each command are detailed in the project
+specification (`AED_2025_26_TP_v2.pdf`).
 
-### Distance metric
+---
 
-The `find` command uses **Manhattan distance** to determine the nearest service for bookish/outgoing students:
+## Architecture
 
-```
-d(l1, l2) = |l1.lat - l2.lat| + |l1.long - l2.long|
-```
+The design follows an object-oriented model centered on an `App` class that manages the
+current `Area`. Key class groups:
 
-Ties (equal distance or equal price) are resolved by **order of insertion**.
+- **`App`** — entry point / façade for all commands, holds the `currentArea`.
+- **`Area`** — core of the system; owns services, students and countries, and answers
+  all area-level queries (search, ranking, tagging, filtering).
+- **`Service`** hierarchy — `Service` → `LimitedService` → `Eating` / `Lodging`, plus
+  `Leisure` (unlimited capacity). `ServiceType` enum acts as a factory for service creation.
+- **`Student`** hierarchy — `Student` → `VisitingStudent` (`Bookish`, `Outgoing`) and
+  `Thrifty` (no visit history, cheapest-service logic). `StudentType` enum is the factory.
+- **`Country`** — groups students by nationality for the `students <country>` command.
+- **`Coordinates`** — record type; encapsulates latitude/longitude and Manhattan distance
+  calculation, used by the `ranked` command.
 
-## Design & Architecture
+Only classes/interfaces from the provided `dataStructures` package may be used (no
+`java.util`, except for I/O such as `Scanner`).
 
-This project emphasizes:
-- **Extensibility**: new service types and student types can be added with minimal changes to existing code, via interfaces + abstract base classes + polymorphism (`ServiceType`/`StudentType` enums for classification, dedicated subclasses for behavior).
-- **Encapsulation**: interfaces (`Service`, `Student`, `Eating`, `Lodging`, `Leisure`, `Bookish`, `Outgoing`, `Thrifty`, `VisitingStudent`, `LimitedService`) define contracts; `...Class` suffixed classes provide the implementations.
-- **Custom data structures only**: per course constraints, this project does **not** use `java.util` Collections. All lists/maps/trees/hash tables under `dataStructures/` are the generic array/BST/AVL/hash-table/linked-list implementations provided in lectures/labs, used unmodified (wrapped where extra behavior was needed).
-- **Exception-driven error handling**: every documented error case from the spec (invalid bounds, invalid prices, already-exists, unknown location, etc.) maps to its own checked exception under `exceptions/`, keeping `Commands.java` readable and each business rule self-documenting.
+### Data structures used
 
-### Project structure
+| Class | Structure | Purpose |
+|---|---|---|
+| `Area.servicesByInsertion` | `List<Service>` | insertion order — `services` command |
+| `Area.servicesByTag` | `Map<String, List<Service>>` | services grouped by review tag — `tag` command |
+| `Area.servicesByName` | `SortedMap<String, Service>` | alphabetical lookup — `go`, `move` |
+| `Area.servicesByRank` | `List<List<Service>>` | services bucketed by rounded star average — `ranking`, `ranked`, `find` |
+| `Area.studentsByName` | `SortedMap<String, Student>` | alphabetical listing — `students` |
+| `Area.countries` | `Map<String, Country>` | per-country student grouping |
+| `Country.citizens` | `List<Student>` | insertion order for `students <country>` |
+| `VisitingStudent.visits` | `List<Service>` | visit history — `visited` command |
+| `Service.tags` | `SortedList<String>` | tags applied to a service's reviews |
+| `LimitedService.presentStudents` | `TwoWayList<Student>` | bidirectional traversal — `users` (ascending/descending) |
 
-```
-src/
-├── Main.java                  # Entry point
-├── Commands.java              # Command parsing, dispatch & I/O feedback
-├── Tests.java                 # Test runner
-│
-├── system/                    # Core domain
-│   ├── App.java / AppClass.java           # Application-level state & orchestration
-│   ├── Area.java / AreaClass.java         # Bounding rectangle ("bounds") logic
-│   ├── Country.java / CountryClass.java   # Country/region grouping
-│   ├── Coordinates.java                   # Lat/long point representation
-│   │
-│   ├── service/
-│   │   ├── Service.java                       # Base interface
-│   │   ├── LimitedService.java                # Interface for services with capacity limits
-│   │   ├── AbstractServiceClass.java          # Shared service implementation
-│   │   ├── AbstractLimitedServiceClass.java
-│   │   ├── Eating.java / EatingServiceClass.java
-│   │   ├── Lodging.java / LodgingServiceClass.java
-│   │   ├── Leisure.java / LeisureServiceClass.java
-│   │   ├── ServiceType.java                   # eating / lodging / leisure classification
-│   │   ├── ServiceTypeFilter.java             # Filter services by type
-│   │   ├── ServiceDistanceFilter.java         # Filter by Manhattan distance (for `find`)
-│   │   ├── ServiceTagFilter.java / TagComparator.java
-│   │
-│   └── student/
-│       ├── Student.java                       # Base interface
-│       ├── VisitingStudent.java                # Interface for students that record visits
-│       ├── AbstractStudentClass.java
-│       ├── AbstractVisitingStudentClass.java
-│       ├── Bookish.java / BookishStudentClass.java
-│       ├── Outgoing.java / OutgoingStudentClass.java
-│       ├── Thrifty.java / ThriftyStudentClass.java
-│       └── StudentType.java                   # bookish / outgoing / thrifty classification
-│
-├── exceptions/                 # One exception per documented error case
-│   ├── UndefinedBoundsException / InvalidBoundsException / ExistingBoundException
-│   ├── InvalidMenuPriceException / InvalidRoomPriceException / InvalidTicketPriceException
-│   ├── InvalidDiscountException / InvalidLocationException / InvalidCapacityException
-│   ├── AlreadyExistsException / AlreadyHomeException / AlreadyThereException
-│   ├── NonExistingStudentException / NonExistingLodgingException / NonExistingBoundsException
-│   ├── UnknownLocationException / UnacceptableMoveException / ThriftyStudentException
-│   ├── InvalidEvaluationException / InvalidStudentTypeException / InvalidServiceTypeException
-│   ├── NoServicesWithAvgException / NoServicesWithTypeException
-│   ├── ServiceFullException / InvalidServiceException / InvalidOrderException
-│
-└── dataStructures/             # Provided generic structures — used, never modified
-    ├── List.java / ListInArray.java / SortedList.java
-    ├── SinglyLinkedList.java / DoublyLinkedList.java / TwoWayList.java / SortedDoublyLinkedList.java
-    ├── Map.java / MapSinglyList.java / SortedMap.java / BSTSortedMap.java / AVLSortedMap.java
-    ├── HashTable.java / ClosedHashTable.java / SepChainHashTable.java
-    ├── Tree.java / BTree.java / AdvancedBSTree.java / AVLNode.java / BTNode.java
-    ├── Iterator variants (Array/Singly/Doubly/TwoWay/Filter/InOrder/Keys/Values)
-    └── exceptions/              # Structure-level exceptions (empty stack/queue/map, invalid position, etc.)
-```
+Concrete implementations rely on separate-chaining hash tables (`SepChainHashTable`) and
+AVL-based sorted maps (`AVLSortedMap`) where they improve efficiency over simpler
+alternatives.
 
-## Building & Running
+---
 
-Using IntelliJ's project file (`Homeaway from Home.iml`) or plain `javac`:
+## Complexity
 
-```bash
-# Compile
-javac -d out/production/"Homeaway from Home" src/*.java src/**/*.java
+Estimated space complexity: **O(3n + 2m + c + 0.5nm + 0.1nm)**, where:
 
-# Run interactively
-java -cp out/production/"Homeaway from Home" Main
-```
+- `n` — number of services in the system
+- `m` — number of students in the system
+- `c` — number of countries in the system
+- `0.5nm` — expected number of services visited per student
+- `0.1nm` — expected number of students present per service
+
+Most operations that touch a single service or student run in **O(1)** best case; operations
+that must traverse the area's services or students run in **O(n)** worst case.
+
+---
+
+## Project structure & grading
+
+This is a group project (2 students) split into two phases, each with a class diagram
+report, a program submission (via Mooshak), and a final report:
+
+| Deliverable | Weight | Deadline |
+|---|---|---|
+| 1st Class Diagram Report | 1% | 3 Oct 2025 |
+| 1st Program (Mooshak, problem A) | 10% | 31 Oct 2025 |
+| Final Report of 1st Program | 2% | 31 Oct 2025 |
+| 2nd Class Diagram Report | 1% | 7 Nov 2025 |
+| 2nd Program (Mooshak, problem B) | 16% | 5 Dec 2025 |
+| Final Report of 2nd Program | 5% | 5 Dec 2025 |
+
+For programs that pass all Mooshak tests, functionality is worth 20% and code quality 80% of
+the program grade. Each phase also includes an oral discussion (0–20), with the final stage
+grade being the minimum of the submitted work and oral discussion grades.
+
+**Constraints:** only classes/interfaces from the provided `dataStructures` package may be
+used; the `java.util` package is forbidden except for I/O; for the 2nd program, the `tag`
+command's text processing must be implemented without `String` methods.
+
+---
 
 ## Testing
 
-The `tests/` directory holds paired input/expected-output files (`input1`…`input18`, `output1`…`output18`), mirroring Mooshak's evaluation format:
+Local test results (18 tests, run on a MacBook Air M2): all passing, total runtime **587 ms**
+(individual tests ranging from 9 ms to 113 ms).
 
-```bash
-java -cp out/production/"Homeaway from Home" Main < tests/input1 > actual1
-diff actual1 tests/output1
-```
+---
 
-`Tests.java` can be used to automate running all 18 cases and diffing results in one go.
+## Notes for future improvement
 
-Tests were built incrementally alongside each command, following the recommended order:
-
-1. `help` / `exit`
-2. `bounds`
-3. `eating` / `lodging` / `leisure` / `services`
-4. `student` / `students` / `leave`
-5. `go` / `move` / `where` / `visited`
-6. `star` / `ranking` / `ranked`
-7. `find` (most complex — implemented last)
-
-## Serialization
-
-`.ser` files at the repo root (e.g. `costa-da-caparica.ser`, `portugal.ser`, `tokyo.ser`, `algeria.ser`, `buenos-aires.ser`, `madagascar.ser`, `costa-anywhere.ser`, `costa-do-sol.ser`, `portugal-continental.ser`) are serialized snapshots of different `bounds`/area configurations, used for saving and restoring system state across runs or test scenarios.
-
-## Submission History
-
-Incremental Mooshak submissions are tracked as `sub1.zip` … `sub10.zip`, corresponding to each checkpoint/feature increment as the command set was built out.
-
-## Submission Notes
-
-- **Mooshak contest**: POO2025-TP1
-- **Mooshak username**: `65443_68022` (smallest student number first)
-- **Deadline**: 23h55 (Lisbon time), May 2nd, 2025
-- Code must not be shared outside the group and must comply with the NOVA University Code of Ethics.
-
-## License
-
-Academic project developed for the Object-Oriented Programming course at NOVA FCT — not intended for external distribution.
+The group considered replacing `servicesByTag` (`Map<String, List<Service>>`) with a
+`SepChainHashTable<String, Service>` to further improve the efficiency of the `tag` command.
