@@ -7,6 +7,11 @@ NOVA School of Science & Technology
 - Guilherme Santos — 65443
 - Bernardo Cortez de Lobão — 68022
 
+**Docs**
+- [Project description](./docs/AED_2025_26_TP_v2.pdf)
+- [Class diagram report](./docs/65443_68022.pdf)
+- [Final report](./docs/Reporte%20Final%2065443_68022.pdf)
+
 ---
 
 ## About the project
@@ -75,8 +80,8 @@ The application is driven by a text-based command interpreter (case-insensitive 
 | `help` | Shows all available commands |
 | `exit` | Saves the current area (if any) and terminates the program |
 
-Full behavior, arguments and error messages for each command are detailed in the project
-specification (`AED_2025_26_TP_v2.pdf`).
+Full behavior, arguments and error messages for each command are detailed in the
+[project specification](./docs/AED_2025_26_TP_v2.pdf).
 
 ---
 
